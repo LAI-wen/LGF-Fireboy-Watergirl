@@ -34,6 +34,8 @@ void CGameStateInit::OnInit()
 
 void CGameStateInit::OnBeginState()
 {
+	background.LoadBitmapByString({ "resources/menu.bmp" }, RGB(255, 255, 255));
+	background.SetTopLeft(120, 150);
 }
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -46,6 +48,14 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 	GotoGameState(GAME_STATE_RUN);		// ¤Á´«¦ÜGAME_STATE_RUN
 }
 
+void CGameStateInit::load_background() {
+
+}
+
+
 void CGameStateInit::OnShow()
 {
+	background.ShowBitmap();
+
 }
+
