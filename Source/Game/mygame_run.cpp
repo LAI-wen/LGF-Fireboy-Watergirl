@@ -27,6 +27,23 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 10);
+	character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 10);
+
+
+	if (GetAsyncKeyState(0x41)) {  //A鍵向左
+		character1.SetTopLeft(character1.GetLeft() - 10, character1.GetTop());
+	}
+	if (GetAsyncKeyState(0x44)) {  //D鍵向右
+		character1.SetTopLeft(character1.GetLeft() + 10, character1.GetTop());
+	}
+
+	if (keepLeft == true) {
+		character2.SetTopLeft(character2.GetLeft() - 10, character2.GetTop());
+	}
+	if (keepRight == true) {
+		character2.SetTopLeft(character2.GetLeft() + 10, character2.GetTop());
+	}
 	
 }
 
@@ -39,12 +56,28 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	if (nChar == VK_LEFT) {
+		keepLeft = true;
+	}
+
+	if (nChar == VK_RIGHT) {
+		keepRight = true;
+	}
+
+	if (nChar == VK_UP) {
+		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 10);
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	if (nChar == VK_LEFT) {
+		keepLeft = false;
+	}
+
+	if (nChar == VK_RIGHT) {
+		keepRight = false;
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
