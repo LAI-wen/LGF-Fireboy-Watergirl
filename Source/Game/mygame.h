@@ -101,6 +101,8 @@ namespace game_framework {
 
 		bool keepLeft = false;
 		bool keepRight = false;
+		bool jump = false;
+		int jump_time = 0;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
