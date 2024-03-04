@@ -66,6 +66,10 @@ namespace game_framework {
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
 		CMovingBitmap logo;								// csie��logo
+	private:
+		void load_background();
+		void draw_text();
+		CMovingBitmap background;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

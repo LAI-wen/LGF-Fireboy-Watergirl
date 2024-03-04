@@ -42,9 +42,6 @@ void CGameStateRun::OnMove()							// ���ʹC������
 		character2.SetTopLeft(character2.GetLeft() + 10, character2.GetTop());
 	}
 
-	if (character2.IsOverlap(character2, floor)) {			//����I��a�O
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() -5);
-	}
 
 
 
@@ -63,8 +60,8 @@ void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 	character2.LoadBitmapByString({"Resources/watergirl.bmp"}, RGB(255, 255, 255));
 	character2.SetTopLeft(800, 280);
 
-	floor.LoadBitmapByString({ "resources/floor.bmp" });
-	floor.SetTopLeft(0, 800);
+	floor1.LoadBitmapByString({ "resources/floor.bmp" });
+	floor1.SetTopLeft(0, 800);
 
 	character2.LoadBitmapByString({ "resources/GAME_FRAMEWORK.bmp" });
 	character2.SetTopLeft(150, 265);
