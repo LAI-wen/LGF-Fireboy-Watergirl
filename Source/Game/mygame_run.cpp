@@ -27,8 +27,13 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 10);
-	character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 10);
+	//character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 10);
+
+
+	if (character2.IsOverlap(character2, floor)==false || jump==false) {
+		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 5);
+	}
+
 
 
 	if (GetAsyncKeyState(0x41)) {  //A鍵向左
@@ -44,14 +49,26 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (keepRight == true) {
 		character2.SetTopLeft(character2.GetLeft() + 10, character2.GetTop());
 	}
+
+	if (character2.IsOverlap(character2, floor)) {			//角色碰到地板
+		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() -5);
+	}
+
+
+
+
 	
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 
+	floor.LoadBitmapByString({ "resources/floor.bmp" });
+	floor.SetTopLeft(0, 800);
 
-	
+	character2.LoadBitmapByString({ "resources/GAME_FRAMEWORK.bmp" });
+	character2.SetTopLeft(150, 265);
+
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -65,7 +82,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 
 	if (nChar == VK_UP) {
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 10);
+		jump = true;
+		for (int i = 10; i >= -10; i=i-1) {
+			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - i);
+		}
+		jump = false;
 	}
 }
 
@@ -102,4 +123,6 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
+	floor.ShowBitmap();
+	character2.ShowBitmap();
 }

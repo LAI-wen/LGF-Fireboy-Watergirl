@@ -97,9 +97,11 @@ namespace game_framework {
 		CMovingBitmap character2;						//§Ì§Ì
 		CMovingBitmap door1;							//©n©nªù
 		CMovingBitmap door2;							//§Ì§Ìªù
+		CMovingBitmap floor;							//¦aªO
 
-		bool keepLeft = false;
+		bool keepLeft = false;		
 		bool keepRight = false;
+		bool jump = false;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
