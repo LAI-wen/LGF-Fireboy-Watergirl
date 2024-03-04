@@ -27,15 +27,12 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 10);
-	character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 10);
-
-
-	if (GetAsyncKeyState(0x41)) {  //A鍵向左
-		character1.SetTopLeft(character1.GetLeft() - 10, character1.GetTop());
+	if (CMovingBitmap::IsOverlap(character1, floor1) == false) {
+		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 2);
 	}
-	if (GetAsyncKeyState(0x44)) {  //D鍵向右
-		character1.SetTopLeft(character1.GetLeft() + 10, character1.GetTop());
+
+	if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
+		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 2);
 	}
 
 	if (keepLeft == true) {
@@ -49,9 +46,16 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+	floor1.LoadBitmapByString({ "Resources/floor1.bmp" });
+	floor1.SetTopLeft(0, 850);
+
+	character1.LoadBitmapByString({"Resources/fireboy.bmp"}, RGB(255, 255, 255));
+	character1.SetTopLeft(800, 265);
+
+	character2.LoadBitmapByString({"Resources/watergirl.bmp"}, RGB(255, 255, 255));
+	character2.SetTopLeft(800, 280);
 
 
-	
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -65,7 +69,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 
 	if (nChar == VK_UP) {
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 10);
+			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 40);
 	}
 }
 
@@ -102,4 +106,8 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
+	floor1.ShowBitmap();
+	character1.ShowBitmap();
+	character2.ShowBitmap();
+
 }
