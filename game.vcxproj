@@ -268,7 +268,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\bitmap1.bmp" />
-    <Image Include="Resources\floor.bmp" />
     <Image Include="Resources\Game Framework.png" />
     <Image Include="resources\game.ico" />
     <Image Include="resources\gameDoc.ico" />

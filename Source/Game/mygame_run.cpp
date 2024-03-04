@@ -10,7 +10,7 @@
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
-// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸°õ¦æª«¥ó¡A¥D­nªº¹CÀ¸µ{¦¡³£¦b³o¸Ì
+// ï¿½oï¿½ï¿½classï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½æª«ï¿½ï¿½Aï¿½Dï¿½nï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½oï¿½ï¿½
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
@@ -25,22 +25,14 @@ void CGameStateRun::OnBeginState()
 {
 }
 
-void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
+void CGameStateRun::OnMove()							// ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
-	//character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 10);
-
-
-	if (character2.IsOverlap(character2, floor)==false || jump==false) {
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 5);
+	if (CMovingBitmap::IsOverlap(character1, floor1) == false) {
+		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 2);
 	}
 
-
-
-	if (GetAsyncKeyState(0x41)) {  //AÁä¦V¥ª
-		character1.SetTopLeft(character1.GetLeft() - 10, character1.GetTop());
-	}
-	if (GetAsyncKeyState(0x44)) {  //DÁä¦V¥k
-		character1.SetTopLeft(character1.GetLeft() + 10, character1.GetTop());
+	if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
+		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 2);
 	}
 
 	if (keepLeft == true) {
@@ -50,7 +42,7 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 		character2.SetTopLeft(character2.GetLeft() + 10, character2.GetTop());
 	}
 
-	if (character2.IsOverlap(character2, floor)) {			//¨¤¦â¸I¨ì¦aªO
+	if (character2.IsOverlap(character2, floor)) {			//ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½aï¿½O
 		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() -5);
 	}
 
@@ -60,8 +52,16 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	
 }
 
-void CGameStateRun::OnInit()  								// ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
+void CGameStateRun::OnInit()  								// ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤Î¹Ï§Î³]ï¿½w
 {
+	floor1.LoadBitmapByString({ "Resources/floor1.bmp" });
+	floor1.SetTopLeft(0, 850);
+
+	character1.LoadBitmapByString({"Resources/fireboy.bmp"}, RGB(255, 255, 255));
+	character1.SetTopLeft(800, 265);
+
+	character2.LoadBitmapByString({"Resources/watergirl.bmp"}, RGB(255, 255, 255));
+	character2.SetTopLeft(800, 280);
 
 	floor.LoadBitmapByString({ "resources/floor.bmp" });
 	floor.SetTopLeft(0, 800);
@@ -82,11 +82,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 
 	if (nChar == VK_UP) {
-		jump = true;
-		for (int i = 10; i >= -10; i=i-1) {
-			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - i);
-		}
-		jump = false;
+			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 40);
 	}
 }
 
@@ -101,28 +97,30 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 }
 
 void CGameStateRun::OnShow()
 {
-	floor.ShowBitmap();
+	floor1.ShowBitmap();
+	character1.ShowBitmap();
 	character2.ShowBitmap();
+
 }

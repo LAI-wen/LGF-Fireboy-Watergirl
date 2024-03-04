@@ -121,8 +121,5 @@
     <Image Include="Resources\GAME_FRAMEWORK.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resources\floor.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>
