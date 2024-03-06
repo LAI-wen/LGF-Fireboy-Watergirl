@@ -27,37 +27,47 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// ���ʹC������
 {
+
+
 	if (CMovingBitmap::IsOverlap(character1, floor1) == false) {
 		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 2);
 	}
+
 
 	if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
 		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 2);
 	}
 
-	if (keepLeft == true) {
-		character2.SetTopLeft(character2.GetLeft() - 5 , character2.GetTop());
-	}
-	if (keepRight == true) {
-		character2.SetTopLeft(character2.GetLeft() + 5, character2.GetTop());
-	}
+	if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
+		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 2);
 
-	if (jump == true && (clock() - jump_time) < 400) {
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 10);
-	}
-	else if (jump == true && (clock() - jump_time) < 450) {
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 5);
-	}
-	else if (jump == true && (clock() - jump_time) < 4000) {
-		jump = false;
+		if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
+			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 5);
 
-	}
+		}
 
+		if (keepLeft == true) {
+			character2.SetTopLeft(character2.GetLeft() - 5, character2.GetTop());
+		}
+		if (keepRight == true) {
+			character2.SetTopLeft(character2.GetLeft() + 5, character2.GetTop());
+		}
 
+		if (jump == true && (clock() - jump_time) < 400) {
+			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 10);
+		}
+		else if (jump == true && (clock() - jump_time) < 450) {
+			character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 5);
+		}
+		else if (jump == true && (clock() - jump_time) < 4000) {
+			jump = false;
+
+		}
 
 
 
 	
+}
 }
 
 void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
@@ -92,7 +102,6 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_UP && CMovingBitmap::IsOverlap(character2, floor1) == true) {
 		jump = true;
 		jump_time = clock();
-		//character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 40);
 	}
 }
 
