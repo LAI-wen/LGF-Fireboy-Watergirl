@@ -32,13 +32,8 @@ void CGameStateRun::OnMove()							// ���ʹC������
 	}
 
 
-	if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
-		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 2);
-	}
-
-	if (CMovingBitmap::IsOverlap(character2, floor1) == false) {
+	if (CMovingBitmap::IsOverlap(character2, floor1) == false && CMovingBitmap::IsOverlap(character2, floor2) == false) {
 		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() + 5);
-
 	}
 
 	if (keepLeft == true) {
@@ -50,15 +45,18 @@ void CGameStateRun::OnMove()							// ���ʹC������
 
 	}
 
-	if (jump == true && (clock() - jump_time) < 400) {
+	if (jump == true && (clock() - jump_time) < 450) {
 		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 12);
 	}
-	else if (jump == true && (clock() - jump_time) < 440) {
+	else if (jump == true && (clock() - jump_time) < 500) {
 		character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 5);
 	}
-	else if (jump == true && (clock() - jump_time) < 4000) {
+	else if (jump == true) {
 		jump = false;
+	}
 
+	if (CMovingBitmap::IsOverlap(character2, floor2) == true) {
+		jump = false;
 	}
 
 
@@ -70,8 +68,14 @@ void CGameStateRun::OnMove()							// ���ʹC������
 
 void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 {
+	bg.LoadBitmapByString({ "Resources/bg.bmp" });
+	bg.SetTopLeft(0, 0);
+
 	floor1.LoadBitmapByString({ "Resources/floor1.bmp" });
-	floor1.SetTopLeft(0, 850);
+	floor1.SetTopLeft(0, 842);
+
+	floor2.LoadBitmapByString({ "Resources/floor2.bmp" });
+	floor2.SetTopLeft(0, 720);
 
 	character1.LoadBitmapByString({ "Resources/fireboy.bmp" }, RGB(255, 255, 255));
 	character1.SetTopLeft(850, 700);
@@ -87,6 +91,15 @@ void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 									"Resources/watergirl_sprite (1_7).bmp",
 										}, RGB(255, 255, 255));
 	character2.SetTopLeft(850, 700);
+
+	map_left.LoadBitmapByString({ "Resources/map_left.bmp" });
+	map_left.SetTopLeft(0, 0);
+
+	map_right.LoadBitmapByString({ "Resources/map_right.bmp" });
+	map_right.SetTopLeft(1348, 0);
+
+	map_top.LoadBitmapByString({ "Resources/map_top.bmp" });
+	map_top.SetTopLeft(0, 0);
 	
 
 
@@ -105,7 +118,6 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_UP && CMovingBitmap::IsOverlap(character2, floor1) == true) {
 		jump = true;
 		jump_time = clock();
-		//character2.SetTopLeft(character2.GetLeft(), character2.GetTop() - 40);
 	}
 }
 
@@ -143,12 +155,13 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ��
 
 void CGameStateRun::OnShow()
 {
+	bg.ShowBitmap();
 	floor1.ShowBitmap();
+	floor2.ShowBitmap();
 	character1.ShowBitmap();
 	character2.ShowBitmap();
-
-
-
-
+	map_left.ShowBitmap();
+	map_right.ShowBitmap();
+	map_top.ShowBitmap();
 
 }
