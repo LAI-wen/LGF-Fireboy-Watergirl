@@ -70,6 +70,8 @@ namespace game_framework {
 		void load_background();
 		void draw_text();
 		CMovingBitmap background;
+		CMovingBitmap button_play;
+		int button_play_time;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -103,10 +105,13 @@ namespace game_framework {
 		CMovingBitmap door2;							//�̧̪�
 		CMovingBitmap floor1;
 
-		bool keepLeft = false;		
+
+		bool keepLeft = false;							
 		bool keepRight = false;
 		bool jump = false;
 		int jump_time = 0;
+
+
 
 	};
 
