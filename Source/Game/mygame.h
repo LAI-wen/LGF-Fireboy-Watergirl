@@ -101,7 +101,7 @@ namespace game_framework {
 		CMovingBitmap background;						//�I��
 		CMovingBitmap bg;
 		CMovingBitmap character1;						//�n�n
-		CMovingBitmap character2;						//�̧�
+		CMovingBitmap character2[3];						//�̧�
 		CMovingBitmap door1;							//�n�n��
 		CMovingBitmap door2;							//�̧̪�
 		CMovingBitmap floor1;
