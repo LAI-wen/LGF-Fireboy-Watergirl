@@ -99,11 +99,16 @@ namespace game_framework {
 		int phase = 1;									//���d
 		int sub_phase = 1;								//�l���d
 		CMovingBitmap background;						//�I��
+		CMovingBitmap bg;
 		CMovingBitmap character1;						//�n�n
 		CMovingBitmap character2;						//�̧�
 		CMovingBitmap door1;							//�n�n��
 		CMovingBitmap door2;							//�̧̪�
 		CMovingBitmap floor1;
+		CMovingBitmap floor2;
+		CMovingBitmap map_left;
+		CMovingBitmap map_right;
+		CMovingBitmap map_top;
 
 
 		bool keepLeft = false;							
