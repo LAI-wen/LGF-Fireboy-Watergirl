@@ -40,14 +40,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	// character1 move
 	// 碰到牆壁停止
-	/*
-	if (GetAsyncKeyState(0x41) & 0x8000 && CMovingBitmap::IsOverlap(character1, map_left) == false) {
+	
+	if (CMovingBitmap::IsOverlap(character1, map_left) == false) {
 		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
 	}
-	if (GetAsyncKeyState(0x44) & 0x8000 && CMovingBitmap::IsOverlap(character1, map_right) == false) {
+	if (CMovingBitmap::IsOverlap(character1, map_right) == false) {
 		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
 	}
-	*/
+	
 
 	if (GetAsyncKeyState(0x41) & 0x8000) {  //A
 		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
@@ -110,6 +110,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	}
 
+	//door 動畫
+	if (CMovingBitmap::IsOverlap(character2[0], door2) == true && door2.GetFrameIndexOfBitmap() == 0) {
+		door2.ToggleAnimation();
+	}
 
 
 
@@ -180,6 +184,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	ramp.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
 	ramp.SetTopLeft(800, 600);
+
+	//門
+	door2.LoadBitmapByString({ "Resources/door200.bmp",
+							   "Resources/door201.bmp",
+							   "Resources/door202.bmp",
+							   "Resources/door203.bmp",
+							   "Resources/door204.bmp",
+							   "Resources/door205.bmp" });
+	door2.SetTopLeft(100, 631);
+	door2.SetAnimation(100, true);
 	
 
 
@@ -238,6 +252,8 @@ void CGameStateRun::OnShow()
 {
 	//牆壁
 	bg.ShowBitmap();
+	//門
+	door2.ShowBitmap();
 
 	//機關與動畫
 	button.ShowBitmap();
