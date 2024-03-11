@@ -99,6 +99,16 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		jump2 = false;
 	}
 
+	//機關
+
+	if (CMovingBitmap::IsOverlap(character2[0], button) == true ) {
+		button.SetTopLeft(button.GetLeft(), button.GetTop() + 1);
+	}
+	else if(button.GetTop() >700)
+	{
+		button.SetTopLeft(button.GetLeft(), button.GetTop() - 2);
+
+	}
 
 
 
@@ -106,11 +116,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 }
 
-void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
+void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+
+	//背景
 	bg.LoadBitmapByString({ "Resources/bg.bmp" });
 	bg.SetTopLeft(0, 0);
 
+	//地板
 	floor1.LoadBitmapByString({ "Resources/floor1.bmp" });
 	floor1.SetTopLeft(0, 842);
 
@@ -123,6 +136,7 @@ void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 	floor2_right.LoadBitmapByString({ "Resources/floor2_right.bmp" });
 	floor2_right.SetTopLeft(980, 721);
 
+	//角色
 	character1.LoadBitmapByString({ "Resources/fireboy.bmp" }, RGB(255, 255, 255));
 	character1.SetTopLeft(850, 700);
 
@@ -149,6 +163,8 @@ void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 									"Resources/watergirl_sprite (2_7).bmp"
 		}, RGB(255, 255, 255));
 
+
+	//牆壁
 	map_left.LoadBitmapByString({ "Resources/map_left.bmp" });
 	map_left.SetTopLeft(0, 0);
 
@@ -157,6 +173,13 @@ void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 
 	map_top.LoadBitmapByString({ "Resources/map_top.bmp" });
 	map_top.SetTopLeft(0, 0);
+
+	//機關
+	button.LoadBitmapByString({ "Resources/button(1).bmp" }, RGB(255, 255, 255));
+	button.SetTopLeft(300, 700);
+
+	ramp.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
+	ramp.SetTopLeft(800, 600);
 	
 
 
@@ -213,13 +236,22 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ��
 
 void CGameStateRun::OnShow()
 {
+	//牆壁
 	bg.ShowBitmap();
+
+	//機關與動畫
+	button.ShowBitmap();
+
+	ramp.ShowBitmap();
+
+	//地板
 	floor1.ShowBitmap();
 	floor2_up.ShowBitmap();
 	floor2_down.ShowBitmap();
 	floor2_right.ShowBitmap();
 	character1.ShowBitmap();
 
+	//人物與動畫
 	if (keepRight) {
 
 		character2[1].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
@@ -235,8 +267,10 @@ void CGameStateRun::OnShow()
 
 	}
 
+	//牆壁
 	map_left.ShowBitmap();
 	map_right.ShowBitmap();
 	map_top.ShowBitmap();
+
 
 }
