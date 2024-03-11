@@ -29,16 +29,52 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	//重力
 	//當角色1沒有碰到最下層地板，會往下掉
-	if (CMovingBitmap::IsOverlap(character1, floor1) == false) {
-		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 2);
+	if (CMovingBitmap::IsOverlap(character1, floor1) == false && CMovingBitmap::IsOverlap(character1, floor2_up) == false) {
+		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 5);
 	}
 
 	//當角色2沒有碰到最下層地板，會往下掉
-	if (CMovingBitmap::IsOverlap(character2[0], floor1) == false && CMovingBitmap::IsOverlap(character2[0], floor2) == false) {
+	if (CMovingBitmap::IsOverlap(character2[0], floor1) == false && CMovingBitmap::IsOverlap(character2[0], floor2_up) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() + 5);
 	}
 
-	//持續的左右移動
+	// character1 move
+	// 碰到牆壁停止
+	/*
+	if (GetAsyncKeyState(0x41) & 0x8000 && CMovingBitmap::IsOverlap(character1, map_left) == false) {
+		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
+	}
+	if (GetAsyncKeyState(0x44) & 0x8000 && CMovingBitmap::IsOverlap(character1, map_right) == false) {
+		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
+	}
+	*/
+
+	if (GetAsyncKeyState(0x41) & 0x8000) {  //A
+		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
+	}
+	if (GetAsyncKeyState(0x44) & 0x8000) {  //D
+		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
+	}
+	if (GetAsyncKeyState(0x57) & 0x8000 && CMovingBitmap::IsOverlap(character1, floor1) == true) {
+		jump1 = true;
+		jump1_time = clock();
+	}
+
+	if (jump1 == true && (clock() - jump1_time) < 450) {
+		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() - 12);
+	}
+	else if (jump1 == true && (clock() - jump1_time) < 500) {
+		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() - 5);
+	}
+	else if (jump1 == true) {
+		jump1 = false;
+	}
+
+	if (CMovingBitmap::IsOverlap(character1, floor2_down) == true) {
+		jump1 = false;
+	}
+
+	//character2 move
 	//如果碰到牆壁就停止
 
 	if (keepLeft == true && CMovingBitmap::IsOverlap(character2[0], map_left) == false) {
@@ -46,22 +82,21 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 	if (keepRight == true && CMovingBitmap::IsOverlap(character2[0], map_right) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
-
 	}
 
 	//跳躍
-	if (jump == true && (clock() - jump_time) < 450) {
+	if (jump2 == true && (clock() - jump2_time) < 450) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 12);
 	}
-	else if (jump == true && (clock() - jump_time) < 500) {
+	else if (jump2 == true && (clock() - jump2_time) < 500) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
-	else if (jump == true) {
-		jump = false;
+	else if (jump2 == true) {
+		jump2 = false;
 	}
 
-	if (CMovingBitmap::IsOverlap(character2[0], floor2) == true) {
-		jump = false;
+	if (CMovingBitmap::IsOverlap(character2[0], floor2_down) == true) {
+		jump2 = false;
 	}
 
 
@@ -79,8 +114,14 @@ void CGameStateRun::OnInit()  								// �C������Ȥιϧγ]�w
 	floor1.LoadBitmapByString({ "Resources/floor1.bmp" });
 	floor1.SetTopLeft(0, 842);
 
-	floor2.LoadBitmapByString({ "Resources/floor2.bmp" });
-	floor2.SetTopLeft(0, 720);
+	floor2_up.LoadBitmapByString({ "Resources/floor2_up.bmp" });
+	floor2_up.SetTopLeft(0, 720);
+
+	floor2_down.LoadBitmapByString({ "Resources/floor2_down.bmp" });
+	floor2_down.SetTopLeft(0, 721);
+
+	floor2_right.LoadBitmapByString({ "Resources/floor2_right.bmp" });
+	floor2_right.SetTopLeft(980, 721);
 
 	character1.LoadBitmapByString({ "Resources/fireboy.bmp" }, RGB(255, 255, 255));
 	character1.SetTopLeft(850, 700);
@@ -131,13 +172,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_RIGHT) {
 		keepRight = true;
 		character2[1].SetAnimation(100, false);
-
-
 	}
 
 	if (nChar == VK_UP && CMovingBitmap::IsOverlap(character2[0], floor1) == true) {
-		jump = true;
-		jump_time = clock();
+		jump2 = true;
+		jump2_time = clock();
 	}
 }
 
@@ -149,7 +188,6 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	if (nChar == VK_RIGHT) {
 		keepRight = false;
-
 	}
 }
 
@@ -177,7 +215,9 @@ void CGameStateRun::OnShow()
 {
 	bg.ShowBitmap();
 	floor1.ShowBitmap();
-	floor2.ShowBitmap();
+	floor2_up.ShowBitmap();
+	floor2_down.ShowBitmap();
+	floor2_right.ShowBitmap();
 	character1.ShowBitmap();
 
 	if (keepRight) {
