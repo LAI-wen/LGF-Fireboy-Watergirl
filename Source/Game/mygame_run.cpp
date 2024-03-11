@@ -10,7 +10,7 @@
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
-// �o��class���C�����C�����檫��A�D�n���C���{�����b�o��
+// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
@@ -25,25 +25,31 @@ void CGameStateRun::OnBeginState()
 {
 }
 
-void CGameStateRun::OnMove()							// ���ʹC������
+void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	//重力
+	//當角色1沒有碰到最下層地板，會往下掉
 	if (CMovingBitmap::IsOverlap(character1, floor1) == false) {
 		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 2);
 	}
 
-
+	//當角色2沒有碰到最下層地板，會往下掉
 	if (CMovingBitmap::IsOverlap(character2[0], floor1) == false && CMovingBitmap::IsOverlap(character2[0], floor2) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() + 5);
 	}
 
-	if (keepLeft == true) {
+	//持續的左右移動
+	//如果碰到牆壁就停止
+
+	if (keepLeft == true && CMovingBitmap::IsOverlap(character2[0], map_left) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
 	}
-	if (keepRight == true) {
+	if (keepRight == true && CMovingBitmap::IsOverlap(character2[0], map_right) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
 
 	}
 
+	//跳躍
 	if (jump == true && (clock() - jump_time) < 450) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 12);
 	}
