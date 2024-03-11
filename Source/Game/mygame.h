@@ -100,7 +100,7 @@ namespace game_framework {
 		int sub_phase = 1;								//�l���d
 		CMovingBitmap background;						//�I��
 		CMovingBitmap bg;
-		CMovingBitmap character1;						//�n�n
+		CMovingBitmap character1[3];						//�n�n
 		CMovingBitmap character2[3];						//�̧�
 		CMovingBitmap door1;							//�n�n��
 		CMovingBitmap door2;							//�̧̪�
