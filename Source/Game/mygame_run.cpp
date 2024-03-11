@@ -28,34 +28,34 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	//重力
-	//當角色1沒有碰到最下層地板，會往下掉
+	//當角色1沒有碰到最下層跟第二層地板，會往下掉
 	if (CMovingBitmap::IsOverlap(character1, floor1) == false && CMovingBitmap::IsOverlap(character1, floor2_up) == false) {
 		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 5);
 	}
 
-	//當角色2沒有碰到最下層地板，會往下掉
+	//當角色2沒有碰到最下層跟第二層地板，會往下掉
 	if (CMovingBitmap::IsOverlap(character2[0], floor1) == false && CMovingBitmap::IsOverlap(character2[0], floor2_up) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() + 5);
 	}
 
 	// character1 move
 	// 碰到牆壁停止
-	
+
 	if (CMovingBitmap::IsOverlap(character1, map_left) == false) {
 		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
 	}
 	if (CMovingBitmap::IsOverlap(character1, map_right) == false) {
 		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
 	}
-	
 
-	if (GetAsyncKeyState(0x41) & 0x8000) {  //A
+
+	if (GetAsyncKeyState(0x41) & 0x8000) {  //按A向左
 		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
 	}
-	if (GetAsyncKeyState(0x44) & 0x8000) {  //D
+	if (GetAsyncKeyState(0x44) & 0x8000) {  //按D向右
 		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
 	}
-	if (GetAsyncKeyState(0x57) & 0x8000 && CMovingBitmap::IsOverlap(character1, floor1) == true) {
+	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(character1, floor1) == true || CMovingBitmap::IsOverlap(character1, floor2_up) == true)) {
 		jump1 = true;
 		jump1_time = clock();
 	}
@@ -101,10 +101,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	//機關
 
-	if (CMovingBitmap::IsOverlap(character2[0], button) == true ) {
+	if (CMovingBitmap::IsOverlap(character2[0], button) == true) {
 		button.SetTopLeft(button.GetLeft(), button.GetTop() + 1);
 	}
-	else if(button.GetTop() >700)
+	else if (button.GetTop() > 700)
 	{
 		button.SetTopLeft(button.GetLeft(), button.GetTop() - 2);
 
@@ -194,7 +194,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 							   "Resources/door205.bmp" });
 	door2.SetTopLeft(100, 631);
 	door2.SetAnimation(100, true);
-	
+
 
 
 }
@@ -211,7 +211,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		character2[1].SetAnimation(100, false);
 	}
 
-	if (nChar == VK_UP && CMovingBitmap::IsOverlap(character2[0], floor1) == true) {
+	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(character2[0], floor1) == true || CMovingBitmap::IsOverlap(character2[0], floor2_up) == true)) {
 		jump2 = true;
 		jump2_time = clock();
 	}
