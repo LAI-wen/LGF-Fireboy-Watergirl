@@ -105,7 +105,9 @@ namespace game_framework {
 		CMovingBitmap door1;							//�n�n��
 		CMovingBitmap door2;							//�̧̪�
 		CMovingBitmap floor1;
-		CMovingBitmap floor2;
+		CMovingBitmap floor2_up;
+		CMovingBitmap floor2_down;
+		CMovingBitmap floor2_right;
 		CMovingBitmap map_left;
 		CMovingBitmap map_right;
 		CMovingBitmap map_top;
@@ -113,8 +115,10 @@ namespace game_framework {
 
 		bool keepLeft = false;							
 		bool keepRight = false;
-		bool jump = false;
-		int jump_time = 0;
+		bool jump1 = false;
+		int jump1_time = 0;
+		bool jump2 = false;
+		int jump2_time = 0;
 
 
 
