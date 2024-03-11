@@ -29,8 +29,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	//重力
 	//當角色1沒有碰到最下層跟第二層地板，會往下掉
-	if (CMovingBitmap::IsOverlap(character1, floor1) == false && CMovingBitmap::IsOverlap(character1, floor2_up) == false ) {
-		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 5);
+	if (CMovingBitmap::IsOverlap(character1[0], floor1) == false && CMovingBitmap::IsOverlap(character1[0], floor2_up) == false ) {
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() + 5);
 	}
 
 	//當角色2沒有碰到最下層跟第二層地板，會往下掉
@@ -41,36 +41,38 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// character1 move
 	// 碰到牆壁停止
 
-	if (CMovingBitmap::IsOverlap(character1, map_left) == false) {
-		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
+	if (CMovingBitmap::IsOverlap(character1[0], map_left) == false) {
+		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
 	}
-	if (CMovingBitmap::IsOverlap(character1, map_right) == false) {
-		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
+	if (CMovingBitmap::IsOverlap(character1[0], map_right) == false) {
+		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
 	}
 
 
 	if (GetAsyncKeyState(0x41) & 0x8000) {  //按A向左
-		character1.SetTopLeft(character1.GetLeft() - 5, character1.GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
+		character1[2].SetAnimation(100, false);
 	}
 	if (GetAsyncKeyState(0x44) & 0x8000) {  //按D向右
-		character1.SetTopLeft(character1.GetLeft() + 5, character1.GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
+		character1[1].SetAnimation(100, false);
 	}
-	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(character1, floor1) == true || CMovingBitmap::IsOverlap(character1, floor2_up) == true)) {
+	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(character1[0], floor1) == true || CMovingBitmap::IsOverlap(character1[0], floor2_up) == true)) {
 		jump1 = true;
 		jump1_time = clock();
 	}
 
 	if (jump1 == true && (clock() - jump1_time) < 450) {
-		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() - 12);
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() - 12);
 	}
 	else if (jump1 == true && (clock() - jump1_time) < 500) {
-		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() - 5);
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() - 5);
 	}
 	else if (jump1 == true) {
 		jump1 = false;
 	}
 
-	if (CMovingBitmap::IsOverlap(character1, floor2_down) == true) {
+	if (CMovingBitmap::IsOverlap(character1[0], floor2_down) == true) {
 		jump1 = false;
 	}
 
@@ -121,8 +123,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	//角色碰到機關停住
-	if (CMovingBitmap::IsOverlap(character1, ramp) == true) {
-		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() -10);
+	if (CMovingBitmap::IsOverlap(character1[0], ramp) == true) {
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() -10);
 	}
 
 	//door 動畫
@@ -156,8 +158,27 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	floor2_right.SetTopLeft(980, 721);
 
 	//角色
-	character1.LoadBitmapByString({ "Resources/fireboy.bmp" }, RGB(255, 255, 255));
-	character1.SetTopLeft(850, 700);
+	character1[0].LoadBitmapByString({ "Resources/fireboy.bmp" }, RGB(255, 255, 255));
+	character1[0].SetTopLeft(850, 700);
+
+	character1[2].LoadBitmapByString({ "Resources/fireboy(1_0).bmp",
+										"Resources/fireboy(1_1).bmp",
+										"Resources/fireboy(1_2).bmp",
+										"Resources/fireboy(1_3).bmp",
+										"Resources/fireboy(1_4).bmp",
+										"Resources/fireboy(1_5).bmp",
+										"Resources/fireboy(1_6).bmp",
+										"Resources/fireboy(1_7).bmp" }, RGB(255, 255, 255));
+
+	character1[1].LoadBitmapByString({ "Resources/fireboy(2_0).bmp",
+									   "Resources/fireboy(2_1).bmp",
+									   "Resources/fireboy(2_2).bmp",
+									   "Resources/fireboy(2_3).bmp",
+									   "Resources/fireboy(2_4).bmp",
+									   "Resources/fireboy(2_5).bmp",
+									   "Resources/fireboy(2_6).bmp",
+									   "Resources/fireboy(2_7).bmp" }, RGB(255, 255, 255));
+
 
 	character2[0].LoadBitmapByString({ "Resources/watergirl_sprite (0_0).bmp" }, RGB(255, 255, 255));
 	character2[0].SetTopLeft(850, 700);
@@ -268,6 +289,7 @@ void CGameStateRun::OnShow()
 {
 	//牆壁
 	bg.ShowBitmap();
+
 	//門
 	door2.ShowBitmap();
 
@@ -281,9 +303,23 @@ void CGameStateRun::OnShow()
 	floor2_up.ShowBitmap();
 	floor2_down.ShowBitmap();
 	floor2_right.ShowBitmap();
-	character1.ShowBitmap();
 
 	//人物與動畫
+	// character1
+	if (GetAsyncKeyState(0x41) & 0x8000) {
+		character1[1].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
+		character1[1].ShowBitmap();
+	}
+	else if (GetAsyncKeyState(0x44) & 0x8000)
+	{
+		character1[2].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
+		character1[2].ShowBitmap();
+	}
+	else {
+		character1[0].ShowBitmap();
+	}
+
+	// character2
 	if (keepRight) {
 
 		character2[1].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
