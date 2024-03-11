@@ -108,6 +108,9 @@ namespace game_framework {
 		CMovingBitmap floor2_up;
 		CMovingBitmap floor2_down;
 		CMovingBitmap floor2_right;
+		CMovingBitmap floor3_up;
+		CMovingBitmap floor3_down;
+		CMovingBitmap floor3_right;
 		CMovingBitmap map_left;
 		CMovingBitmap map_right;
 		CMovingBitmap map_top;
