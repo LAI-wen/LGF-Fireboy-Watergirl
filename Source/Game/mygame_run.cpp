@@ -29,7 +29,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	//重力
 	//當角色1沒有碰到最下層跟第二層地板，會往下掉
-	if (CMovingBitmap::IsOverlap(character1, floor1) == false && CMovingBitmap::IsOverlap(character1, floor2_up) == false) {
+	if (CMovingBitmap::IsOverlap(character1, floor1) == false && CMovingBitmap::IsOverlap(character1, floor2_up) == false ) {
 		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() + 5);
 	}
 
@@ -101,13 +101,28 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	//機關
 
-	if (CMovingBitmap::IsOverlap(character2[0], button) == true) {
+	if (CMovingBitmap::IsOverlap(character2[0], button) == true && button.GetTop()) {
 		button.SetTopLeft(button.GetLeft(), button.GetTop() + 1);
 	}
 	else if (button.GetTop() > 700)
 	{
 		button.SetTopLeft(button.GetLeft(), button.GetTop() - 2);
+	}
+	else if (button.GetTop() == 721) {
+		button.SetTopLeft(button.GetLeft(), button.GetTop());
+	}
 
+	if (button.GetTop() > 720 && ramp.GetTop() < 560) {
+		ramp.SetTopLeft(ramp.GetLeft(), ramp.GetTop() + 5);
+	}
+
+	else if (ramp.GetTop() > 300) {
+		ramp.SetTopLeft(ramp.GetLeft(), ramp.GetTop() - 5);
+	}
+
+	//角色碰到機關停住
+	if (CMovingBitmap::IsOverlap(character1, ramp) == true) {
+		character1.SetTopLeft(character1.GetLeft(), character1.GetTop() -10);
 	}
 
 	//door 動畫
@@ -179,11 +194,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	map_top.SetTopLeft(0, 0);
 
 	//機關
+
 	button.LoadBitmapByString({ "Resources/button(1).bmp" }, RGB(255, 255, 255));
 	button.SetTopLeft(300, 700);
 
 	ramp.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
-	ramp.SetTopLeft(800, 600);
+	ramp.SetTopLeft(1000, 300);
 
 	//門
 	door2.LoadBitmapByString({ "Resources/door200.bmp",
