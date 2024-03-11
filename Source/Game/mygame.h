@@ -111,6 +111,8 @@ namespace game_framework {
 		CMovingBitmap map_left;
 		CMovingBitmap map_right;
 		CMovingBitmap map_top;
+		CMovingBitmap button;
+		CMovingBitmap ramp;
 
 
 		bool keepLeft = false;							
