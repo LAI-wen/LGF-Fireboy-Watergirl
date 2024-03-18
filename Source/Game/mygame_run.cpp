@@ -28,13 +28,13 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	//重力
-	//當角色1沒有碰到最下層跟第二層地板，會往下掉
+	//當角色1沒有碰到最下層跟第二層地板 以及 移動板，會往下掉
 	if (CMovingBitmap::IsOverlap(character1[0], floor1) == false && CMovingBitmap::IsOverlap(character1[0], floor2_up) == false && CMovingBitmap::IsOverlap(character1[0], floor3_up) == false && CMovingBitmap::IsOverlap(character1[0], ramp) == false) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() + 5);
 	}
 
-	//當角色2沒有碰到最下層跟第二層地板，會往下掉
-	if (CMovingBitmap::IsOverlap(character2[0], floor1) == false && CMovingBitmap::IsOverlap(character2[0], floor2_up) == false && CMovingBitmap::IsOverlap(character2[0], floor3_up) == false) {
+	//當角色2沒有碰到最下層跟第二層地板 以及 移動板，會往下掉
+	if (CMovingBitmap::IsOverlap(character2[0], floor1) == false && CMovingBitmap::IsOverlap(character2[0], floor2_up) == false && CMovingBitmap::IsOverlap(character2[0], floor3_up  ) == false && CMovingBitmap::IsOverlap(character2[0], ramp) == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() + 5);
 	}
 
@@ -48,11 +48,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 
-	if (GetAsyncKeyState(0x41) & 0x8000) {  //按A向左
+	if (GetAsyncKeyState(0x41) & 0x8000) {  // 當角色1按A向左
 		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
 		character1[2].SetAnimation(100, false);
 	}
-	if (GetAsyncKeyState(0x44) & 0x8000) {  //按D向右
+	if (GetAsyncKeyState(0x44) & 0x8000) {  //當角色1按D向右
 		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
 		character1[1].SetAnimation(100, false);
 	}
@@ -86,7 +86,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
 	}
 
-	//跳躍
+	//當角色2跳躍
 	if (jump2 == true && (clock() - jump2_time) < 500) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 12);
 	}
@@ -97,7 +97,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		jump2 = false;
 	}
 
-	if (CMovingBitmap::IsOverlap(character2[0], floor2_down) == true || CMovingBitmap::IsOverlap(character2[0], floor2_right) == true) {
+	if (CMovingBitmap::IsOverlap(character2[0], floor2_down) == true || CMovingBitmap::IsOverlap(character2[0], floor2_right) == true ) {
 		jump2 = false;
 	}
 
@@ -140,8 +140,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() -5);
 	}
 
-	if (CMovingBitmap::IsOverlap(character2[0], ramp) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 10);
+	if (CMovingBitmap::IsOverlap(character2[0], ramp) == true && ramp.GetTop() > 300) {
+		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 
 	//door 動畫
