@@ -113,12 +113,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop());
 	}
 
-	if ((button1.GetTop() > 720 && ramp.GetTop() < 600) || (button2.GetTop() > 220 && ramp.GetTop() < 600)) {
-		ramp.SetTopLeft(ramp.GetLeft(), ramp.GetTop() + 5);
+	if (button1.GetTop() > 700) {
+		ramp.SetTopLeft(ramp.GetLeft(), min(600, ramp.GetTop() + 5));
 	}
-
-	else if (ramp.GetTop() > 300) {
-		ramp.SetTopLeft(ramp.GetLeft(), ramp.GetTop() - 5);
+	else {
+		ramp.SetTopLeft(ramp.GetLeft(), max(300, ramp.GetTop() - 5));
 	}
 
 	//button2
