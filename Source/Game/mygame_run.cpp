@@ -113,7 +113,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop());
 	}
 
-	if (button1.GetTop() > 720 && ramp.GetTop() < 600) {
+	if ((button1.GetTop() > 720 && ramp.GetTop() < 600) || (button2.GetTop() > 220 && ramp.GetTop() < 600)) {
 		ramp.SetTopLeft(ramp.GetLeft(), ramp.GetTop() + 5);
 	}
 
@@ -211,6 +211,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		box_down.SetTopLeft(box_down.GetLeft() + 5, box_down.GetTop());
 		box_right.SetTopLeft(box_right.GetLeft() + 5, box_right.GetTop());
 		box_left.SetTopLeft(box_left.GetLeft() + 5, box_left.GetTop());
+
+		//箱子碰到牆壁時人物不會穿越箱子
+		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
 
 	}
 
