@@ -102,8 +102,17 @@ namespace game_framework {
 		CMovingBitmap bg;
 		CMovingBitmap character1[3];						//�n�n
 		CMovingBitmap character2[3];						//�̧�
+		CMovingBitmap character1_left;
+		CMovingBitmap character2_left;
+		CMovingBitmap character1_right;
+		CMovingBitmap character2_right;
+		CMovingBitmap foot1;
+		CMovingBitmap foot2;
+		CMovingBitmap head1;
+		CMovingBitmap head2;
 		CMovingBitmap door1;							//�n�n��
 		CMovingBitmap door2;							//�̧̪�
+		CMovingBitmap cube[4][40];
 		CMovingBitmap floor1;
 		CMovingBitmap floor2_up;
 		CMovingBitmap floor2_down;
@@ -124,7 +133,11 @@ namespace game_framework {
 
 
 
-		bool keepLeft = false;							
+
+
+
+
+		bool keepLeft = false;
 		bool keepRight = false;
 		bool jump1 = false;
 		int jump1_time = 0;
