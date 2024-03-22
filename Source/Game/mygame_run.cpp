@@ -362,7 +362,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	character1_right.LoadEmptyBitmap(75, 11);
 
 
-	character2[0].LoadBitmapByString({ "Resources/watergirl_sprite (0_0).bmp" }, RGB(255, 255, 255));
+	character2[0].LoadBitmapByString({ "Resources/watergirl_sprite (0_0).bmp", "Resources/watergirl_ignore.bmp" }, RGB(255, 255, 255));
 	character2[0].SetTopLeft(850, 750);
 
 	character2[1].LoadBitmapByString({ "Resources/watergirl_sprite (1_0).bmp",
@@ -384,6 +384,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 									"Resources/watergirl_sprite (2_6).bmp",
 									"Resources/watergirl_sprite (2_7).bmp"
 		}, RGB(255, 255, 255));
+
 
 	//角色2碰撞感測器
 
@@ -447,7 +448,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	door2.SetTopLeft(100, 131);
 	door2.SetAnimation(100, true);
 
-
+	//水池
+	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
+	pond.SetTopLeft(1150, 842);
 
 }
 
@@ -619,6 +622,10 @@ void CGameStateRun::OnShow()
 		character2[2].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
 		character2[2].ShowBitmap();
 	}
+	else if (CMovingBitmap::IsOverlap(character2[0], pond) == true) {  //死亡條件
+		character2[0].SetFrameIndexOfBitmap(1);
+		GotoGameState(GAME_STATE_OVER);
+	}
 	else {
 		character2[0].ShowBitmap();
 
@@ -631,6 +638,8 @@ void CGameStateRun::OnShow()
 	map_right.ShowBitmap();
 	map_top.ShowBitmap();
 
+	//水池
+	pond.ShowBitmap();
 
 }
 

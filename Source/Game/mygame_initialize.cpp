@@ -46,18 +46,35 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 }
 
+void CGameStateInit::OnMove() {
+
+	if (clock() - button_play_time == 25000) {
+		button_play.SetFrameIndexOfBitmap(0);
+		button_play.ShowBitmap();
+	}
+	else if (clock() - button_play_time <= 35500) {
+		GotoGameState(GAME_STATE_RUN);
+	}
+
+}
+
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
 
 	if (WM_LBUTTONDOWN) {
-		button_play.SetFrameIndexOfBitmap(1);
-		button_play.ShowBitmap();
-		button_play_time = clock();
-		GotoGameState(GAME_STATE_RUN);
+		int idx1 = point.x;
+		int idy1 = point.y;
 
+		if (idx1 >= 480 && idy1 > 500 && idx1 <= 863 && idy1 <= 618) {
+			button_play.SetFrameIndexOfBitmap(1);
+			button_play.ShowBitmap();
+			button_play_time = clock();
+
+
+		}
 
 	}
-		// ¤Á´«¦ÜGAME_STATE_RUN
+	// ¤Á´«¦ÜGAME_STATE_RUN
 }
 
 
@@ -65,6 +82,7 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 void CGameStateInit::load_background() {
 
 }
+
 
 
 

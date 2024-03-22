@@ -63,6 +63,7 @@ namespace game_framework {
 		void OnKeyUp(UINT, UINT, UINT); 				// �B�z��LUp���ʧ@
 		void OnLButtonDown(UINT nFlags, CPoint point);  // �B�z�ƹ����ʧ@
 	protected:
+		void OnMove();
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
 		CMovingBitmap logo;								// csie��logo
@@ -73,7 +74,6 @@ namespace game_framework {
 		CMovingBitmap button_play;
 		int button_play_time;
 	};
-
 	/////////////////////////////////////////////////////////////////////////////
 	// �o��class���C�����C�����檫��A�D�n���C���{�����b�o��
 	// �C��Member function��Implementation���n����
@@ -130,6 +130,7 @@ namespace game_framework {
 		CMovingBitmap box_down;
 		CMovingBitmap box_right;
 		CMovingBitmap box_left;
+		CMovingBitmap pond;
 
 
 		void show_image_by_phase();
@@ -162,16 +163,23 @@ namespace game_framework {
 	// �C��Member function��Implementation���n����
 	/////////////////////////////////////////////////////////////////////////////
 
+
 	class CGameStateOver : public CGameState {
 	public:
 		CGameStateOver(CGame *g);
 		void OnBeginState();							// �]�w�C�������һݪ��ܼ�
 		void OnInit();
+		void OnLButtonDown(UINT nFlags, CPoint point);
 	protected:
 		void OnMove();									// ���ʹC������
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
 		int counter;	// �˼Ƥ��p�ƾ�
+		int button_retry_time;
+		int button_play_time;
+		CMovingBitmap background;
+		CMovingBitmap button_retry;
+		CMovingBitmap button_menu;
 	};
 
 }
