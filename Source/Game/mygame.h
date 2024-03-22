@@ -126,10 +126,13 @@ namespace game_framework {
 		CMovingBitmap button1;
 		CMovingBitmap button2;
 		CMovingBitmap ramp;
+		CMovingBitmap box;
+		/*
 		CMovingBitmap box_up;
 		CMovingBitmap box_down;
 		CMovingBitmap box_right;
 		CMovingBitmap box_left;
+		*/
 		CMovingBitmap pond;
 
 
