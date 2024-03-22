@@ -27,10 +27,36 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	//重力
+	/////////重力開始////////////////////////////////////////////////////////////////////
 
-	//當角色1沒有碰到最下層跟第二層地板 以及 移動板，會往下掉
+	//當角色1
+	//沒有碰到最下層跟第二層地板 以及 移動板，會往下掉
+	/*
 	if (CMovingBitmap::IsOverlap(character1[0], floor1) == false && CMovingBitmap::IsOverlap(character1[0], floor2_up) == false && CMovingBitmap::IsOverlap(character1[0], floor3_up) == false && CMovingBitmap::IsOverlap(character1[0], ramp) == false) {
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() + 5);
+	}
+	*/
+
+	bool gravity_flag1 = false;
+
+	if (CMovingBitmap::IsOverlap(foot1, floor1) == true || CMovingBitmap::IsOverlap(foot1, ramp) == true) {
+		//character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
+		gravity_flag1 = true;
+	}
+
+
+	for (int j = 0; j < 2; j++) {
+		for (int i = 0; i < 30; i++) {
+			if (CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
+				//character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
+				gravity_flag1 = true;
+				break;
+			}
+		}
+	}
+
+
+	if (gravity_flag1 == false) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() + 5);
 	}
 
@@ -45,28 +71,29 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 
 
-	bool flag = false;
+	bool gravity_flag2 = false;
 
-	if (CMovingBitmap::IsOverlap(foot2, floor1) != false) {
-		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
-		flag = true;
+	if (CMovingBitmap::IsOverlap(foot2, floor1) != false || CMovingBitmap::IsOverlap(foot2, ramp) == true) {
+		//character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
+		gravity_flag2 = true;
 	}
 
-	
-	for (int i = 0; i < 30; i++) {
-		if (CMovingBitmap::IsOverlap(foot2, cube[0][i]) == true) {
-			character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
-			flag = true;
-			break;
-		}	
+	for (int j = 0; j < 2; j++) {
+		for (int i = 0; i < 30; i++) {
+			if (CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
+				character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
+				gravity_flag2 = true;
+				break;
+			}
+		}
 	}
 
-	if (flag == false) {
+	if (gravity_flag2 == false) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() + 5);
 	}
 
+	/////////重力結束////////////////////////////////////////////////////////////////////
 
-	
 
 	// character1 move
 	// 角色碰到牆壁停止
@@ -87,7 +114,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		character1[1].SetAnimation(100, false);
 	}
 	// character 1 跳躍
-	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(character1[0], floor1) == true || CMovingBitmap::IsOverlap(character1[0], floor2_up) == true || CMovingBitmap::IsOverlap(character1[0], ramp) == true)) {
+	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(foot1, floor1) == true || CMovingBitmap::IsOverlap(foot1, ramp) == true)) {
 		jump1 = true;
 		jump1_time = clock();
 	}
@@ -102,10 +129,24 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		jump1 = false;
 	}
 
-	if (CMovingBitmap::IsOverlap(character1[0], floor2_down) == true) {
-		jump1 = false;
+	bool flag1 = false;
+
+	for (int j = 0; j < 2; j++) {
+		for (int i = 0; i < 30; i++) {
+			if (GetAsyncKeyState(0x57) & 0x8000 && CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
+				character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
+				flag1 = true;
+				break;
+			}
+		}
 	}
 
+	if (flag1 == true) {
+		jump1 = true;
+		jump1_time = clock();
+		flag1 = false;
+	}
+	
 	//character2 move
 	//如果碰到牆壁就停止
 
@@ -165,11 +206,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	
 
 	//角色碰到機關停住
-	if (CMovingBitmap::IsOverlap(character1[0], ramp) == true && ramp.GetTop() > 300) {
+	if (CMovingBitmap::IsOverlap(foot1, ramp) == true && ramp.GetTop() > 300) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() -5);
 	}
 
-	if (CMovingBitmap::IsOverlap(character2[0], ramp) == true && ramp.GetTop() > 300) {
+	if (CMovingBitmap::IsOverlap(foot2, ramp) == true && ramp.GetTop() > 300) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 
@@ -257,13 +298,20 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	bg.SetTopLeft(0, 0);
 
 	//////////////////////////////地板///////////////////////////
-	for (int j = 0; j < 4; j++) {
-		for (int i = 0; i < 30; i++) {
-			cube[j][i].LoadEmptyBitmap(34, 36);
-		}
+	
+	//第一層
+	for (int i = 0; i < 38; i++) {
+		cube[0][i].LoadEmptyBitmap(34, 36);
 	}
 
-	cube[0][0].SetTopLeft(0,742);
+	cube[0][0].SetTopLeft(0,841);
+
+	//第二層
+	for (int i = 0; i < 30; i++) {
+		cube[1][i].LoadEmptyBitmap(34, 36);
+	}
+	cube[1][0].SetTopLeft(0, 720);
+
 	floor1.LoadBitmapByString({ "Resources/floor1.bmp" });
 	floor1.SetTopLeft(0, 842);
 
@@ -307,6 +355,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 									   "Resources/fireboy(2_5).bmp",
 									   "Resources/fireboy(2_6).bmp",
 									   "Resources/fireboy(2_7).bmp" }, RGB(255, 255, 255));
+
+	foot1.LoadEmptyBitmap(5, 21);
+	head1.LoadEmptyBitmap(5, 21);
+	character1_left.LoadEmptyBitmap(75, 11);
+	character1_right.LoadEmptyBitmap(75, 11);
 
 
 	character2[0].LoadBitmapByString({ "Resources/watergirl_sprite (0_0).bmp" }, RGB(255, 255, 255));
@@ -400,6 +453,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+
+	////////角色2左右移動
 	if (nChar == VK_LEFT) {
 		keepLeft = true;
 		character2[2].SetAnimation(100, false);
@@ -409,16 +464,36 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		keepRight = true;
 		character2[1].SetAnimation(100, false);
 	}
-
-	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(foot2, floor1) == true || CMovingBitmap::IsOverlap(foot2, floor2_up) == true || CMovingBitmap::IsOverlap(foot2, ramp) == true)) {
+	////////角色2 跳
+	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(foot2, floor1) == true || CMovingBitmap::IsOverlap(foot2, ramp) == true)) {
 		jump2 = true;
 		jump2_time = clock();
+	}
+
+	bool flag2 = false;
+
+	for (int j = 0; j < 2; j++) {
+		for (int i = 0; i < 30; i++) {
+			if (nChar == VK_UP && CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
+				character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
+				flag2 = true;
+				break;
+			}
+		}
+	}
+
+	if (flag2 == true) {
+		jump2 = true;
+		jump2_time = clock();
+		flag2 = false;
 	}
 
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+
+	////////角色2左右移動
 	if (nChar == VK_LEFT) {
 		keepLeft = false;
 	}
@@ -469,12 +544,7 @@ void CGameStateRun::OnShow()
 	box_left.ShowBitmap();
 
 	//////////////地板///////////////////////////////////////
-	
-
-
-	
-
-	
+		
 
 	floor1.ShowBitmap();
 	floor2_up.ShowBitmap();
@@ -484,13 +554,31 @@ void CGameStateRun::OnShow()
 	floor3_down.ShowBitmap();
 
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < 38; i++) {
 		cube[0][i].SetTopLeft(cube[0][0].GetLeft() + (36 * i), cube[0][0].GetTop());
 		cube[0][i].ShowBitmap();
 	}
 
+	for (int i = 0; i < 30; i++) {
+		cube[1][i].SetTopLeft(cube[1][0].GetLeft() + (36 * i), cube[1][0].GetTop());
+		cube[1][i].ShowBitmap();
+	}
+
 	///////////////////////人物與動畫//////////////////////////////////////
 	// character1
+	//角色碰撞感測器
+	foot1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 85);
+	foot1.ShowBitmap();
+
+	head1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 4);
+	head1.ShowBitmap();
+
+	character1_left.SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop() + 15);
+	character1_left.ShowBitmap();
+	character1_right.SetTopLeft(character1[0].GetLeft() + 55, character1[0].GetTop() + 15);
+	character1_right.ShowBitmap();
+	
+	//角色跑步動畫
 	if (GetAsyncKeyState(0x41) & 0x8000) {
 		character1[1].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
 		character1[1].ShowBitmap();
@@ -503,6 +591,9 @@ void CGameStateRun::OnShow()
 	else {
 		character1[0].ShowBitmap();
 	}
+
+
+
 
 	// character2
 
@@ -541,4 +632,91 @@ void CGameStateRun::OnShow()
 	map_top.ShowBitmap();
 
 
+}
+
+
+
+void CGameStateRun::show_image_by_phase() {
+	if (phase <= 6) {
+
+		if (phase == 3 && sub_phase == 1) {
+
+		}
+		if (phase == 4 && sub_phase == 1) {
+	
+		}
+		if (phase == 5 && sub_phase == 1) {
+
+		}
+		if (phase == 6 && sub_phase == 1) {
+
+		}
+	}
+}
+
+void CGameStateRun::show_text_by_phase() {
+	CDC *pDC = CDDraw::GetBackCDC();
+
+	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(0, 0, 0), 800);
+
+	if (phase == 1 && sub_phase == 1) {
+		CTextDraw::Print(pDC, 237, 128, "修改你的主角！");
+		CTextDraw::Print(pDC, 55, 163, "將灰色方格換成 resources 內的 giraffe.bmp 圖樣！");
+		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+	}
+	else if (phase == 2 && sub_phase == 1) {
+		CTextDraw::Print(pDC, 26, 128, "下一個階段，讓長頸鹿能夠透過上下左右移動到這個位置！");
+		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+	}
+	else if (phase == 3 && sub_phase == 1) {
+		CTextDraw::Print(pDC, 205, 128, "幫你準備了一個寶箱");
+		CTextDraw::Print(pDC, 68, 162, "設計程式讓長頸鹿摸到寶箱後，將寶箱消失！");
+		CTextDraw::Print(pDC, 68, 196, "記得寶箱要去背，使用 RGB(255, 255, 255)");
+		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+	}
+	else if (phase == 4 && sub_phase == 1) {
+		CTextDraw::Print(pDC, 173, 128, "幫你準備了一個蜜蜂好朋友");
+		CTextDraw::Print(pDC, 89, 162, "已經幫它做了兩幀的動畫，讓它可以上下移動");
+		CTextDraw::Print(pDC, 110, 196, "寫個程式來讓你的蜜蜂好朋友擁有動畫！");
+		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+	}
+	else if (phase == 5 && sub_phase == 1) {
+		CTextDraw::Print(pDC, 173, 128, "幫你準備了三扇門");
+		CTextDraw::Print(pDC, 89, 162, "設計程式讓長頸鹿摸到門之後，門會打開");
+		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+	}
+	else if (phase == 6 && sub_phase == 1) {
+		CTextDraw::Print(pDC, 173, 128, "幫你準備了一顆會倒數的球");
+		CTextDraw::Print(pDC, 89, 162, "設計程式讓球倒數，然後顯示 OK 後停止動畫");
+		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+	}
+	else if (sub_phase == 2) {
+		CTextDraw::Print(pDC, 268, 128, "完成！");
+	}
+
+	CDDraw::ReleaseBackCDC();
+}
+
+bool CGameStateRun::validate_phase_1() {
+	return 0;
+}
+
+bool CGameStateRun::validate_phase_2() {
+	return 0;
+}
+
+bool CGameStateRun::validate_phase_3() {
+	return 0;
+}
+
+bool CGameStateRun::validate_phase_4() {
+	return 0;
+}
+
+bool CGameStateRun::validate_phase_5() {
+	return 0;
+}
+
+bool CGameStateRun::validate_phase_6() {
+	return 0;
 }
