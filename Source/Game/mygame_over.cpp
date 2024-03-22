@@ -33,12 +33,12 @@ void CGameStateOver::OnMove()
 
 void CGameStateOver::OnBeginState()
 {
-	background.LoadBitmapByString({ "resources/GameOver.bmp" }, RGB(255, 255, 255));
-	background.SetTopLeft(120, 150);
-	button_menu.LoadBitmapByString({ "resources/button_menu.bmp" });
-	button_retry.LoadBitmapByString({ "resources/button_retry.bmp" });
-	button_menu.SetTopLeft(269, 515);
-	button_retry.SetTopLeft(510, 515);
+	background.LoadBitmapByString({ "resources/game_over.bmp" }, RGB(255, 255, 255));
+	background.SetTopLeft(170, 150);
+	button_menu.LoadBitmapByString({ "resources/button_menu.bmp","resources/button_menu1.bmp" });
+	button_retry.LoadBitmapByString({ "resources/button_retry.bmp","resources/button_retry1.bmp" });
+	button_menu.SetTopLeft(405, 536);
+	button_retry.SetTopLeft(722, 536);
 
 
 }
@@ -70,7 +70,7 @@ void CGameStateOver::OnLButtonDown(UINT nFlags, CPoint point)
 		int idx1 = point.x;
 		int idy1 = point.y;
 
-		if (idx1 >= 480 && idy1 > 500 && idx1 <= 863 && idy1 <= 618) {
+		if (idx1 >= 722 && idy1 > 536 && idx1 <= 915 && idy1 <= 600) {
 			button_retry.SetFrameIndexOfBitmap(1);
 			button_retry.ShowBitmap();
 			button_retry_time = clock();
