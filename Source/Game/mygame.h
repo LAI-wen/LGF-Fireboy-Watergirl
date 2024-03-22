@@ -132,6 +132,15 @@ namespace game_framework {
 		CMovingBitmap box_left;
 
 
+		void show_image_by_phase();
+		void show_text_by_phase();
+		bool validate_phase_1();
+		bool validate_phase_2();
+		bool validate_phase_3();
+		bool validate_phase_4();
+		bool validate_phase_5();
+		bool validate_phase_6();
+
 
 
 
