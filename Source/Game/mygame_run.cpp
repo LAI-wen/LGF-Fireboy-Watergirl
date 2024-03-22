@@ -27,6 +27,7 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	/////ALL
 	/////////重力開始////////////////////////////////////////////////////////////////////
 
 	//當角色1

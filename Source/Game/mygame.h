@@ -179,7 +179,7 @@ namespace game_framework {
 	private:
 		int counter;	// �˼Ƥ��p�ƾ�
 		int button_retry_time;
-		int button_play_time;
+		int button_menu_time;
 		CMovingBitmap background;
 		CMovingBitmap button_retry;
 		CMovingBitmap button_menu;

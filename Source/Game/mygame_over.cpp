@@ -71,11 +71,17 @@ void CGameStateOver::OnLButtonDown(UINT nFlags, CPoint point)
 		int idy1 = point.y;
 
 		if (idx1 >= 722 && idy1 > 536 && idx1 <= 915 && idy1 <= 600) {
+			button_retry.SetTopLeft(718, 530);
 			button_retry.SetFrameIndexOfBitmap(1);
 			button_retry.ShowBitmap();
 			button_retry_time = clock();
 
-
+		}
+		else if(idx1 >= 405 && idy1 > 536 && idx1 <= 611 && idy1 <= 600){
+			button_menu.SetTopLeft(400, 530);
+			button_menu.SetFrameIndexOfBitmap(1);
+			button_menu.ShowBitmap();
+			button_menu_time = clock();
 		}
 
 	}

@@ -48,11 +48,11 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateInit::OnMove() {
 
-	if (clock() - button_play_time == 25000) {
+	if (clock() - button_play_time == 35000) {
 		button_play.SetFrameIndexOfBitmap(0);
 		button_play.ShowBitmap();
 	}
-	else if (clock() - button_play_time <= 35500) {
+	else if (clock() - button_play_time <= 55500) {
 		GotoGameState(GAME_STATE_RUN);
 	}
 
