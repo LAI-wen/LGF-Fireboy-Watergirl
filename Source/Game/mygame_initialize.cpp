@@ -34,7 +34,7 @@ void CGameStateInit::OnInit()
 
 void CGameStateInit::OnBeginState()
 {
-	background.LoadBitmapByString({ "resources/menu.bmp" }, RGB(255, 255, 255));
+	background.LoadBitmapByString({ "resources/start.bmp" }, RGB(255, 255, 255));
 	background.SetTopLeft(120, 150);
 	button_play.LoadBitmapByString({ "resources/play1.bmp", "resources/play2.bmp" }, RGB(255, 255, 255));
 	button_play.SetTopLeft(480, 500);
