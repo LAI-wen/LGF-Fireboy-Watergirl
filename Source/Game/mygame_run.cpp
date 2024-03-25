@@ -41,11 +41,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	for (int j = 0; j < 3; j++) {
-		for (int i = 0; i < 38; i++) {
-			if (j == 1 && i > 29) {
+		for (int i = 0; i < floor[0]; i++) {
+			if (j == 1 && i > floor[1]-1) {
 				break;
 			}
-			else if (j == 2 && i > 26) {
+			else if (j == 2 && i > floor[2]-1) {
 				break;
 			}
 			if (CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
@@ -69,13 +69,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	for (int j = 0; j < 3; j++) {
-		for (int i = 0; i < 38; i++) {
-			if (j == 1 && i > 29) {
-				break;
-			}
-			else if (j == 2 && i > 26) {
-				break;
-			}
+		for (int i = 0; i < floor[j]; i++) {
 			if (CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
 				character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
 				gravity_flag2 = true;
@@ -163,23 +157,17 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	////	 角色 1 頂頭
 	for (int j = 1; j < 3; j++) {
-		for (int i = 0; i < 38; i++) {
-			if (j == 1 && i > 29) {
-				break;
-			}
-			else if (j == 2 && i > 26) {
-				break;
-			}
-			if (CMovingBitmap::IsOverlap(head1, cube[1][i]) == true ) {
+		for (int i = 0; i < floor[j]; i++) {
+			if (CMovingBitmap::IsOverlap(head1, cube[j][i]) == true ) {
 				jump1 = false;
 			}
 
-			if (CMovingBitmap::IsOverlap(character1_left, cube[1][i]) == true) {
+			if (CMovingBitmap::IsOverlap(character1_left, cube[j][i]) == true) {
 				jump1 = false;
 				character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
 
 			}
-			if (CMovingBitmap::IsOverlap(character1_right, cube[1][i]) == true) {
+			if (CMovingBitmap::IsOverlap(character1_right, cube[j][i]) == true) {
 				jump1 = false;
 				character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
 
@@ -189,11 +177,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	////	 角色 2 頂頭 // 碰到地板左右停止
 	for (int j = 1; j < 3; j++) {
-		for (int i = 0; i < 30; i++) {
-			if (j == 1 && i > 29) {
+		for (int i = 0; i < floor[1]; i++) {
+			if (j == 1 && i > floor[1]-1) {
 				break;
 			}
-			else if (j == 2 && i > 26) {
+			else if (j == 2 && i > floor[2]-1) {
 				break;
 			}
 			if (CMovingBitmap::IsOverlap(head2, cube[1][i]) == true || CMovingBitmap::IsOverlap(character2_left, cube[1][i]) == true) {
@@ -215,11 +203,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	bool flag1 = false;
 
 	for (int j = 0; j < 3; j++) {
-		for (int i = 0; i < 38; i++) {
-			if (j == 1 && i > 29) {
+		for (int i = 0; i < floor[0]; i++) {
+			if (j == 1 && i > floor[1]-1) {
 				break;
 			}
-			else if (j == 2 && i > 26) {
+			else if (j == 2 && i > floor[2]-1) {
 				break;
 			}
 
@@ -361,20 +349,17 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	/////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////地板 依關卡改所需方格數////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
-	int floor1 = 38;
-	int floor2 = 30;
-	int floor3 = 30;
-	int floor4 = 30;
-	int floor5 = 30;
+	
+
 
 	if (phase <= 6) {
 
 		if (phase == 1 && sub_phase == 1) {
-			int floor1 = 38;
-			int floor2 = 30;
-			int floor3 = 27;
-			int floor4 = 30;
-			int floor5 = 30;
+			floor[0] = 38;
+			floor[1] = 26;
+			floor[2] = 27;
+			floor[3] = 30;
+			floor[4] = 30;
 
 		}
 		if (phase == 2 && sub_phase == 1) {
@@ -395,17 +380,17 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}
 
 	//第一層
-	for (int i = 0; i < floor1; i++) {
+	for (int i = 0; i < floor[0]; i++) {
 		cube[0][i].LoadBitmapByString({ "Resources/cube.bmp" });
 	}
 
 	//第二層
-	for (int i = 0; i < floor2; i++) {
+	for (int i = 0; i < floor[1]; i++) {
 		cube[1][i].LoadBitmapByString({ "Resources/cube.bmp" });
 	}
 
 	//第三層
-	for (int i = 0; i < floor3; i++) {
+	for (int i = 0; i < floor[2]; i++) {
 		cube[2][i].LoadBitmapByString({ "Resources/cube.bmp" });
 	}
 
@@ -655,11 +640,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	bool flag2 = false;
 
 	for (int j = 0; j < 2; j++) {
-		for (int i = 0; i < 38; i++) {
-			if (j == 1 && i > 29) {
+		for (int i = 0; i < floor[0]; i++) {
+			if (j == 1 && i > floor[1]-1) {
 				break;
 			}
-			else if (j == 2 && i > 26) {
+			else if (j == 2 && i > floor[2]-1) {
 				break;
 			}
 
@@ -750,17 +735,17 @@ void CGameStateRun::OnShow()
 	
 
 	///////////////////地板///////////////////////////////////////	
-	for (int i = 0; i < 38; i++) {
+	for (int i = 0; i < floor[0]; i++) {
 		cube[0][i].SetTopLeft(cube[0][0].GetLeft() + (36 * i), cube[0][0].GetTop());
 		cube[0][i].ShowBitmap();
 	}
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < floor[1]; i++) {
 		cube[1][i].SetTopLeft(cube[1][0].GetLeft() + (36 * i), cube[1][0].GetTop());
 		cube[1][i].ShowBitmap();
 	}
 
-	for (int i = 0; i < 27; i++) {
+	for (int i = 0; i < floor[2]; i++) {
 		cube[2][i].SetTopLeft(cube[2][0].GetLeft() + (36 * i), cube[2][0].GetTop());
 		cube[2][i].ShowBitmap();
 	}
