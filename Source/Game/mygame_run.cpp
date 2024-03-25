@@ -170,13 +170,24 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			else if (j == 2 && i > 26) {
 				break;
 			}
-			if (CMovingBitmap::IsOverlap(head1, cube[1][i]) == true) {
+			if (CMovingBitmap::IsOverlap(head1, cube[1][i]) == true ) {
 				jump1 = false;
+			}
+
+			if (CMovingBitmap::IsOverlap(character1_left, cube[1][i]) == true) {
+				jump1 = false;
+				character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
+
+			}
+			if (CMovingBitmap::IsOverlap(character1_right, cube[1][i]) == true) {
+				jump1 = false;
+				character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
+
 			}
 		}
 	}
 
-	////	 角色 2 頂頭
+	////	 角色 2 頂頭 // 碰到地板左右停止
 	for (int j = 1; j < 3; j++) {
 		for (int i = 0; i < 30; i++) {
 			if (j == 1 && i > 29) {
@@ -185,8 +196,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			else if (j == 2 && i > 26) {
 				break;
 			}
-			if (CMovingBitmap::IsOverlap(head2, cube[1][i]) == true) {
+			if (CMovingBitmap::IsOverlap(head2, cube[1][i]) == true || CMovingBitmap::IsOverlap(character2_left, cube[1][i]) == true) {
 				jump2 = false;
+			}
+			if (keepLeft == true && CMovingBitmap::IsOverlap(character2_left, cube[1][i]) == true) {
+				jump2 = false;
+				character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
+
+			}
+			if (keepRight == true && CMovingBitmap::IsOverlap(character2_right, cube[1][i]) == true) {
+				jump2 = false;
+				character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
+
 			}
 		}
 	}
@@ -337,26 +358,56 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	bg.LoadBitmapByString({ "Resources/bg.bmp" });
 	bg.SetTopLeft(0, 0);
 
-	//////////////////////////////地板///////////////////////////
-	
+	/////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////地板 依關卡改所需方格數////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	int floor1 = 38;
+	int floor2 = 30;
+	int floor3 = 30;
+	int floor4 = 30;
+	int floor5 = 30;
+
+	if (phase <= 6) {
+
+		if (phase == 1 && sub_phase == 1) {
+			int floor1 = 38;
+			int floor2 = 30;
+			int floor3 = 27;
+			int floor4 = 30;
+			int floor5 = 30;
+
+		}
+		if (phase == 2 && sub_phase == 1) {
+
+		}
+		if (phase == 3 && sub_phase == 1) {
+
+		}
+		if (phase == 4 && sub_phase == 1) {
+
+		}
+		if (phase == 5 && sub_phase == 1) {
+
+		}
+		if (phase == 6 && sub_phase == 1) {
+
+		}
+	}
+
 	//第一層
-	for (int i = 0; i < 38; i++) {
+	for (int i = 0; i < floor1; i++) {
 		cube[0][i].LoadBitmapByString({ "Resources/cube.bmp" });
 	}
-	cube[0][0].SetTopLeft(0, 841);
 
 	//第二層
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < floor2; i++) {
 		cube[1][i].LoadBitmapByString({ "Resources/cube.bmp" });
 	}
-	cube[1][0].SetTopLeft(0, 720);
 
 	//第三層
-	for (int i = 0; i < 27; i++) {
+	for (int i = 0; i < floor3; i++) {
 		cube[2][i].LoadBitmapByString({ "Resources/cube.bmp" });
 	}
-	cube[2][0].SetTopLeft(0, 220);
-
 
 
 	
@@ -366,7 +417,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	/////////////////////////////////角色 1 圖片讀取////////////////////////////////////////
 	character1[0].LoadBitmapByString({ "Resources/fireboy.bmp", "Resources/character_ignore.bmp" }, RGB(255, 255, 255));
-	character1[0].SetTopLeft(850, 750);
+
 
 	character1[2].LoadBitmapByString({ "Resources/fireboy(1_0).bmp",
 										"Resources/fireboy(1_1).bmp",
@@ -386,7 +437,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 									   "Resources/fireboy(2_6).bmp",
 									   "Resources/fireboy(2_7).bmp" }, RGB(255, 255, 255));
 
-	//角色 1 碰撞感測器
+	//角色 1 碰撞感測器 圖片讀取
 	foot1.LoadEmptyBitmap(5, 21);
 	head1.LoadEmptyBitmap(5, 21);
 	character1_left.LoadEmptyBitmap(60, 11);
@@ -395,7 +446,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	/////////////////////////////////角色 2 圖片讀取////////////////////////////////////////
 
 	character2[0].LoadBitmapByString({ "Resources/watergirl_sprite (0_0).bmp", "Resources/character_ignore.bmp" }, RGB(255, 255, 255));
-	character2[0].SetTopLeft(850, 750);
+
 
 	character2[1].LoadBitmapByString({ "Resources/watergirl_sprite (1_0).bmp",
 										"Resources/watergirl_sprite (1_1).bmp",
@@ -418,14 +469,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		}, RGB(255, 255, 255));
 
 
-	//角色2碰撞感測器
+	//角色2碰撞感測器 圖片讀取
 
 	foot2.LoadEmptyBitmap(5, 21);
 	head2.LoadEmptyBitmap(5, 21);
 	character2_left.LoadEmptyBitmap(60, 11);
 	character2_right.LoadEmptyBitmap(60, 11);
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	//牆壁
@@ -440,17 +489,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//機關
 	button1.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
-	button1.SetTopLeft(300, 710);
-
 	button2.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
-	button2.SetTopLeft(600, 210);
-
 	ramp.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
-	ramp.SetTopLeft(1000, 300);
 
 	//箱子
 	box.LoadBitmapByString({ "Resources/box.bmp" }, RGB(255, 255, 255));
-	box.SetTopLeft(200, 676);
+	
 
 
 	//門
@@ -460,8 +504,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 							   "Resources/door103.bmp",
 							   "Resources/door104.bmp",
 							   "Resources/door105.bmp" });
-	door1.SetTopLeft(200, 131);
-	door1.SetAnimation(100, true);
+
 
 	door2.LoadBitmapByString({ "Resources/door200.bmp",
 							   "Resources/door201.bmp",
@@ -469,28 +512,122 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 							   "Resources/door203.bmp",
 							   "Resources/door204.bmp",
 							   "Resources/door205.bmp" });
-	door2.SetTopLeft(100, 131);
-	door2.SetAnimation(100, true);
+
 
 	//水池
 	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
-	pond.SetTopLeft(1200, 842);
 
 	//寶石
 	red_diamond.LoadBitmapByString({ "Resources/red_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
-	red_diamond.SetTopLeft(700, 780);
-
 	blue_diamond.LoadBitmapByString({ "Resources/blue_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
-	blue_diamond.SetTopLeft(800, 780);
 
 	//搖桿
 	joystick.LoadBitmapByString({ "Resources/joystick_1.bmp", "Resources/joystick_2.bmp" , "Resources/joystick_3.bmp" }, RGB(255, 255, 255));
-	joystick.SetTopLeft(500, 655);
+	
+
+	/////////////////////////////////////////////////////////////////////////////
+	//////////// 物件在不同關卡的初始位置
+	/////////////////////////////////////////////////////////////////////////////
+	if (phase <= 6) {
+
+////////////////////////// 第一關////////////////////////////////////////////
+		if (phase == 1 && sub_phase == 1) {
+			character1[0].SetTopLeft(850, 750);
+			character2[0].SetTopLeft(850, 750);
+			box.SetTopLeft(200, 676);
+
+			////地板
+			cube[0][0].SetTopLeft(0, 841);	// 第一層
+			cube[1][0].SetTopLeft(0, 720);	// 第二層
+			cube[2][0].SetTopLeft(0, 220);	// 第三層
+
+			////人物、箱子  ->可移動物件放在初始設置
+
+			////機關-buttom
+
+			button1.SetTopLeft(300, 710);
+			button2.SetTopLeft(600, 210);
+
+			////機關-ramp
+			ramp.SetTopLeft(1000, 300);
+
+			////門
+			door1.SetTopLeft(200, 131);
+			door1.SetAnimation(100, true);
+			door2.SetTopLeft(100, 131);
+			door2.SetAnimation(100, true);
+
+			////機關-joystick
+			joystick.SetTopLeft(500, 655);
+
+			////死亡水池
+			pond.SetTopLeft(1200, 842);
+
+			////寶石
+			red_diamond.SetTopLeft(700, 780);
+			blue_diamond.SetTopLeft(800, 780);
+		}
+////////////////////////// 第二關////////////////////////////////////////////
+		if (phase == 2 && sub_phase == 1) {
+			////人物
+			character1[0].SetTopLeft(20, 750);
+			character2[0].SetTopLeft(20, 750);
+			////箱子
+			box.SetTopLeft(100, 750);
+
+			////地板
+			cube[0][0].SetTopLeft(0, 841);	// 第一層
+			cube[1][0].SetTopLeft(0, 520);	// 第二層
+			cube[2][0].SetTopLeft(0, 320);	// 第三層
+
+
+			////機關-buttom
+
+			button1.SetTopLeft(300, 510);
+			button2.SetTopLeft(600, 310);
+
+			////機關-ramp
+			ramp.SetTopLeft(1000, 300);
+
+			////門
+			door1.SetFrameIndexOfBitmap(0);
+			door2.SetFrameIndexOfBitmap(0);
+			door1.SetTopLeft(200, 231);
+			door1.SetAnimation(100, true);
+			door2.SetTopLeft(100, 231);
+			door2.SetAnimation(100, true);
+
+			////機關-joystick
+			joystick.SetTopLeft(500, 455);
+
+			////死亡水池
+			pond.SetTopLeft(1200, 842);
+
+			////寶石
+			red_diamond.SetTopLeft(700, 780);
+			blue_diamond.SetTopLeft(800, 780);
+
+		}
+		if (phase == 3 && sub_phase == 1) {
+
+		}
+		if (phase == 4 && sub_phase == 1) {
+
+		}
+		if (phase == 5 && sub_phase == 1) {
+
+		}
+		if (phase == 6 && sub_phase == 1) {
+
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 
 /////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////角色 2 按鈕 ////////////////////////////////
+/////////////////////////////////角色 2 移動按鈕 ////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -544,7 +681,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 
-	////////角色2左右移動
+	////////角色2 放開左右移動
 	if (nChar == VK_LEFT) {
 		keepLeft = false;
 	}
@@ -714,8 +851,16 @@ void CGameStateRun::OnShow()
 		door2.ToggleAnimation();
 	}
 
+	// 判斷通關條件
+	if (door1.GetFrameIndexOfBitmap() == 5 && door2.GetFrameIndexOfBitmap() == 5) {
+		phase += 1;
+		OnInit();
+	}
+
 	//搖桿
 	joystick.ShowBitmap();
+
+	show_image_by_phase();
 
 	
 }
@@ -726,13 +871,7 @@ void CGameStateRun::show_image_by_phase() {
 	if (phase <= 6) {
 
 		if (phase == 1 && sub_phase == 1) {
-			
-			////地板
-			cube[0][0].SetTopLeft(0, 841);	// 第一層
-			cube[1][0].SetTopLeft(0, 720);	// 第二層
-			cube[2][0].SetTopLeft(0, 220);	// 第三層
 
-			//
 		}
 		if (phase == 2 && sub_phase == 1) {
 
@@ -758,44 +897,32 @@ void CGameStateRun::show_text_by_phase() {
 	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(0, 0, 0), 800);
 
 	if (phase == 1 && sub_phase == 1) {
-		CTextDraw::Print(pDC, 237, 128, "修改你的主角！");
-		CTextDraw::Print(pDC, 55, 163, "將灰色方格換成 resources 內的 giraffe.bmp 圖樣！");
-		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+
 	}
 	else if (phase == 2 && sub_phase == 1) {
-		CTextDraw::Print(pDC, 26, 128, "下一個階段，讓長頸鹿能夠透過上下左右移動到這個位置！");
-		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+
 	}
 	else if (phase == 3 && sub_phase == 1) {
-		CTextDraw::Print(pDC, 205, 128, "幫你準備了一個寶箱");
-		CTextDraw::Print(pDC, 68, 162, "設計程式讓長頸鹿摸到寶箱後，將寶箱消失！");
-		CTextDraw::Print(pDC, 68, 196, "記得寶箱要去背，使用 RGB(255, 255, 255)");
-		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+
 	}
 	else if (phase == 4 && sub_phase == 1) {
-		CTextDraw::Print(pDC, 173, 128, "幫你準備了一個蜜蜂好朋友");
-		CTextDraw::Print(pDC, 89, 162, "已經幫它做了兩幀的動畫，讓它可以上下移動");
-		CTextDraw::Print(pDC, 110, 196, "寫個程式來讓你的蜜蜂好朋友擁有動畫！");
-		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+
 	}
 	else if (phase == 5 && sub_phase == 1) {
-		CTextDraw::Print(pDC, 173, 128, "幫你準備了三扇門");
-		CTextDraw::Print(pDC, 89, 162, "設計程式讓長頸鹿摸到門之後，門會打開");
-		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+
 	}
 	else if (phase == 6 && sub_phase == 1) {
-		CTextDraw::Print(pDC, 173, 128, "幫你準備了一顆會倒數的球");
-		CTextDraw::Print(pDC, 89, 162, "設計程式讓球倒數，然後顯示 OK 後停止動畫");
-		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
+
 	}
 	else if (sub_phase == 2) {
-		CTextDraw::Print(pDC, 268, 128, "完成！");
+
 	}
 
 	CDDraw::ReleaseBackCDC();
 }
 
 bool CGameStateRun::validate_phase_1() {
+
 	return 0;
 }
 
