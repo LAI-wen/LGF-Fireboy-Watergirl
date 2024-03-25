@@ -222,10 +222,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	
 	//機關
 	//button1
-	if (CMovingBitmap::IsOverlap(character2[0], button1) == true || CMovingBitmap::IsOverlap(character1[0], button1) == true || CMovingBitmap::IsOverlap(box, button1) == true) {
+	if (CMovingBitmap::IsOverlap(foot2, button1) == true || CMovingBitmap::IsOverlap(foot1, button1) == true || CMovingBitmap::IsOverlap(box, button1) == true) {
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop() + 1);
 	}
-	else if (button1.GetTop() > 700) {
+	else if (button1.GetTop() > 705) {
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop() - 2);
 	}
 	else if (button1.GetTop() == 721) {
@@ -235,10 +235,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	//button2
 	
-	if (CMovingBitmap::IsOverlap(character2[0], button2) == true || CMovingBitmap::IsOverlap(character1[0], button2) == true) {
+	if (CMovingBitmap::IsOverlap(foot2, button2) == true || CMovingBitmap::IsOverlap(foot1, button2) == true) {
 		button2.SetTopLeft(button2.GetLeft(), button2.GetTop() + 1);
 	}
-	else if (button2.GetTop() > 200) {
+	else if (button2.GetTop() > 205) {
 		button2.SetTopLeft(button2.GetLeft(), button2.GetTop() - 2);
 	}
 	else if (button2.GetTop() == 221) {
@@ -246,7 +246,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	// button1 && button2 操控 ramp
-	if (button1.GetTop() > 700 || button2.GetTop() > 200) {
+	if (button1.GetTop() > 705 || button2.GetTop() > 205) {
 		ramp.SetTopLeft(ramp.GetLeft(), min(600, ramp.GetTop() + 5));
 	}
 	else {
@@ -255,11 +255,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	
 
 	//角色碰到機關停住
-	if (CMovingBitmap::IsOverlap(foot1, ramp) == true && ramp.GetTop() > 300) {
+	if (CMovingBitmap::IsOverlap(foot1, ramp) == true && ramp.GetTop() > 300 && ramp.GetTop() != 600) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() -5);
 	}
 
-	if (CMovingBitmap::IsOverlap(foot2, ramp) == true && ramp.GetTop() > 300) {
+	if (CMovingBitmap::IsOverlap(foot2, ramp) == true && ramp.GetTop() > 300 && ramp.GetTop() != 600) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 
@@ -440,10 +440,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//機關
 	button1.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
-	button1.SetTopLeft(300, 700);
+	button1.SetTopLeft(300, 710);
 
 	button2.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
-	button2.SetTopLeft(600, 200);
+	button2.SetTopLeft(600, 210);
 
 	ramp.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
 	ramp.SetTopLeft(1000, 300);
