@@ -871,6 +871,15 @@ void CGameStateRun::OnShow()
 		joystick.SetFrameIndexOfBitmap(0);
 	}
 
+	if (CMovingBitmap::IsOverlap(character2_left, joystick) == true && joystick.GetFrameIndexOfBitmap() == 0) {
+		joystick.ToggleAnimation();
+	}
+
+	if (CMovingBitmap::IsOverlap(character2_right, joystick) == true && joystick.GetFrameIndexOfBitmap() == 2) {
+		joystick.SetFrameIndexOfBitmap(2);
+		joystick.SetFrameIndexOfBitmap(1);
+		joystick.SetFrameIndexOfBitmap(0);
+	}
 
 
 	show_image_by_phase();
