@@ -523,7 +523,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//搖桿
 	joystick.LoadBitmapByString({ "Resources/joystick_1.bmp", "Resources/joystick_2.bmp" , "Resources/joystick_3.bmp" }, RGB(255, 255, 255));
-	
+	joystick.SetTopLeft(500, 655);
+	joystick.SetAnimation(100, true);
 
 	/////////////////////////////////////////////////////////////////////////////
 	//////////// 物件在不同關卡的初始位置
@@ -857,8 +858,20 @@ void CGameStateRun::OnShow()
 		OnInit();
 	}
 
+
 	//搖桿
 	joystick.ShowBitmap();
+	if (CMovingBitmap::IsOverlap(character1_left, joystick) == true && joystick.GetFrameIndexOfBitmap() == 0) {
+		joystick.ToggleAnimation();
+	}
+
+	if (CMovingBitmap::IsOverlap(character1_right, joystick) == true && joystick.GetFrameIndexOfBitmap() == 2) {
+		joystick.SetFrameIndexOfBitmap(2);
+		joystick.SetFrameIndexOfBitmap(1);
+		joystick.SetFrameIndexOfBitmap(0);
+	}
+
+
 
 	show_image_by_phase();
 
