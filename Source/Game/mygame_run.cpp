@@ -483,6 +483,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	blue_diamond.LoadBitmapByString({ "Resources/blue_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
 	blue_diamond.SetTopLeft(800, 780);
 
+	//搖桿
+	joystick.LoadBitmapByString({ "Resources/joystick_1.bmp", "Resources/joystick_2.bmp" , "Resources/joystick_3.bmp" }, RGB(255, 255, 255));
+	joystick.SetTopLeft(500, 655);
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -710,6 +714,8 @@ void CGameStateRun::OnShow()
 		door2.ToggleAnimation();
 	}
 
+	//搖桿
+	joystick.ShowBitmap();
 
 	
 }
