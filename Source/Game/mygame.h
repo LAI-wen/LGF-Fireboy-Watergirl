@@ -127,14 +127,9 @@ namespace game_framework {
 		CMovingBitmap button2;
 		CMovingBitmap ramp;
 		CMovingBitmap box;
-		/*
-		CMovingBitmap box_up;
-		CMovingBitmap box_down;
-		CMovingBitmap box_right;
-		CMovingBitmap box_left;
-		*/
 		CMovingBitmap pond;
-
+		CMovingBitmap blue_diamond;
+		CMovingBitmap red_diamond;
 
 		void show_image_by_phase();
 		void show_text_by_phase();

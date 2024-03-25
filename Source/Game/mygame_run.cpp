@@ -476,6 +476,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
 	pond.SetTopLeft(1200, 842);
 
+	//寶石
+	red_diamond.LoadBitmapByString({ "Resources/red_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
+	red_diamond.SetTopLeft(700, 780);
+
+	blue_diamond.LoadBitmapByString({ "Resources/blue_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
+	blue_diamond.SetTopLeft(800, 780);
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -585,6 +592,19 @@ void CGameStateRun::OnShow()
 	
 	//箱子
 	box.ShowBitmap();
+
+
+	//寶石
+	red_diamond.ShowBitmap();
+	if (CMovingBitmap::IsOverlap(character1[0], red_diamond) == true) {
+		red_diamond.SetFrameIndexOfBitmap(1);
+	}
+
+	blue_diamond.ShowBitmap();
+	if (CMovingBitmap::IsOverlap(character2[0], blue_diamond) == true) {
+		blue_diamond.SetFrameIndexOfBitmap(1);
+	}
+
 	
 
 	///////////////////地板///////////////////////////////////////	
@@ -690,6 +710,8 @@ void CGameStateRun::OnShow()
 		door2.ToggleAnimation();
 	}
 
+
+	
 }
 
 
