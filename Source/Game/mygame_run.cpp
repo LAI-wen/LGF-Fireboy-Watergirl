@@ -82,6 +82,26 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() + 5);
 	}
 
+	// 箱子重力
+	bool gravity_flag_box = false;
+
+	if (CMovingBitmap::IsOverlap(box, ramp) == true) {
+		gravity_flag_box = true;
+	}
+
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < floor[j]; i++) {
+			if (CMovingBitmap::IsOverlap(box, cube[j][i]) == true) {
+				gravity_flag_box = true;
+				break;
+			}
+		}
+	}
+
+	if (gravity_flag_box == false) {
+		box.SetTopLeft(box.GetLeft(), box.GetTop() + 5);
+	}
+
 	/////////重力結束////////////////////////////////////////////////////////////////////
 
 	/////////////////////////////////////////////////////////////////////////////
