@@ -141,6 +141,9 @@ namespace game_framework {
 		bool validate_phase_5();
 		bool validate_phase_6();
 
+		int floor[6] = {40,40,40,40,40,40};
+
+
 
 
 
