@@ -40,14 +40,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		gravity_flag1 = true;
 	}
 
-	for (int j = 0; j < 3; j++) {
-		for (int i = 0; i < floor[0]; i++) {
-			if (j == 1 && i > floor[1]-1) {
-				break;
-			}
-			else if (j == 2 && i > floor[2]-1) {
-				break;
-			}
+	for (int j = 0; j < floor_num; j++) {
+		for (int i = 0; i < floor[j]; i++) {
 			if (CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
 				gravity_flag1 = true;
 				break;
@@ -68,7 +62,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		gravity_flag2 = true;
 	}
 
-	for (int j = 0; j < 3; j++) {
+	for (int j = 0; j < floor_num; j++) {
 		for (int i = 0; i < floor[j]; i++) {
 			if (CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
 				character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
@@ -89,7 +83,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		gravity_flag_box = true;
 	}
 
-	for (int j = 0; j < 3; j++) {
+	for (int j = 0; j < floor_num; j++) {
 		for (int i = 0; i < floor[j]; i++) {
 			if (CMovingBitmap::IsOverlap(box, cube[j][i]) == true) {
 				gravity_flag_box = true;
@@ -176,7 +170,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	/////////////////////////////////////////////////////////////////////////////
 
 	////	 角色 1 頂頭
-	for (int j = 1; j < 3; j++) {
+	for (int j = 1; j < floor_num; j++) {
 		for (int i = 0; i < floor[j]; i++) {
 			if (CMovingBitmap::IsOverlap(head1, cube[j][i]) == true ) {
 				jump1 = false;
@@ -196,23 +190,17 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	////	 角色 2 頂頭 // 碰到地板左右停止
-	for (int j = 1; j < 3; j++) {
-		for (int i = 0; i < floor[1]; i++) {
-			if (j == 1 && i > floor[1]-1) {
-				break;
-			}
-			else if (j == 2 && i > floor[2]-1) {
-				break;
-			}
-			if (CMovingBitmap::IsOverlap(head2, cube[1][i]) == true || CMovingBitmap::IsOverlap(character2_left, cube[1][i]) == true) {
+	for (int j = 1; j < floor_num; j++) {
+		for (int i = 0; i < floor[j]; i++) {
+			if (CMovingBitmap::IsOverlap(head2, cube[j][i]) == true || CMovingBitmap::IsOverlap(character2_left, cube[j][i]) == true) {
 				jump2 = false;
 			}
-			if (keepLeft == true && CMovingBitmap::IsOverlap(character2_left, cube[1][i]) == true) {
+			if (keepLeft == true && CMovingBitmap::IsOverlap(character2_left, cube[j][i]) == true) {
 				jump2 = false;
 				character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
 
 			}
-			if (keepRight == true && CMovingBitmap::IsOverlap(character2_right, cube[1][i]) == true) {
+			if (keepRight == true && CMovingBitmap::IsOverlap(character2_right, cube[j][i]) == true) {
 				jump2 = false;
 				character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
 
@@ -222,17 +210,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	bool flag1 = false;
 
-	for (int j = 0; j < 3; j++) {
-		for (int i = 0; i < floor[0]; i++) {
-			if (j == 1 && i > floor[1]-1) {
-				break;
-			}
-			else if (j == 2 && i > floor[2]-1) {
-				break;
-			}
-
+	for (int j = 0; j < floor_num; j++) {
+		for (int i = 0; i < floor[j]; i++) {
 			if (GetAsyncKeyState(0x57) & 0x8000 && CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
-				character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
 				flag1 = true;
 				break;
 			}
@@ -376,7 +356,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 		if (phase == 1 && sub_phase == 1) {
 			floor[0] = 38;
-			floor[1] = 26;
+			floor[1] = 15;
 			floor[2] = 27;
 			floor[3] = 30;
 			floor[4] = 30;
@@ -399,20 +379,20 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		}
 	}
 
-	//第一層
-	for (int i = 0; i < floor[0]; i++) {
-		cube[0][i].LoadBitmapByString({ "Resources/cube.bmp" });
-	}
 
-	//第二層
-	for (int i = 0; i < floor[1]; i++) {
-		cube[1][i].LoadBitmapByString({ "Resources/cube.bmp" });
-	}
 
-	//第三層
-	for (int i = 0; i < floor[2]; i++) {
-		cube[2][i].LoadBitmapByString({ "Resources/cube.bmp" });
+
+
+	for (int j = 0; j < floor_num; j++) {
+		for (int i = 0; i < floor[j]; i++) {
+			cube[j][i].LoadBitmapByString({ "Resources/cube.bmp" });
+		}
 	}
+	
+
+
+
+
 
 
 	
@@ -545,7 +525,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			////地板
 			cube[0][0].SetTopLeft(0, 841);	// 第一層
 			cube[1][0].SetTopLeft(0, 720);	// 第二層
-			cube[2][0].SetTopLeft(0, 220);	// 第三層
+			cube[2][0].SetTopLeft(0, 600);	// 第三層
+			cube[3][0].SetTopLeft(0, 220);	// 第四層
 
 			////人物、箱子  ->可移動物件放在初始設置
 
@@ -659,17 +640,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	bool flag2 = false;
 
-	for (int j = 0; j < 2; j++) {
-		for (int i = 0; i < floor[0]; i++) {
-			if (j == 1 && i > floor[1]-1) {
-				break;
-			}
-			else if (j == 2 && i > floor[2]-1) {
-				break;
-			}
-
+	for (int j = 0; j < floor_num; j++) {
+		for (int i = 0; i < floor[j]; i++) {
 			if (nChar == VK_UP && CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
-				character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
 				flag2 = true;
 				break;
 			}
@@ -755,20 +728,13 @@ void CGameStateRun::OnShow()
 	
 
 	///////////////////地板///////////////////////////////////////	
-	for (int i = 0; i < floor[0]; i++) {
-		cube[0][i].SetTopLeft(cube[0][0].GetLeft() + (36 * i), cube[0][0].GetTop());
-		cube[0][i].ShowBitmap();
+	for (int j = 0; j < floor_num; j++) {
+		for (int i = 0; i < floor[j]; i++) {
+			cube[j][i].SetTopLeft(cube[j][0].GetLeft() + (36 * i), cube[j][0].GetTop());
+			cube[j][i].ShowBitmap();
+		}
 	}
-
-	for (int i = 0; i < floor[1]; i++) {
-		cube[1][i].SetTopLeft(cube[1][0].GetLeft() + (36 * i), cube[1][0].GetTop());
-		cube[1][i].ShowBitmap();
-	}
-
-	for (int i = 0; i < floor[2]; i++) {
-		cube[2][i].SetTopLeft(cube[2][0].GetLeft() + (36 * i), cube[2][0].GetTop());
-		cube[2][i].ShowBitmap();
-	}
+	
 
 	///////////////////////人物與動畫//////////////////////////////////////
 	// character1
