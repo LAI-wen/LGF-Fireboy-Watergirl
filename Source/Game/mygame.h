@@ -112,7 +112,7 @@ namespace game_framework {
 		CMovingBitmap head2;
 		CMovingBitmap door1;							//�n�n��
 		CMovingBitmap door2;							//�̧̪�
-		CMovingBitmap cube[4][40];
+		CMovingBitmap cube[5][40];
 		CMovingBitmap floor1;
 		CMovingBitmap floor2_up;
 		CMovingBitmap floor2_down;
@@ -142,7 +142,7 @@ namespace game_framework {
 		bool validate_phase_6();
 
 		int floor[6] = {40,40,40,40,40,40};
-
+		int floor_num = 4;
 
 
 
