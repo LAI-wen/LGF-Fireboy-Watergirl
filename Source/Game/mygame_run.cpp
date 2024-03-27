@@ -40,14 +40,21 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		gravity_flag1 = true;
 	}
 
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
-				gravity_flag1 = true;
-				break;
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (CMovingBitmap::IsOverlap(foot1, maps[j][i][n]) == true) {
+						gravity_flag1 = true;
+						break;
+					}
+
+				}
+
 			}
 		}
 	}
+
 
 	if (gravity_flag1 == false) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() + 5);
@@ -62,12 +69,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		gravity_flag2 = true;
 	}
 
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
-				character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
-				gravity_flag2 = true;
-				break;
+
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (CMovingBitmap::IsOverlap(foot2, maps[j][i][n]) == true) {
+						gravity_flag2 = true;
+						break;
+					}
+
+				}
+
 			}
 		}
 	}
@@ -83,14 +96,22 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		gravity_flag_box = true;
 	}
 
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (CMovingBitmap::IsOverlap(box, cube[j][i]) == true) {
-				gravity_flag_box = true;
-				break;
+
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (CMovingBitmap::IsOverlap(box, maps[j][i][n]) == true) {
+						gravity_flag_box = true;
+						break;
+					}
+
+				}
+
 			}
 		}
 	}
+
 
 	if (gravity_flag_box == false) {
 		box.SetTopLeft(box.GetLeft(), box.GetTop() + 5);
@@ -98,41 +119,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	/////////重力結束////////////////////////////////////////////////////////////////////
 
-	/////////////////////////////////////////////////////////////////////////////
-	////	 角色 碰到牆壁停止
-	/////////////////////////////////////////////////////////////////////////////
 
-	////	 角色 1 碰到牆壁停止
-	if (CMovingBitmap::IsOverlap(character1_left, map_left) == false) {
-		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
-	}
-	if (CMovingBitmap::IsOverlap(character1_right, map_right) == false) {
-		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
-	}
-
-	////	 角色 2 碰到牆壁停止
-	if (keepLeft == true && CMovingBitmap::IsOverlap(character2_left, map_left) == false) {
-		character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
-	}
-	if (keepRight == true && CMovingBitmap::IsOverlap(character2_right, map_right) == false) {
-		character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
-	}
-
-
-
-	/////////////////////////////////////////////////////////////////////////////
-	////	 角色 1 移動
-	/////////////////////////////////////////////////////////////////////////////
-
-
-	if (GetAsyncKeyState(0x41) & 0x8000) {  // 當角色1按A向左
-		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
-		character1[2].SetAnimation(100, false);
-	}
-	if (GetAsyncKeyState(0x44) & 0x8000) {  //當角色1按D向右
-		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
-		character1[1].SetAnimation(100, false);
-	}
 
 	/////////////////////////////////////////////////////////////////////////////
 	////	 角色 跳躍
@@ -154,6 +141,28 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		jump1 = false;
 	}
 
+	bool flag1 = false;
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (GetAsyncKeyState(0x57) & 0x8000 && CMovingBitmap::IsOverlap(foot1, maps[j][i][n]) == true) {
+						flag1 = true;
+						break;
+					}
+
+				}
+
+			}
+		}
+	}
+
+	if (flag1 == true) {
+		jump1 = true;
+		jump1_time = clock();
+		flag1 = false;
+	}
+
 	////	 角色 2 跳躍
 	if (jump2 == true && (clock() - jump2_time) < 500) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 12);
@@ -169,61 +178,105 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	////	 角色 頂頭
 	/////////////////////////////////////////////////////////////////////////////
 
-	////	 角色 1 頂頭
-	for (int j = 1; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (CMovingBitmap::IsOverlap(head1, cube[j][i]) == true ) {
-				jump1 = false;
-			}
+	////	 角色 1 頂頭 	////	 角色 1 碰到牆壁停止
 
-			if (CMovingBitmap::IsOverlap(character1_left, cube[j][i]) == true) {
-				jump1 = false;
-				character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
+	bool wall_left1 = true;
+	bool wall_right1 = true;
 
-			}
-			if (CMovingBitmap::IsOverlap(character1_right, cube[j][i]) == true) {
-				jump1 = false;
-				character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (CMovingBitmap::IsOverlap(head1, maps[j][i][n]) == true) {
+						jump1 = false;
+						break;
+					}
+
+					if (CMovingBitmap::IsOverlap(character1_left, maps[j][i][n]) == true) {
+						
+						wall_left1 = false;
+						break;
+
+					}
+					if (CMovingBitmap::IsOverlap(character1_right, maps[j][i][n]) == true) {
+						
+						wall_right1 = false;
+						break;
+						
+					}
+
+				}
 
 			}
 		}
+	}
+
+	if (wall_left1 == true) {
+		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
+	}
+	if (wall_right1 == true) {
+		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
 	}
 
 	////	 角色 2 頂頭 // 碰到地板左右停止
-	for (int j = 1; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (CMovingBitmap::IsOverlap(head2, cube[j][i]) == true || CMovingBitmap::IsOverlap(character2_left, cube[j][i]) == true) {
-				jump2 = false;
-			}
-			if (keepLeft == true && CMovingBitmap::IsOverlap(character2_left, cube[j][i]) == true) {
-				jump2 = false;
-				character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
 
-			}
-			if (keepRight == true && CMovingBitmap::IsOverlap(character2_right, cube[j][i]) == true) {
-				jump2 = false;
-				character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
+	bool wall_left2 = true;
+	bool wall_right2 = true;
+
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (CMovingBitmap::IsOverlap(head2, maps[j][i][n]) == true) {
+						jump2 = false;
+					}
+
+					if (CMovingBitmap::IsOverlap(character2_left, maps[j][i][n]) == true ) {
+			
+						wall_left2 = false;
+						break;
+						character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
+
+					}
+					if (CMovingBitmap::IsOverlap(character2_right, maps[j][i][n]) == true ) {
+						
+						wall_right2 = false;
+						break;
+						character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
+
+					}
+
+				}
 
 			}
 		}
 	}
 
-	bool flag1 = false;
+	/////////////////////////////////////////////////////////////////////////////
+	////	 角色 1 移動
+	/////////////////////////////////////////////////////////////////////////////
 
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (GetAsyncKeyState(0x57) & 0x8000 && CMovingBitmap::IsOverlap(foot1, cube[j][i]) == true) {
-				flag1 = true;
-				break;
-			}
-		}
+
+	if (GetAsyncKeyState(0x41) & 0x8000) {  // 當角色1按A向左
+		character1[0].SetTopLeft(character1[0].GetLeft() - 5, character1[0].GetTop());
+		character1[2].SetAnimation(100, false);
+	}
+	if (GetAsyncKeyState(0x44) & 0x8000) {  //當角色1按D向右
+		character1[0].SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop());
+		character1[1].SetAnimation(100, false);
 	}
 
-	if (flag1 == true) {
-		jump1 = true;
-		jump1_time = clock();
-		flag1 = false;
+
+	////	 角色 2 移動碰到牆壁停止
+	if (keepLeft == true && wall_left2 == true) {
+		character2[0].SetTopLeft(character2[0].GetLeft() - 5, character2[0].GetTop());
+
 	}
+	if (keepRight == true && wall_right2 == true) {
+		character2[0].SetTopLeft(character2[0].GetLeft() + 5, character2[0].GetTop());
+	}
+
+	
 
 	/////////////////////////////////////////////////////////////////////////////
 	////	 機關
@@ -234,10 +287,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (CMovingBitmap::IsOverlap(foot2, button1) == true || CMovingBitmap::IsOverlap(foot1, button1) == true || CMovingBitmap::IsOverlap(box, button1) == true) {
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop() + 1);
 	}
-	else if (button1.GetTop() > 705) {
+	else if (button1.GetTop() > button1_y) {
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop() - 2);
 	}
-	else if (button1.GetTop() == 721) {
+	else if (button1.GetTop() == button1_y+15) {
 		button1.SetTopLeft(button1.GetLeft(), button1.GetTop());
 	}
 
@@ -247,28 +300,28 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (CMovingBitmap::IsOverlap(foot2, button2) == true || CMovingBitmap::IsOverlap(foot1, button2) == true) {
 		button2.SetTopLeft(button2.GetLeft(), button2.GetTop() + 1);
 	}
-	else if (button2.GetTop() > 205) {
+	else if (button2.GetTop() > button2_y) {
 		button2.SetTopLeft(button2.GetLeft(), button2.GetTop() - 2);
 	}
-	else if (button2.GetTop() == 221) {
+	else if (button2.GetTop() == button2_y+15) {
 		button2.SetTopLeft(button2.GetLeft(), button2.GetTop());
 	}
 
 	// button1 && button2 操控 ramp
-	if (button1.GetTop() > 705 || button2.GetTop() > 205) {
-		ramp.SetTopLeft(ramp.GetLeft(), min(600, ramp.GetTop() + 5));
+	if (button1.GetTop() > button1_y || button2.GetTop() > button2_y) {
+		ramp.SetTopLeft(ramp.GetLeft(), min(ramp_y2, ramp.GetTop() + 5));
 	}
 	else {
-		ramp.SetTopLeft(ramp.GetLeft(), max(300, ramp.GetTop() - 5));
+		ramp.SetTopLeft(ramp.GetLeft(), max(ramp_y1, ramp.GetTop() - 5));
 	}
 	
 
 	//角色碰到機關停住
-	if (CMovingBitmap::IsOverlap(foot1, ramp) == true && ramp.GetTop() > 300 && ramp.GetTop() != 600) {
+	if (CMovingBitmap::IsOverlap(foot1, ramp) == true && ramp.GetTop() > ramp_y1 && ramp.GetTop() != ramp_y2) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() -5);
 	}
 
-	if (CMovingBitmap::IsOverlap(foot2, ramp) == true && ramp.GetTop() > 300 && ramp.GetTop() != 600) {
+	if (CMovingBitmap::IsOverlap(foot2, ramp) == true && ramp.GetTop() > ramp_y1 && ramp.GetTop() != ramp_y2) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 
@@ -352,47 +405,17 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	
 
 
-	if (phase <= 6) {
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					maps[j][i][n].LoadBitmapByString({ "Resources/cube.bmp" });
+				}
 
-		if (phase == 1 && sub_phase == 1) {
-			floor[0] = 38;
-			floor[1] = 15;
-			floor[2] = 27;
-			floor[3] = 30;
-			floor[4] = 30;
-
-		}
-		if (phase == 2 && sub_phase == 1) {
-
-		}
-		if (phase == 3 && sub_phase == 1) {
-
-		}
-		if (phase == 4 && sub_phase == 1) {
-
-		}
-		if (phase == 5 && sub_phase == 1) {
-
-		}
-		if (phase == 6 && sub_phase == 1) {
+			}
 
 		}
 	}
-
-
-
-
-
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			cube[j][i].LoadBitmapByString({ "Resources/cube.bmp" });
-		}
-	}
-	
-
-
-
-
 
 
 	
@@ -464,13 +487,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//牆壁
 	map_left.LoadBitmapByString({ "Resources/map_left.bmp" });
-	map_left.SetTopLeft(0, 0);
-
 	map_right.LoadBitmapByString({ "Resources/map_right.bmp" });
-	map_right.SetTopLeft(1348, 0);
-
 	map_top.LoadBitmapByString({ "Resources/map_top.bmp" });
-	map_top.SetTopLeft(0, 0);
+
 
 	//機關
 	button1.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
@@ -511,6 +530,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	joystick.SetTopLeft(500, 655);
 	joystick.SetAnimation(100, true);
 
+
+
 	/////////////////////////////////////////////////////////////////////////////
 	//////////// 物件在不同關卡的初始位置
 	/////////////////////////////////////////////////////////////////////////////
@@ -518,41 +539,54 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 ////////////////////////// 第一關////////////////////////////////////////////
 		if (phase == 1 && sub_phase == 1) {
-			character1[0].SetTopLeft(850, 750);
-			character2[0].SetTopLeft(850, 750);
-			box.SetTopLeft(200, 676);
+
+			// 角色與箱子
+			character1[0].SetTopLeft(25, 630);
+			character2[0].SetTopLeft(25, 750);
+			box.SetTopLeft(700, 220);
 
 			////地板
-			cube[0][0].SetTopLeft(0, 841);	// 第一層
-			cube[1][0].SetTopLeft(0, 720);	// 第二層
-			cube[2][0].SetTopLeft(0, 600);	// 第三層
-			cube[3][0].SetTopLeft(0, 220);	// 第四層
+			for (int j = 0; j < 3; j++) {
+				for (int i = 0; i < 10; i++) {
 
-			////人物、箱子  ->可移動物件放在初始設置
+					maps[j][i][0].SetTopLeft(0, j*300+(30 * i));	// 第一層
+
+				}
+			}
+
 
 			////機關-buttom
 
-			button1.SetTopLeft(300, 710);
-			button2.SetTopLeft(600, 210);
+			button1_y = 580;
+			button2_y = 310;
+
+			button1.SetTopLeft(300, button1_y);
+			button2.SetTopLeft(1000, button2_y);
 
 			////機關-ramp
-			ramp.SetTopLeft(1000, 300);
+			ramp_y1 = 450;
+			ramp_y2 = 600;
+			ramp.SetTopLeft(50, ramp_y1);
 
 			////門
-			door1.SetTopLeft(200, 131);
+			door1.SetTopLeft(1200, 95);
 			door1.SetAnimation(100, true);
-			door2.SetTopLeft(100, 131);
+			door2.SetTopLeft(1100, 95);
 			door2.SetAnimation(100, true);
 
 			////機關-joystick
-			joystick.SetTopLeft(500, 655);
+			joystick.SetTopLeft(400, 655);
 
 			////死亡水池
-			pond.SetTopLeft(1200, 842);
+			pond.SetTopLeft(900, 842);
 
 			////寶石
 			red_diamond.SetTopLeft(700, 780);
 			blue_diamond.SetTopLeft(800, 780);
+
+			map_left.SetTopLeft(0, 0);
+			map_right.SetTopLeft(1348, 0);
+			map_top.SetTopLeft(0, 0);
 		}
 ////////////////////////// 第二關////////////////////////////////////////////
 		if (phase == 2 && sub_phase == 1) {
@@ -563,9 +597,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			box.SetTopLeft(100, 750);
 
 			////地板
-			cube[0][0].SetTopLeft(0, 841);	// 第一層
-			cube[1][0].SetTopLeft(0, 520);	// 第二層
-			cube[2][0].SetTopLeft(0, 320);	// 第三層
+
 
 
 			////機關-buttom
@@ -640,11 +672,18 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	bool flag2 = false;
 
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			if (nChar == VK_UP && CMovingBitmap::IsOverlap(foot2, cube[j][i]) == true) {
-				flag2 = true;
-				break;
+
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					if (nChar == VK_UP && CMovingBitmap::IsOverlap(foot2, maps[j][i][n]) == true) {
+						flag2 = true;
+						break;
+					}
+
+				}
+
 			}
 		}
 	}
@@ -701,6 +740,9 @@ void CGameStateRun::OnShow()
 	//牆壁
 	bg.ShowBitmap();
 
+
+	//牆壁
+
 	//門
 	door1.ShowBitmap();
 	door2.ShowBitmap();
@@ -728,12 +770,22 @@ void CGameStateRun::OnShow()
 	
 
 	///////////////////地板///////////////////////////////////////	
-	for (int j = 0; j < floor_num; j++) {
-		for (int i = 0; i < floor[j]; i++) {
-			cube[j][i].SetTopLeft(cube[j][0].GetLeft() + (36 * i), cube[j][0].GetTop());
-			cube[j][i].ShowBitmap();
+
+
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int n = 0; n < 40; n++) {
+				if (map[j][i][n] == 1) {
+					maps[j][i][n].SetTopLeft((35 * n), maps[j][i][0].GetTop());
+					maps[j][i][n].ShowBitmap();
+				}
+
+			}
 		}
 	}
+	
+
+
 	
 
 	///////////////////////人物與動畫//////////////////////////////////////
@@ -804,12 +856,7 @@ void CGameStateRun::OnShow()
 
 	}
 
-	
 
-	//牆壁
-	map_left.ShowBitmap();
-	map_right.ShowBitmap();
-	map_top.ShowBitmap();
 
 	//水池
 	pond.ShowBitmap();
