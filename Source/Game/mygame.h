@@ -131,8 +131,8 @@ namespace game_framework {
 		CMovingBitmap box_left;
 		CMovingBitmap box_right;
 		CMovingBitmap pond;
-		CMovingBitmap blue_diamond;
-		CMovingBitmap red_diamond;
+		CMovingBitmap blue_diamond[4];
+		CMovingBitmap red_diamond[4];
 		CMovingBitmap joystick;
 
 		void show_image_by_phase();

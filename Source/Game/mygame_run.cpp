@@ -560,8 +560,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
 
 	//寶石
-	red_diamond.LoadBitmapByString({ "Resources/red_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
-	blue_diamond.LoadBitmapByString({ "Resources/blue_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
+	for (int i = 0; i < 4; i++) {
+		blue_diamond[i].LoadBitmapByString({ "Resources/blue_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
+		red_diamond[i].LoadBitmapByString({ "Resources/red_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
+	}
+
+	
+	
 
 	//搖桿
 	joystick.LoadBitmapByString({ "Resources/joystick_1.bmp", "Resources/joystick_2.bmp" , "Resources/joystick_3.bmp" }, RGB(255, 255, 255));
@@ -626,8 +631,14 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			pond.SetTopLeft(900, 842);
 
 			////寶石
-			red_diamond.SetTopLeft(700, 780);
-			blue_diamond.SetTopLeft(800, 780);
+			red_diamond[0].SetTopLeft(700, 780);
+			red_diamond[1].SetTopLeft(300, 400);
+			red_diamond[2].SetTopLeft(400, 100);
+
+			blue_diamond[0].SetTopLeft(950, 780);
+			blue_diamond[1].SetTopLeft(850, 420);
+			blue_diamond[2].SetTopLeft(80, 150);
+			blue_diamond[3].SetTopLeft(750, 130);
 
 			map_left.SetTopLeft(0, 0);
 			map_right.SetTopLeft(1348, 0);
@@ -668,8 +679,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			pond.SetTopLeft(1200, 842);
 
 			////寶石
-			red_diamond.SetTopLeft(700, 780);
-			blue_diamond.SetTopLeft(800, 780);
+			red_diamond[0].SetTopLeft(700, 780);
+			blue_diamond[0].SetTopLeft(800, 780);
 
 		}
 		if (phase == 3 && sub_phase == 1) {
@@ -807,15 +818,19 @@ void CGameStateRun::OnShow()
 
 
 	//寶石
-	red_diamond.ShowBitmap();
-	if (CMovingBitmap::IsOverlap(character1[0], red_diamond) == true) {
-		red_diamond.SetFrameIndexOfBitmap(1);
+	for (int i = 0; i < 4; i++) {
+		red_diamond[i].ShowBitmap();
+		if (CMovingBitmap::IsOverlap(character1[0], red_diamond[i]) == true) {
+			red_diamond[i].SetFrameIndexOfBitmap(1);
+		}
+
+		blue_diamond[i].ShowBitmap();
+		if (CMovingBitmap::IsOverlap(character2[0], blue_diamond[i]) == true) {
+			blue_diamond[i].SetFrameIndexOfBitmap(1);
+		}
 	}
 
-	blue_diamond.ShowBitmap();
-	if (CMovingBitmap::IsOverlap(character2[0], blue_diamond) == true) {
-		blue_diamond.SetFrameIndexOfBitmap(1);
-	}
+	
 
 	
 
