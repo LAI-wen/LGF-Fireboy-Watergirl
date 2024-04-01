@@ -6,6 +6,7 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
+#include <fstream>
 
 using namespace game_framework;
 
@@ -470,6 +471,34 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	/////////////////////////////////////////////////////////////////////////////
 	
 
+	for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < 5; i++) {
+			if (map_test[j][i] == 1) {
+				maps_test[j][i].LoadEmptyBitmap(30, 30);
+			}
+		}
+	}
+
+	maps_test[0][0].SetTopLeft(300, 300);
+	maps_test[1][0].SetTopLeft(300, 330);
+	maps_test[2][0].SetTopLeft(300, 360);
+	maps_test[3][0].SetTopLeft(300, 390);
+	maps_test[4][0].SetTopLeft(300, 410);
+
+	// map1
+
+	ifstream ifs("map/map.txt");
+
+	//for (int k = 0; k < 5; k++) {
+		//for (int i = 0; i < 5; i++) {
+		//	ifs >> map_test[k][i];
+
+		//}
+	//}
+
+	//ifs.close();
+
+
 
 	for (int j = 0; j < 3; j++) {
 		for (int i = 0; i < 10; i++) {
@@ -617,6 +646,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 ////////////////////////// 第一關////////////////////////////////////////////
 		if (phase == 1 && sub_phase == 1) {
 
+
+			
+
 			// 角色與箱子
 			character1[0].SetTopLeft(25, 630);
 			character2[0].SetTopLeft(25, 750);
@@ -680,41 +712,62 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		}
 ////////////////////////// 第二關////////////////////////////////////////////
 		if (phase == 2 && sub_phase == 1) {
-			////人物
-			character1[0].SetTopLeft(20, 750);
-			character2[0].SetTopLeft(20, 750);
-			////箱子
-			box.SetTopLeft(100, 750);
+			// 角色與箱子
+			character1[0].SetTopLeft(100, 730);
+			character2[0].SetTopLeft(25, 730);
+			box.SetTopLeft(1500, 250);
 
 			////地板
+			for (int j = 0; j < 3; j++) {
+				for (int i = 0; i < 10; i++) {
 
+					maps[j][i][0].SetTopLeft(0, j * 300 + (30 * i));    // 第一層
+
+				}
+			}
 
 
 			////機關-buttom
 
-			button1.SetTopLeft(300, 510);
-			button2.SetTopLeft(600, 310);
+			button1_y = 550;
+			button2_y = 130;
+			//button3_y = 575;
+			//button4_y = 130;
+
+			button1.SetTopLeft(300, button1_y);
+			button2.SetTopLeft(800, button2_y);
+
 
 			////機關-ramp
-			ramp.SetTopLeft(1000, 300);
+			// ramp1
+			ramp_y1 = 500;
+			ramp_y2 = 650;
+			ramp.SetTopLeft(700, ramp_y1);
+
+			// ramp2
+			ramp2_y1 = 330;
+			ramp2_y2 = 430;
+			ramp2.SetTopLeft(1245, ramp2_y1);
 
 			////門
-			door1.SetFrameIndexOfBitmap(0);
-			door2.SetFrameIndexOfBitmap(0);
-			door1.SetTopLeft(200, 231);
+			door1.SetTopLeft(50, 70);
 			door1.SetAnimation(100, true);
-			door2.SetTopLeft(100, 231);
+			door2.SetTopLeft(150, 70);
 			door2.SetAnimation(100, true);
 
 			////機關-joystick
-			joystick.SetTopLeft(500, 455);
+			joystick.SetTopLeft(300, 535);
 
 			////死亡水池
-			pond.SetTopLeft(1200, 842);
+			pond.SetTopLeft(900, 842);
 
 			////寶石
-			red_diamond[0].SetTopLeft(700, 780);
-			blue_diamond[0].SetTopLeft(800, 780);
+			//red_diamond.SetTopLeft(700, 780);
+			//blue_diamond.SetTopLeft(800, 780);
+
+			map_left.SetTopLeft(0, 0);
+			map_right.SetTopLeft(1348, 0);
+			map_top.SetTopLeft(0, 0);
 
 		}
 		if (phase == 3 && sub_phase == 1) {
@@ -871,6 +924,7 @@ void CGameStateRun::OnShow()
 	///////////////////地板///////////////////////////////////////	
 
 
+
 	for (int j = 0; j < 3; j++) {
 		for (int i = 0; i < 10; i++) {
 			for (int n = 0; n < 40; n++) {
@@ -879,6 +933,16 @@ void CGameStateRun::OnShow()
 					maps[j][i][n].ShowBitmap();
 				}
 
+			}
+		}
+	}
+
+
+	for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < 5; i++) {
+			if (map_test[j][i] == 1) {
+				maps_test[j][i].SetTopLeft((30* i), maps_test[j][0].GetTop());
+				maps_test[j][i].ShowBitmap();
 			}
 		}
 	}

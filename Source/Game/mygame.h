@@ -231,6 +231,15 @@ namespace game_framework {
 
 		CMovingBitmap maps[3][10][40];
 
+		int map_test[5][5] = {
+			{1, 1, 1, 1, 0},
+			{1, 1, 1, 1, 0},
+			{1, 1, 1, 1, 0},
+			{1, 0, 0, 0, 0},
+			{1, 1, 1, 1, 1}
+		};
+		CMovingBitmap maps_test[5][5];
+
 
 
 

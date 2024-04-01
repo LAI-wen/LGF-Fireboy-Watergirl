@@ -19,15 +19,15 @@ CGameStateOver::CGameStateOver(CGame *g) : CGameState(g)
 
 void CGameStateOver::OnMove()
 {
-	/*
+	
 	if (clock() - button_retry_time == 21000) {
 		button_retry.SetFrameIndexOfBitmap(0);
-		button_play.ShowBitmap();
+		button_retry.ShowBitmap();
 	}
 	else if (clock() - button_retry_time <= 25500) {
 		GotoGameState(GAME_STATE_RUN);
 	}
-	*/
+	
 	//GotoGameState(GAME_STATE_INIT);
 }
 
