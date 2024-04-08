@@ -937,7 +937,7 @@ void CGameStateRun::OnShow()
 		}
 	}
 
-
+	/*
 	for (int j = 0; j < 5; j++) {
 		for (int i = 0; i < 5; i++) {
 			if (map_test[j][i] == 1) {
@@ -947,7 +947,7 @@ void CGameStateRun::OnShow()
 		}
 	}
 	
-
+	*/
 
 	
 
