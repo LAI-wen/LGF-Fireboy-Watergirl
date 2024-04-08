@@ -147,6 +147,7 @@ namespace game_framework {
 		bool validate_phase_4();
 		bool validate_phase_5();
 		bool validate_phase_6();
+		bool isdead = false;
 
 		int continue_what;
 		int floor[6] = {40,40,40,40,40,40};
