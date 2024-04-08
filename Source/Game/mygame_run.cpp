@@ -457,7 +457,27 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 
+	//碰到水池死亡
+	//角色一
+	if (CMovingBitmap::IsOverlap(foot1, pond) == true) {
+		character1[0].SetFrameIndexOfBitmap(1);
+		GotoGameState(GAME_STATE_OVER);
+	}
+	else if (CMovingBitmap::IsOverlap(foot1, blue_pond) == true) {
+		character1[0].SetFrameIndexOfBitmap(1);
+		GotoGameState(GAME_STATE_OVER);
+	}
 
+	//角色二
+	if (CMovingBitmap::IsOverlap(foot2, pond) == true) {
+		character2[0].SetFrameIndexOfBitmap(1);
+		GotoGameState(GAME_STATE_OVER);
+	}
+	else if (CMovingBitmap::IsOverlap(foot2, red_pond) == true) {
+		character2[0].SetFrameIndexOfBitmap(1);
+		GotoGameState(GAME_STATE_OVER);
+	}
+	
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -621,6 +641,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//水池
 	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
+	red_pond.LoadBitmapByString({ "Resources/red_pond.bmp" }, RGB(255, 255, 255));
+	blue_pond.LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
 
 	//寶石
 	for (int i = 0; i < 4; i++) {
@@ -694,14 +716,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			joystick.SetTopLeft(300, 535);
 
 			////死亡水池
-			pond.SetTopLeft(900, 842);
+			pond.SetTopLeft(840, 660);
+			red_pond.SetTopLeft(630, 840);
+			blue_pond.SetTopLeft(872, 840);
 
 			////寶石
 			red_diamond[0].SetTopLeft(700, 780);
 			red_diamond[1].SetTopLeft(300, 400);
 			red_diamond[2].SetTopLeft(400, 100);
 
-			blue_diamond[0].SetTopLeft(950, 780);
+			blue_diamond[0].SetTopLeft(935, 780);
 			blue_diamond[1].SetTopLeft(850, 420);
 			blue_diamond[2].SetTopLeft(80, 150);
 			blue_diamond[3].SetTopLeft(750, 130);
@@ -909,11 +933,13 @@ void CGameStateRun::OnShow()
 		red_diamond[i].ShowBitmap();
 		if (CMovingBitmap::IsOverlap(character1[0], red_diamond[i]) == true) {
 			red_diamond[i].SetFrameIndexOfBitmap(1);
+			diamond_num++;
 		}
 
 		blue_diamond[i].ShowBitmap();
 		if (CMovingBitmap::IsOverlap(character2[0], blue_diamond[i]) == true) {
 			blue_diamond[i].SetFrameIndexOfBitmap(1);
+			diamond_num++;
 		}
 	}
 
@@ -957,7 +983,7 @@ void CGameStateRun::OnShow()
 	foot1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 85);
 	foot1.ShowBitmap();
 
-	head1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 4);
+	head1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 10);
 	head1.ShowBitmap();
 
 	character1_left.SetTopLeft(character1[0].GetLeft() + 0, character1[0].GetTop() + 25);
@@ -975,10 +1001,6 @@ void CGameStateRun::OnShow()
 		character1[2].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
 		character1[2].ShowBitmap();
 	}
-	else if (CMovingBitmap::IsOverlap(foot1, pond) == true) {  //死亡條件
-		character1[0].SetFrameIndexOfBitmap(1);
-		GotoGameState(GAME_STATE_OVER);
-	}
 	else {
 		character1[0].ShowBitmap();
 	}
@@ -991,7 +1013,7 @@ void CGameStateRun::OnShow()
 	foot2.SetTopLeft(character2[0].GetLeft() + 39, character2[0].GetTop() + 95);
 	foot2.ShowBitmap();
 
-	head2.SetTopLeft(character2[0].GetLeft() + 39, character2[0].GetTop() + 15);
+	head2.SetTopLeft(character2[0].GetLeft() + 39, character2[0].GetTop() + 20);
 	head2.ShowBitmap();
 
 	character2_left.SetTopLeft(character2[0].GetLeft() + 22, character2[0].GetTop() + 25);
@@ -1010,10 +1032,6 @@ void CGameStateRun::OnShow()
 		character2[2].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
 		character2[2].ShowBitmap();
 	}
-	else if (CMovingBitmap::IsOverlap(character2[0], pond) == true) {  //死亡條件
-		character2[0].SetFrameIndexOfBitmap(1);
-		GotoGameState(GAME_STATE_OVER);
-	}
 	else {
 		character2[0].ShowBitmap();
 
@@ -1023,6 +1041,8 @@ void CGameStateRun::OnShow()
 
 	//水池
 	pond.ShowBitmap();
+	red_pond.ShowBitmap();
+	blue_pond.ShowBitmap();
 
 	//door 動畫
 	if (CMovingBitmap::IsOverlap(character1[0], door1) == true && door1.GetFrameIndexOfBitmap() == 0) {
@@ -1037,7 +1057,15 @@ void CGameStateRun::OnShow()
 	if (door1.GetFrameIndexOfBitmap() == 5 && door2.GetFrameIndexOfBitmap() == 5) {
 		phase += 1;
 		OnInit();
+		/*
+		if (phase == 1) {
+			if (diamond_num == 7) {
+
+			}
+		}
+		*/
 	}
+	
 
 
 	//搖桿

@@ -131,9 +131,12 @@ namespace game_framework {
 		CMovingBitmap box_left;
 		CMovingBitmap box_right;
 		CMovingBitmap pond;
+		CMovingBitmap red_pond;
+		CMovingBitmap blue_pond;
 		CMovingBitmap blue_diamond[4];
 		CMovingBitmap red_diamond[4];
 		CMovingBitmap joystick;
+
 
 		void show_image_by_phase();
 		void show_text_by_phase();
@@ -146,7 +149,7 @@ namespace game_framework {
 
 		int floor[6] = {40,40,40,40,40,40};
 		int floor_num = 4;
-
+		int diamond_num = 0;
 
 		int map[3][10][40] = {
 			 { //1
