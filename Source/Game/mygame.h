@@ -137,6 +137,7 @@ namespace game_framework {
 		CMovingBitmap red_diamond[4];
 		CMovingBitmap joystick;
 		CMovingBitmap continueUI;
+		CMovingBitmap gameover;
 
 		void show_image_by_phase();
 		void show_text_by_phase();
