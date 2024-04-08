@@ -256,6 +256,11 @@ namespace game_framework {
 		bool jump2 = false;
 		int jump2_time = 0;
 
+		int button_retry_time;
+		int button_menu_time;
+		CMovingBitmap button_retry;
+		CMovingBitmap button_menu;
+
 
 
 	};
