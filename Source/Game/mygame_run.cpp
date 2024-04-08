@@ -166,7 +166,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	////	 角色 2 跳躍
 	if (jump2 == true && (clock() - jump2_time) < 500) {
-		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 12);
+		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 15);
 	}
 	else if (jump2 == true && (clock() - jump2_time) < 560) {
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
@@ -220,25 +220,25 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	if (wall_left1 == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft() - 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() - 10, character1[0].GetTop());
 	}
 	if (wall_right1 == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft() + 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() + 10, character1[0].GetTop());
 	}
 
 
 	if (box_moveleft == true ) {
-		box.SetTopLeft(box.GetLeft() - 7, box.GetTop());
+		box.SetTopLeft(box.GetLeft() - 10, box.GetTop());
 	}
 	if (box_moveright == true ) {
-		box.SetTopLeft(box.GetLeft() + 7, box.GetTop());
+		box.SetTopLeft(box.GetLeft() + 10, box.GetTop());
 	}
 
 	if (box_moveleft == true && CMovingBitmap::IsOverlap(box, character1[0]) == true ) {
-		character1[0].SetTopLeft(character1[0].GetLeft() - 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() - 10, character1[0].GetTop());
 	}
 	if (box_moveright == true && CMovingBitmap::IsOverlap(box, character1[0]) == true ) {
-		character1[0].SetTopLeft(character1[0].GetLeft() + 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() + 10, character1[0].GetTop());
 	}
 
 	if (box_moveleft == true && CMovingBitmap::IsOverlap(box, character2[0]) == true) {
@@ -283,32 +283,32 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	
 	// 角色碰到ramp 停止 
 	if (CMovingBitmap::IsOverlap(character1_left, ramp) == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft() + 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() + 10, character1[0].GetTop());
 	}
 	if (CMovingBitmap::IsOverlap(character1_right, ramp) == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft() - 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() - 10, character1[0].GetTop());
 	}
 
 	if (CMovingBitmap::IsOverlap(character2_left, ramp) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() + 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() + 10, character2[0].GetTop());
 	}
 	if (CMovingBitmap::IsOverlap(character2_right, ramp) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() - 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() - 10, character2[0].GetTop());
 	}
 
 	// 角色碰到ramp2 停止 
 	if (CMovingBitmap::IsOverlap(character1_left, ramp2) == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft() + 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() + 10, character1[0].GetTop());
 	}
 	if (CMovingBitmap::IsOverlap(character1_right, ramp2) == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft() - 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() - 10, character1[0].GetTop());
 	}
 
 	if (CMovingBitmap::IsOverlap(character2_left, ramp2) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() + 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() + 10, character2[0].GetTop());
 	}
 	if (CMovingBitmap::IsOverlap(character2_right, ramp2) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() - 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() - 10, character2[0].GetTop());
 	}
 
 
@@ -319,22 +319,22 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 
 	if (GetAsyncKeyState(0x41) & 0x8000) {  // 當角色1按A向左
-		character1[0].SetTopLeft(character1[0].GetLeft() - 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() - 10, character1[0].GetTop());
 		character1[2].SetAnimation(100, false);
 	}
 	if (GetAsyncKeyState(0x44) & 0x8000) {  //當角色1按D向右
-		character1[0].SetTopLeft(character1[0].GetLeft() + 7, character1[0].GetTop());
+		character1[0].SetTopLeft(character1[0].GetLeft() + 10, character1[0].GetTop());
 		character1[1].SetAnimation(100, false);
 	}
 
 
 	////	 角色 2 移動碰到牆壁停止
 	if (keepLeft == true && wall_left2 == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() - 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() - 10, character2[0].GetTop());
 
 	}
 	if (keepRight == true && wall_right2 == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() + 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() + 10, character2[0].GetTop());
 	}
 
 	
@@ -460,27 +460,31 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//碰到水池死亡
 	//角色一
 	if (CMovingBitmap::IsOverlap(foot1, pond) == true) {
-		character1[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
+		isdead = true;
 	}
 	else if (CMovingBitmap::IsOverlap(foot1, blue_pond) == true) {
-		character1[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
+		isdead = true;
+
 	}
 
 	//角色二
 	if (CMovingBitmap::IsOverlap(foot2, pond) == true) {
-		character2[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
+		isdead = true;
 	}
 	else if (CMovingBitmap::IsOverlap(foot2, red_pond) == true) {
-		character2[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
+		isdead = true;
 	}
+
+
+	///死亡介面按鈕
+	if (clock() - button_retry_time == 21000) {
+		button_retry.SetFrameIndexOfBitmap(0);
+		button_retry.ShowBitmap();
+	}
+	else if (clock() - button_retry_time <= 25500) {
+		isdead = 0;
+	}
+	
 	
 }
 
@@ -666,7 +670,14 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//死亡介面
 	gameover.LoadBitmapByString({ "Resources/game_over.bmp" }, RGB(255, 255, 255));
-	gameover.SetTopLeft(170, 150);
+	gameover.SetTopLeft(0, 0);
+
+	//死亡介面按鈕
+
+	button_menu.LoadBitmapByString({ "resources/button_menu.bmp","resources/button_menu1.bmp" });
+	button_retry.LoadBitmapByString({ "resources/button_retry.bmp","resources/button_retry1.bmp" });
+	button_menu.SetTopLeft(455, 536);
+	button_retry.SetTopLeft(772, 536);
 
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -738,6 +749,15 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			blue_diamond[1].SetTopLeft(850, 420);
 			blue_diamond[2].SetTopLeft(80, 150);
 			blue_diamond[3].SetTopLeft(750, 130);
+
+			for (int i = 0; i < 4; i++) {
+				red_diamond[i].SetFrameIndexOfBitmap(0);
+				blue_diamond[i].SetFrameIndexOfBitmap(0);
+			}
+			
+
+			diamond_num = 0;
+
 
 			map_left.SetTopLeft(0, 0);
 			map_right.SetTopLeft(1348, 0);
@@ -887,6 +907,30 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ����ʧ@
 {
+
+	if (isdead == true && (WM_LBUTTONDOWN)) {
+		int idx1 = point.x;
+		int idy1 = point.y;
+
+		if (idx1 >= 752 && idy1 > 536 && idx1 <= 955 && idy1 <= 600) {
+			button_retry.SetTopLeft(768, 530);
+			button_retry.SetFrameIndexOfBitmap(1);
+			button_retry.ShowBitmap();
+			button_retry_time = clock();
+
+		}
+		else if (idx1 >= 455 && idy1 > 536 && idx1 <= 661 && idy1 <= 600) {
+			button_menu.SetTopLeft(450, 530);
+			button_menu.SetFrameIndexOfBitmap(1);
+			button_menu.ShowBitmap();
+			button_menu_time = clock();
+		}
+
+		
+	}
+
+
+
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ����ʧ@
@@ -916,6 +960,7 @@ void CGameStateRun::OnShow()
 	//牆壁
 	bg.ShowBitmap();
 
+	
 
 	//牆壁
 
@@ -1085,33 +1130,10 @@ void CGameStateRun::OnShow()
 		continueUI.SetFrameIndexOfBitmap(1);
 		continueUI.ShowBitmap();
 	}
-	
-	/*
-	//碰到水池死亡
-	//角色一
-	if (CMovingBitmap::IsOverlap(foot1, pond) == true) {
-		character1[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
-	}
-	else if (CMovingBitmap::IsOverlap(foot1, blue_pond) == true) {
-		character1[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
-	}
 
-	//角色二
-	if (CMovingBitmap::IsOverlap(foot2, pond) == true) {
-		character2[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
-	}
-	else if (CMovingBitmap::IsOverlap(foot2, red_pond) == true) {
-		character2[0].SetFrameIndexOfBitmap(1);
-		//GotoGameState(GAME_STATE_OVER);
-		gameover.ShowBitmap();
-	}
-	*/
+	
+
+	
 
 
 	//搖桿
@@ -1138,6 +1160,19 @@ void CGameStateRun::OnShow()
 
 
 	show_image_by_phase();
+
+
+	//死亡畫面
+	if (isdead == true) {
+		gameover.ShowBitmap();
+		button_menu.ShowBitmap();
+		button_retry.ShowBitmap();
+		OnInit();
+	}
+
+
+
+
 
 	
 }
