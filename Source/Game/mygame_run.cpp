@@ -522,8 +522,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//角色 1 碰撞感測器 圖片讀取
 	foot1.LoadEmptyBitmap(5, 21);
 	head1.LoadEmptyBitmap(5, 21);
-	character1_left.LoadEmptyBitmap(60, 11);
-	character1_right.LoadEmptyBitmap(60, 11);
+	character1_left.LoadEmptyBitmap(50, 11);
+	character1_right.LoadEmptyBitmap(50, 11);
 
 	
 	character1[0].LoadBitmapByString({ "Resources/fireboy.bmp", "Resources/character_ignore.bmp" }, RGB(255, 255, 255));
@@ -579,8 +579,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	foot2.LoadEmptyBitmap(5, 21);
 	head2.LoadEmptyBitmap(5, 21);
-	character2_left.LoadEmptyBitmap(60, 11);
-	character2_right.LoadEmptyBitmap(60, 11);
+	character2_left.LoadEmptyBitmap(50, 11);
+	character2_right.LoadEmptyBitmap(50, 11);
 
 
 	//牆壁
@@ -681,7 +681,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			
 			// ramp2
 			ramp2_y1 = 330;
-			ramp2_y2 = 430;
+			ramp2_y2 = 440;
 			ramp2.SetTopLeft(1245, ramp2_y1);
 
 			////門
@@ -960,9 +960,9 @@ void CGameStateRun::OnShow()
 	head1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 4);
 	head1.ShowBitmap();
 
-	character1_left.SetTopLeft(character1[0].GetLeft() + 0, character1[0].GetTop() + 15);
+	character1_left.SetTopLeft(character1[0].GetLeft() + 0, character1[0].GetTop() + 25);
 	character1_left.ShowBitmap();
-	character1_right.SetTopLeft(character1[0].GetLeft() + 55, character1[0].GetTop() + 15);
+	character1_right.SetTopLeft(character1[0].GetLeft() + 55, character1[0].GetTop() + 25);
 	character1_right.ShowBitmap();
 	
 	//角色跑步動畫
