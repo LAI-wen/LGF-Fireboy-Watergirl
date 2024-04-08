@@ -136,7 +136,7 @@ namespace game_framework {
 		CMovingBitmap blue_diamond[4];
 		CMovingBitmap red_diamond[4];
 		CMovingBitmap joystick;
-
+		CMovingBitmap continueUI;
 
 		void show_image_by_phase();
 		void show_text_by_phase();
@@ -147,6 +147,7 @@ namespace game_framework {
 		bool validate_phase_5();
 		bool validate_phase_6();
 
+		int continue_what;
 		int floor[6] = {40,40,40,40,40,40};
 		int floor_num = 4;
 		int diamond_num = 0;

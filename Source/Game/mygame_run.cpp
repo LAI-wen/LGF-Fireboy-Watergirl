@@ -133,7 +133,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	if (jump1 == true && (clock() - jump1_time) < 500) {
-		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() - 12);
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() - 15);
 	}
 	else if (jump1 == true && (clock() - jump1_time) < 560) {
 		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop() - 5);
@@ -461,21 +461,21 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//角色一
 	if (CMovingBitmap::IsOverlap(foot1, pond) == true) {
 		character1[0].SetFrameIndexOfBitmap(1);
-		GotoGameState(GAME_STATE_OVER);
+		//GotoGameState(GAME_STATE_OVER);
 	}
 	else if (CMovingBitmap::IsOverlap(foot1, blue_pond) == true) {
 		character1[0].SetFrameIndexOfBitmap(1);
-		GotoGameState(GAME_STATE_OVER);
+		//GotoGameState(GAME_STATE_OVER);
 	}
 
 	//角色二
 	if (CMovingBitmap::IsOverlap(foot2, pond) == true) {
 		character2[0].SetFrameIndexOfBitmap(1);
-		GotoGameState(GAME_STATE_OVER);
+		//GotoGameState(GAME_STATE_OVER);
 	}
 	else if (CMovingBitmap::IsOverlap(foot2, red_pond) == true) {
 		character2[0].SetFrameIndexOfBitmap(1);
-		GotoGameState(GAME_STATE_OVER);
+		//GotoGameState(GAME_STATE_OVER);
 	}
 	
 }
@@ -651,12 +651,15 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}
 
 	
-	
-
 	//搖桿
 	joystick.LoadBitmapByString({ "Resources/joystick_1.bmp", "Resources/joystick_2.bmp" , "Resources/joystick_3.bmp" }, RGB(255, 255, 255));
 	joystick.SetTopLeft(500, 655);
 	joystick.SetAnimation(100, true);
+
+	//continue 介面
+	continueUI.LoadBitmapByString({ "Resources/continue.bmp", "Resources/continue_all.bmp" }, RGB(255, 255, 255));
+	continueUI.SetTopLeft(120, 150);
+
 
 
 
@@ -1044,26 +1047,37 @@ void CGameStateRun::OnShow()
 	red_pond.ShowBitmap();
 	blue_pond.ShowBitmap();
 
-	//door 動畫
-	if (CMovingBitmap::IsOverlap(character1[0], door1) == true && door1.GetFrameIndexOfBitmap() == 0) {
+	//門動畫
+	if (CMovingBitmap::IsOverlap(character1_right, door1) == true && door1.GetFrameIndexOfBitmap() == 0) {
 		door1.ToggleAnimation();
 	}
 
-	if (CMovingBitmap::IsOverlap(character2[0], door2) == true && door2.GetFrameIndexOfBitmap() == 0) {
+	if (CMovingBitmap::IsOverlap(character2_right, door2) == true && door2.GetFrameIndexOfBitmap() == 0) {
 		door2.ToggleAnimation();
 	}
 
 	// 判斷通關條件
 	if (door1.GetFrameIndexOfBitmap() == 5 && door2.GetFrameIndexOfBitmap() == 5) {
-		phase += 1;
-		OnInit();
-		/*
+		//phase += 1;
+		//OnInit();
 		if (phase == 1) {
 			if (diamond_num == 7) {
-
+				continue_what = 1;
+			}
+			else {
+				continue_what = 2;
 			}
 		}
-		*/
+
+	}
+
+	if (continue_what == 1) {
+		continueUI.SetFrameIndexOfBitmap(0);
+		continueUI.ShowBitmap();
+	}
+	else if (continue_what == 2) {
+		continueUI.SetFrameIndexOfBitmap(1);
+		continueUI.ShowBitmap();
 	}
 	
 
