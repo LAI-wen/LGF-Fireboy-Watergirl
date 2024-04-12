@@ -242,10 +242,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	if (box_moveleft == true && CMovingBitmap::IsOverlap(box, character2[0]) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() - 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() - 10, character2[0].GetTop());
 	}
 	if (box_moveright == true && CMovingBitmap::IsOverlap(box, character2[0]) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() + 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() + 10, character2[0].GetTop());
 	}
 
 
@@ -421,14 +421,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//向左推
 	if (CMovingBitmap::IsOverlap(character1_left, box) == true) {
 		if (GetAsyncKeyState(0x41) & 0x8000) {
-			box.SetTopLeft(box.GetLeft() - 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() - 10, box.GetTop());
 		}
 	}
 
 	//向右推
 	if (CMovingBitmap::IsOverlap(character1_right, box) == true) {
 		if (GetAsyncKeyState(0x44) & 0x8000) {
-			box.SetTopLeft(box.GetLeft() + 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() + 10, box.GetTop());
 		}
 	}
 
@@ -441,14 +441,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//向左推
 	if (CMovingBitmap::IsOverlap(character2_left, box) == true) {
 		if (keepLeft == true) {
-			box.SetTopLeft(box.GetLeft() - 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() - 10, box.GetTop());
 		}
 	}
 
 	//向右推
 	if (CMovingBitmap::IsOverlap(character2_right, box) == true) {
 		if (keepRight == true) {
-			box.SetTopLeft(box.GetLeft() + 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() + 10, box.GetTop());
 		}
 	}
 
@@ -1122,14 +1122,7 @@ void CGameStateRun::OnShow()
 
 	}
 
-	if (continue_what == 1) {
-		continueUI.SetFrameIndexOfBitmap(0);
-		continueUI.ShowBitmap();
-	}
-	else if (continue_what == 2) {
-		continueUI.SetFrameIndexOfBitmap(1);
-		continueUI.ShowBitmap();
-	}
+	
 
 	
 
@@ -1161,6 +1154,16 @@ void CGameStateRun::OnShow()
 
 	show_image_by_phase();
 
+
+	//continue 畫面
+	if (continue_what == 1) {
+		continueUI.SetFrameIndexOfBitmap(0);
+		continueUI.ShowBitmap();
+	}
+	else if (continue_what == 2) {
+		continueUI.SetFrameIndexOfBitmap(1);
+		continueUI.ShowBitmap();
+	}
 
 	//死亡畫面
 	if (isdead == true) {
