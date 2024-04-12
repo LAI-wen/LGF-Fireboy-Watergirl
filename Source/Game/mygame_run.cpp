@@ -1155,9 +1155,11 @@ void CGameStateRun::OnShow()
 		}
 
 
+
 		phase += 1;
 		OnInit();
 	}
+
 
 
 	
@@ -1191,12 +1193,15 @@ void CGameStateRun::OnShow()
 	if (continue_what == 1) {
 		continueUI.SetFrameIndexOfBitmap(0);
 		continueUI.ShowBitmap();
+
 		button_continue.ShowBitmap();
+
 	}
 	else if (continue_what == 2) {
 		continueUI.SetFrameIndexOfBitmap(1);
 		continueUI.ShowBitmap();
 		button_continue.ShowBitmap();
+
 	}
 
 	//死亡畫面
