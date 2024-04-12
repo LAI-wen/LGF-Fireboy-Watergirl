@@ -258,6 +258,8 @@ namespace game_framework {
 
 		int button_retry_time;
 		int button_menu_time;
+		int button_continue_time;
+		CMovingBitmap button_continue;
 		CMovingBitmap button_retry;
 		CMovingBitmap button_menu;
 

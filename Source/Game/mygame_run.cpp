@@ -190,7 +190,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (int i = 0; i < 10; i++) {
 			for (int n = 0; n < 40; n++) {
 				if (map[j][i][n] == 1) {
-					if (CMovingBitmap::IsOverlap(head1, maps[j][i][n]) == true) {
+					if (CMovingBitmap::IsOverlap(head1, maps[j][i][n]) == true || CMovingBitmap::IsOverlap(head1, ramp) == true || CMovingBitmap::IsOverlap(ramp2, ramp) == true) {
 						jump1 = false;
 						break;
 					}
@@ -242,10 +242,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 
 	if (box_moveleft == true && CMovingBitmap::IsOverlap(box, character2[0]) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() - 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() - 10, character2[0].GetTop());
 	}
 	if (box_moveright == true && CMovingBitmap::IsOverlap(box, character2[0]) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft() + 7, character2[0].GetTop());
+		character2[0].SetTopLeft(character2[0].GetLeft() + 10, character2[0].GetTop());
 	}
 
 
@@ -261,7 +261,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (int i = 0; i < 10; i++) {
 			for (int n = 0; n < 40; n++) {
 				if (map[j][i][n] == 1) {
-					if (CMovingBitmap::IsOverlap(head2, maps[j][i][n]) == true) {
+					if (CMovingBitmap::IsOverlap(head2, maps[j][i][n]) == true || CMovingBitmap::IsOverlap(head2, ramp) == true || CMovingBitmap::IsOverlap(head2, ramp2) == true) {
 						jump2 = false;
 					}
 
@@ -421,14 +421,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//向左推
 	if (CMovingBitmap::IsOverlap(character1_left, box) == true) {
 		if (GetAsyncKeyState(0x41) & 0x8000) {
-			box.SetTopLeft(box.GetLeft() - 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() - 10, box.GetTop());
 		}
 	}
 
 	//向右推
 	if (CMovingBitmap::IsOverlap(character1_right, box) == true) {
 		if (GetAsyncKeyState(0x44) & 0x8000) {
-			box.SetTopLeft(box.GetLeft() + 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() + 10, box.GetTop());
 		}
 	}
 
@@ -441,14 +441,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//向左推
 	if (CMovingBitmap::IsOverlap(character2_left, box) == true) {
 		if (keepLeft == true) {
-			box.SetTopLeft(box.GetLeft() - 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() - 10, box.GetTop());
 		}
 	}
 
 	//向右推
 	if (CMovingBitmap::IsOverlap(character2_right, box) == true) {
 		if (keepRight == true) {
-			box.SetTopLeft(box.GetLeft() + 7, box.GetTop());
+			box.SetTopLeft(box.GetLeft() + 10, box.GetTop());
 		}
 	}
 
@@ -484,6 +484,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	else if (clock() - button_retry_time <= 25500) {
 		isdead = 0;
 	}
+
+	if (clock() - button_continue_time == 21000) {
+		button_continue.SetFrameIndexOfBitmap(0);
+		button_continue.ShowBitmap();
+	}
+	else if (clock() - button_continue_time <= 25500) {
+		continue_what = 0;
+	}
 	
 	
 }
@@ -513,18 +521,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	maps_test[3][0].SetTopLeft(300, 390);
 	maps_test[4][0].SetTopLeft(300, 410);
 
-	// map1
 
-	ifstream ifs("map/map.txt");
-
-	//for (int k = 0; k < 5; k++) {
-		//for (int i = 0; i < 5; i++) {
-		//	ifs >> map_test[k][i];
-
-		//}
-	//}
-
-	//ifs.close();
 
 
 
@@ -549,7 +546,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	/////////////////////////////////角色 1 圖片讀取////////////////////////////////////////
 	//角色 1 碰撞感測器 圖片讀取
 	foot1.LoadEmptyBitmap(5, 21);
-	head1.LoadEmptyBitmap(5, 21);
+	head1.LoadEmptyBitmap(5, 30);
 	character1_left.LoadEmptyBitmap(50, 11);
 	character1_right.LoadEmptyBitmap(50, 11);
 
@@ -605,10 +602,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//角色2碰撞感測器 圖片讀取
 
-	foot2.LoadEmptyBitmap(5, 21);
-	head2.LoadEmptyBitmap(5, 21);
-	character2_left.LoadEmptyBitmap(50, 11);
-	character2_right.LoadEmptyBitmap(50, 11);
+	foot2.LoadBitmapByString({ "Resources/foot.bmp" }, RGB(255, 255, 255));
+	head2.LoadBitmapByString({ "Resources/head.bmp" }, RGB(255, 255, 255));
+	character2_left.LoadBitmapByString({ "Resources/left.bmp" }, RGB(255, 255, 255));
+	character2_right.LoadBitmapByString({ "Resources/left.bmp" }, RGB(255, 255, 255));
 
 
 	//牆壁
@@ -678,6 +675,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	button_retry.LoadBitmapByString({ "resources/button_retry.bmp","resources/button_retry1.bmp" });
 	button_menu.SetTopLeft(455, 536);
 	button_retry.SetTopLeft(772, 536);
+	button_continue.LoadBitmapByString({ "resources/button_continue1.bmp","resources/continue_button.bmp" });
+	button_continue.SetTopLeft(186, 536);
 
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -907,7 +906,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ����ʧ@
 {
-
+	// 死亡畫面 retry
 	if (isdead == true && (WM_LBUTTONDOWN)) {
 		int idx1 = point.x;
 		int idy1 = point.y;
@@ -925,8 +924,24 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_menu.ShowBitmap();
 			button_menu_time = clock();
 		}
+	
+	}
+	//continue
+	if ((continue_what == 1 || continue_what == 2) && (WM_LBUTTONDOWN)) {
+		int idx1 = point.x;
+		int idy1 = point.y;
 
-		
+		if (idx1 >= 752 && idy1 > 536 && idx1 <= 955 && idy1 <= 600) {
+			button_continue.SetFrameIndexOfBitmap(1);
+			button_continue.ShowBitmap();
+			button_continue_time = clock();
+
+		}
+		else if (idx1 >= 455 && idy1 > 536 && idx1 <= 661 && idy1 <= 600) {
+			button_continue.SetFrameIndexOfBitmap(1);
+			button_continue.ShowBitmap();
+			button_continue_time = clock();
+		}
 	}
 
 
@@ -1042,7 +1057,7 @@ void CGameStateRun::OnShow()
 
 	character1_left.SetTopLeft(character1[0].GetLeft() + 5, character1[0].GetTop() + 25);
 	character1_left.ShowBitmap();
-	character1_right.SetTopLeft(character1[0].GetLeft() + 50, character1[0].GetTop() + 25);
+	character1_right.SetTopLeft(character1[0].GetLeft() + 50, character1[0].GetTop() + 30);
 	character1_right.ShowBitmap();
 	
 	//角色跑步動畫
@@ -1070,9 +1085,9 @@ void CGameStateRun::OnShow()
 	head2.SetTopLeft(character2[0].GetLeft() + 39, character2[0].GetTop() + 20);
 	head2.ShowBitmap();
 
-	character2_left.SetTopLeft(character2[0].GetLeft() + 22, character2[0].GetTop() + 30);
+	character2_left.SetTopLeft(character2[0].GetLeft() + 22, character2[0].GetTop() + 35);
 	character2_left.ShowBitmap();
-	character2_right.SetTopLeft(character2[0].GetLeft() + 66, character2[0].GetTop() + 30);
+	character2_right.SetTopLeft(character2[0].GetLeft() + 66, character2[0].GetTop() + 35);
 	character2_right.ShowBitmap();
 
 	//角色跑步動畫
@@ -1108,28 +1123,42 @@ void CGameStateRun::OnShow()
 	}
 
 	// 判斷通關條件
-	if (door1.GetFrameIndexOfBitmap() == 5 && door2.GetFrameIndexOfBitmap() == 5) {
-		//phase += 1;
-		//OnInit();
+	if ((door1.GetFrameIndexOfBitmap() == 5 && door2.GetFrameIndexOfBitmap() == 5) || GetAsyncKeyState(0x32) & 0x8000) {
+
 		if (phase == 1) {
+			
 			if (diamond_num == 7) {
 				continue_what = 1;
 			}
 			else {
+				button_continue.ShowBitmap();
 				continue_what = 2;
 			}
+
+			
+			
+			ifstream ifs("map/map.map");
+			///
+			for (int n = 0; n < 3; n++) {
+				for (int k = 0; k < 10; k++) {
+					for (int i = 0; i < 40; i++) {
+						ifs >> map[n][k][i];
+
+					}
+				}
+			}
+			ifs.close();
+			OnInit();
+
+
+
 		}
 
+
+		phase += 1;
+		OnInit();
 	}
 
-	if (continue_what == 1) {
-		continueUI.SetFrameIndexOfBitmap(0);
-		continueUI.ShowBitmap();
-	}
-	else if (continue_what == 2) {
-		continueUI.SetFrameIndexOfBitmap(1);
-		continueUI.ShowBitmap();
-	}
 
 	
 
@@ -1143,8 +1172,6 @@ void CGameStateRun::OnShow()
 	}
 
 	if (CMovingBitmap::IsOverlap(character1_right, joystick) == true && joystick.GetFrameIndexOfBitmap() == 2) {
-		joystick.SetFrameIndexOfBitmap(2);
-		joystick.SetFrameIndexOfBitmap(1);
 		joystick.SetFrameIndexOfBitmap(0);
 	}
 
@@ -1153,14 +1180,24 @@ void CGameStateRun::OnShow()
 	}
 
 	if (CMovingBitmap::IsOverlap(character2_right, joystick) == true && joystick.GetFrameIndexOfBitmap() == 2) {
-		joystick.SetFrameIndexOfBitmap(2);
-		joystick.SetFrameIndexOfBitmap(1);
 		joystick.SetFrameIndexOfBitmap(0);
 	}
 
 
 	show_image_by_phase();
 
+
+	//continue 畫面
+	if (continue_what == 1) {
+		continueUI.SetFrameIndexOfBitmap(0);
+		continueUI.ShowBitmap();
+		button_continue.ShowBitmap();
+	}
+	else if (continue_what == 2) {
+		continueUI.SetFrameIndexOfBitmap(1);
+		continueUI.ShowBitmap();
+		button_continue.ShowBitmap();
+	}
 
 	//死亡畫面
 	if (isdead == true) {
