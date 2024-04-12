@@ -1136,8 +1136,6 @@ void CGameStateRun::OnShow()
 	}
 
 	if (CMovingBitmap::IsOverlap(character1_right, joystick) == true && joystick.GetFrameIndexOfBitmap() == 2) {
-		joystick.SetFrameIndexOfBitmap(2);
-		joystick.SetFrameIndexOfBitmap(1);
 		joystick.SetFrameIndexOfBitmap(0);
 	}
 
@@ -1146,8 +1144,6 @@ void CGameStateRun::OnShow()
 	}
 
 	if (CMovingBitmap::IsOverlap(character2_right, joystick) == true && joystick.GetFrameIndexOfBitmap() == 2) {
-		joystick.SetFrameIndexOfBitmap(2);
-		joystick.SetFrameIndexOfBitmap(1);
 		joystick.SetFrameIndexOfBitmap(0);
 	}
 
