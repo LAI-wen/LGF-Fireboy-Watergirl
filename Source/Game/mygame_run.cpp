@@ -545,10 +545,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	/////////////////////////////////角色 1 圖片讀取////////////////////////////////////////
 	//角色 1 碰撞感測器 圖片讀取
-	foot1.LoadEmptyBitmap(5, 21);
-	head1.LoadEmptyBitmap(5, 30);
-	character1_left.LoadEmptyBitmap(50, 11);
-	character1_right.LoadEmptyBitmap(50, 11);
+	foot1.LoadBitmapByString({ "Resources/foot.bmp" }, RGB(255, 255, 255));
+	head1.LoadBitmapByString({ "Resources/head.bmp" }, RGB(255, 255, 255));
+	character1_left.LoadBitmapByString({ "Resources/left.bmp" }, RGB(255, 255, 255));
+	character1_right.LoadBitmapByString({ "Resources/left.bmp" }, RGB(255, 255, 255));
 
 	
 	character1[0].LoadBitmapByString({ "Resources/fireboy.bmp", "Resources/character_ignore.bmp" }, RGB(255, 255, 255));
@@ -621,8 +621,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	ramp2.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
 
 	//箱子
-	box_left.LoadEmptyBitmap(40, 5);
-	box_right.LoadEmptyBitmap(40, 5);
+	box_left.LoadBitmapByString({ "Resources/box_side.bmp" }, RGB(255, 255, 255));
+	box_right.LoadBitmapByString({ "Resources/box_side.bmp" }, RGB(255, 255, 255));
 	box.LoadBitmapByString({ "Resources/box.bmp" }, RGB(255, 255, 255));
 	
 
