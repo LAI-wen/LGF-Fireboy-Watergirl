@@ -179,6 +179,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	diamond.generateObject();
 	joystick.generateObject();
 
+	pause.LoadBitmapByString({ "Resources/pause_img.bmp" }, RGB(255, 255, 255));;
+	
+
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////角色////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
@@ -354,6 +357,24 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 		}
 	
 	}
+	//pause call pause meau
+
+	if ((WM_LBUTTONDOWN)) {
+		int idx1 = point.x;
+		int idy1 = point.y;
+
+		/*
+		if (idx1 >= 1350 && idy1 > 15 && idx1 <= 1383 && idy1 <= 51 ) {
+			scene.showScene(3);
+
+		}
+		*/
+		
+
+	}
+
+
+
 	//continue
 	if ((continue_what == 1 || continue_what == 2) && (WM_LBUTTONDOWN)) {
 		int idx1 = point.x;
@@ -395,11 +416,17 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ��
 void CGameStateRun::OnShow()
 {
 
+	//暫停
+
+	
+
 	//地圖
 	bg.ShowBitmap();
+	
 
 	
 	map.showMap(phase);
+	pause.ShowBitmap();
 
 
 	door.showObject(phase);
@@ -969,6 +996,10 @@ void CGameStateRun::show_image_by_phase() {
 				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
 				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
 			}
+
+			//
+
+			pause.SetTopLeft(1350,15);
 
 
 			diamond_num = 0;
