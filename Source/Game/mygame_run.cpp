@@ -7,6 +7,9 @@
 #include "../Library/gamecore.h"
 #include "mygame.h"
 #include <fstream>
+#include "sstream"
+
+
 
 using namespace game_framework;
 
@@ -129,25 +132,20 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		isdead = true;
 		TRACE("red_isdead1=%d\n", isdead);
 	}
-	else if(CMovingBitmap::IsOverlap(foot2, pond.red_pond) == false && clock() - button_retry_time == 21000) {
-		button_retry.SetFrameIndexOfBitmap(0);
-		button_retry.ShowBitmap();
-	}
-	else if (CMovingBitmap::IsOverlap(foot2, pond.red_pond) == false && (clock() - button_retry_time <= 25500)) {
-		isdead = false;
-		button_retry_time = 0;
-		TRACE("isdead=%d\n", isdead);
-	}
+
 	
 
 	///死亡介面按鈕
+
+
 	if (clock() - button_retry_time == 21000) {
 		button_retry.SetFrameIndexOfBitmap(0);
 		button_retry.ShowBitmap();
 	}
-	else if (clock() - button_retry_time <= 25500 && clock() - button_retry_time >= 30000) {
+	else if (clock() - button_retry_time <= 25500 ) {
 		isdead = false;
 		TRACE("isdead=%d\n", isdead);
+		button_retry_time = clock();
 	}
 
 	if (clock() - button_continue_time == 21000) {
@@ -265,7 +263,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	button_menu.SetTopLeft(455, 536);
 	button_retry.SetTopLeft(772, 536);
 	button_continue.LoadBitmapByString({ "resources/button_continue1.bmp","resources/continue_button.bmp" });
-	button_continue.SetTopLeft(186, 536);
+	button_continue.SetTopLeft(230, 560);
 
 
 	show_image_by_phase();
@@ -361,14 +359,8 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 		int idx1 = point.x;
 		int idy1 = point.y;
 
-		if (idx1 >= 752 && idy1 > 536 && idx1 <= 955 && idy1 <= 600) {
-			button_continue.SetFrameIndexOfBitmap(1);
-			button_continue.ShowBitmap();
 
-			button_continue_time = clock();
-
-		}
-		else if (idx1 >= 455 && idy1 > 536 && idx1 <= 661 && idy1 <= 600) {
+		if (idx1 >= 570 && idy1 > 580 && idx1 <= 850 && idy1 <= 650) {
 			button_continue.SetFrameIndexOfBitmap(1);
 			button_continue.ShowBitmap();
 			button_continue_time = clock();
@@ -1049,3 +1041,6 @@ bool CGameStateRun::validate_phase_5() {
 bool CGameStateRun::validate_phase_6() {
 	return 0;
 }
+
+
+
