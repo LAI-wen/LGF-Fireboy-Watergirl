@@ -123,6 +123,8 @@ namespace game_framework {
 		CMovingBitmap continueUI;
 		CMovingBitmap gameover;
 
+		CMovingBitmap pause;
+
 		void gravety();
 		void boxMove();
 		void characterMove();
