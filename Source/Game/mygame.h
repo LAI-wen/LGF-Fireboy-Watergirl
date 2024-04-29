@@ -122,6 +122,9 @@ namespace game_framework {
 		CMovingBitmap gameover;
 
 		void gravety();
+		void boxMove();
+		void characterMove();
+
 		void show_image_by_phase();
 		void show_text_by_phase();
 		bool validate_phase_1();
