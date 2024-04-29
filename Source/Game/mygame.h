@@ -101,6 +101,8 @@ namespace game_framework {
 		void OnMove();									// ���ʹC������
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
+
+
 		int phase = 1;									//���d
 		int sub_phase = 1;								//�l���d
 		CMovingBitmap background;						//�I��
