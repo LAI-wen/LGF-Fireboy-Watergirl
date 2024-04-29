@@ -37,7 +37,7 @@ void Object::Door::showObject(int map_stage) {
 void Object::Button::generateObject() {
 	button1.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
 	button2.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
-	
+
 
 	button1_y = 435;
 	button2_y = 317;
@@ -78,12 +78,12 @@ void Object::Box::generateObject() {
 	box.LoadBitmapByString({ "Resources/box.bmp" }, RGB(255, 255, 255));
 	box_left.LoadBitmapByString({ "Resources/box_side.bmp" });
 	box_right.LoadBitmapByString({ "Resources/box_side.bmp" });
-	
+
 	box.SetTopLeft(700, 250);
 	//box_left.SetTopLeft(box.GetLeft() - 5, box.GetTop());
 	//box_right.SetTopLeft(box.GetLeft() + 43, box.GetTop());
-	
-	
+
+
 }
 
 void Object::Box::showObject(int map_stage) {
@@ -136,7 +136,7 @@ void Object::Diamond::showObject(int map_stage) {
 		for (int i = 0; i < 4; i++) {
 			red_diamond[i].ShowBitmap();
 			blue_diamond[i].ShowBitmap();
-			
+
 		}
 	}
 }

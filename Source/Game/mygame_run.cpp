@@ -112,18 +112,31 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	//角色一
 	if (CMovingBitmap::IsOverlap(foot1, pond.pond) == true) {
 		isdead = true;
+		TRACE("isdead2=%d\n", isdead);
 	}
 	else if (CMovingBitmap::IsOverlap(foot1, pond.blue_pond) == true) {
 		isdead = true;
+		TRACE("blue_isdead2=%d\n", isdead);
 
 	}
 	
 	//角色二
 	if (CMovingBitmap::IsOverlap(foot2, pond.pond) == true) {
 		isdead = true;
+		TRACE("isdead1=%d\n", isdead);
 	}
 	else if (CMovingBitmap::IsOverlap(foot2, pond.red_pond) == true) {
 		isdead = true;
+		TRACE("red_isdead1=%d\n", isdead);
+	}
+	else if(CMovingBitmap::IsOverlap(foot2, pond.red_pond) == false && clock() - button_retry_time == 21000) {
+		button_retry.SetFrameIndexOfBitmap(0);
+		button_retry.ShowBitmap();
+	}
+	else if (CMovingBitmap::IsOverlap(foot2, pond.red_pond) == false && (clock() - button_retry_time <= 25500)) {
+		isdead = false;
+		button_retry_time = 0;
+		TRACE("isdead=%d\n", isdead);
 	}
 	
 
@@ -132,8 +145,9 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		button_retry.SetFrameIndexOfBitmap(0);
 		button_retry.ShowBitmap();
 	}
-	else if (clock() - button_retry_time <= 25500) {
-		isdead = 0;
+	else if (clock() - button_retry_time <= 25500 && clock() - button_retry_time >= 30000) {
+		isdead = false;
+		TRACE("isdead=%d\n", isdead);
 	}
 
 	if (clock() - button_continue_time == 21000) {
@@ -254,46 +268,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	button_continue.SetTopLeft(186, 536);
 
 
-	/////////////////////////////////////////////////////////////////////////////
-	//////////// 物件在不同關卡的初始位置
-	/////////////////////////////////////////////////////////////////////////////
-	if (phase <= 6) {
-		if (phase == 1 && sub_phase == 1) {
-			// 角色與箱子
-			character1[0].SetTopLeft(25, 640);
-			character2[0].SetTopLeft(25, 760);
-			
-
-			for (int i = 0; i < 4; i++) {
-				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
-				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
-			}
-			
-
-			diamond_num = 0;
-			
-		}
-
-		if (phase == 2 && sub_phase == 1) {
-			character1[0].SetTopLeft(25, 640);
-			character2[0].SetTopLeft(25, 760);
-			
-		}
-		if (phase == 3 && sub_phase == 1) {
-
-		}
-		if (phase == 4 && sub_phase == 1) {
-
-		}
-		if (phase == 5 && sub_phase == 1) {
-
-		}
-		if (phase == 6 && sub_phase == 1) {
-
-		}
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////
+	show_image_by_phase();
+	
 
 }
 
@@ -388,6 +364,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 		if (idx1 >= 752 && idy1 > 536 && idx1 <= 955 && idy1 <= 600) {
 			button_continue.SetFrameIndexOfBitmap(1);
 			button_continue.ShowBitmap();
+
 			button_continue_time = clock();
 
 		}
@@ -433,15 +410,15 @@ void CGameStateRun::OnShow()
 	map.showMap(phase);
 
 
+	door.showObject(phase);
+	button.showObject(phase);
+	ramp.showObject(phase);
+	box.showObject(phase);
+	pond.showObject(phase);
+	diamond.showObject(phase);
+	joystick.showObject(phase);
 
 
-	door.showObject(1);
-	button.showObject(1);
-	ramp.showObject(1);
-	box.showObject(1);
-	pond.showObject(1);
-	diamond.showObject(1);
-	joystick.showObject(1);
 
 	
 	box.box_left.SetTopLeft(box.box.GetLeft() - 5, box.box.GetTop());
@@ -594,7 +571,7 @@ void CGameStateRun::OnShow()
 	}
 
 	
-	show_image_by_phase();
+	
 	
 	//搖桿
 	//joystick.ShowBitmap();
@@ -615,7 +592,7 @@ void CGameStateRun::OnShow()
 	}
 
 
-	show_image_by_phase();
+	
 
 	//死掉介面 0
 	//繼續_ALL寶石介面 1
@@ -625,16 +602,11 @@ void CGameStateRun::OnShow()
 	//continue 畫面
 	if (continue_what == 1) {
 		scene.showScene(1);
-		continueUI.SetFrameIndexOfBitmap(0);
-		continueUI.ShowBitmap();
-
 		button_continue.ShowBitmap();
 
 	}
 	else if (continue_what == 2) {
 		scene.showScene(2);
-		continueUI.SetFrameIndexOfBitmap(1);
-		continueUI.ShowBitmap();
 		button_continue.ShowBitmap();
 
 	}
@@ -645,7 +617,9 @@ void CGameStateRun::OnShow()
 		gameover.ShowBitmap();
 		button_menu.ShowBitmap();
 		button_retry.ShowBitmap();
-		OnInit();
+		show_image_by_phase();
+		
+
 	}
 
 
@@ -979,19 +953,36 @@ void CGameStateRun::boxMove() {
 
 
 void CGameStateRun::show_image_by_phase() {
+	/////////////////////////////////////////////////////////////////////////////
+	//////////// 物件在不同關卡的初始位置
+	/////////////////////////////////////////////////////////////////////////////
 	if (phase <= 6) {
-
 		if (phase == 1 && sub_phase == 1) {
+			// 角色與箱子
+			character1[0].SetTopLeft(25, 640);
+			character2[0].SetTopLeft(25, 760);
+
+
+			for (int i = 0; i < 4; i++) {
+				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
+				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
+			}
+
+
+			diamond_num = 0;
 
 		}
+
 		if (phase == 2 && sub_phase == 1) {
+			character1[0].SetTopLeft(25, 640);
+			character2[0].SetTopLeft(25, 760);
 
 		}
 		if (phase == 3 && sub_phase == 1) {
 
 		}
 		if (phase == 4 && sub_phase == 1) {
-	
+
 		}
 		if (phase == 5 && sub_phase == 1) {
 
@@ -1000,6 +991,8 @@ void CGameStateRun::show_image_by_phase() {
 
 		}
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void CGameStateRun::show_text_by_phase() {
