@@ -76,10 +76,10 @@ void Object::Button::setObject(int map_stage) {
 		break;
 
 	case 2:
-		button1_y = 550;
-		button2_y = 550;
+		button1_y = 555;
+		button2_y = 555;
 		button1.SetTopLeft(300, button1_y);
-		button2.SetTopLeft(1000, button2_y);
+		button2.SetTopLeft(1050, button2_y);
 		break;
 	}
 }
@@ -182,6 +182,13 @@ void Object::Pond::generateObject() {
 	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
 	red_pond.LoadBitmapByString({ "Resources/red_pond.bmp" }, RGB(255, 255, 255));
 	blue_pond.LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
+
+	for (int i = 0; i < 2; i++) {
+		long_pond[i].LoadBitmapByString({ "Resources/long_green_pond.bmp" }, RGB(255, 255, 255));
+		long_red_pond[i].LoadBitmapByString({ "Resources/long_red_pond.bmp" }, RGB(255, 255, 255));
+		long_blue_pond[i].LoadBitmapByString({ "Resources/long_blue_pond.bmp" }, RGB(255, 255, 255));
+	}
+	
 }
 
 void Object::Pond::setObject(int map_stage) {
@@ -193,9 +200,12 @@ void Object::Pond::setObject(int map_stage) {
 		break;
 
 	case 2:
-		pond.SetTopLeft(840, 660);
-		red_pond.SetTopLeft(630, 840);
-		blue_pond.SetTopLeft(872, 840);
+		long_pond[0].SetTopLeft(308, 420);
+		long_pond[1].SetTopLeft(807, 420);
+		long_red_pond[0].SetTopLeft(280, 840);
+		long_red_pond[1].SetTopLeft(770, 720);
+		long_blue_pond[0].SetTopLeft(280, 720);
+		long_blue_pond[1].SetTopLeft(770, 840);
 		break;
 	}
 }
@@ -209,9 +219,12 @@ void Object::Pond::showObject(int map_stage) {
 		break;
 
 	case 2:
-		pond.ShowBitmap();
-		red_pond.ShowBitmap();
-		blue_pond.ShowBitmap();
+		long_pond[0].ShowBitmap();
+		long_red_pond[0].ShowBitmap();
+		long_blue_pond[0].ShowBitmap();
+		long_pond[1].ShowBitmap();
+		long_red_pond[1].ShowBitmap();
+		long_blue_pond[1].ShowBitmap();
 		break;
 	}
 }
