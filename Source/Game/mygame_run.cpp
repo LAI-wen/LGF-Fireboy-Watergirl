@@ -523,12 +523,14 @@ void CGameStateRun::OnShow()
 			if (diamond_num == 7) {
 				continue_what = 1;
 				phase += 1;
+				show_image_by_phase();
 
 			}
 			else {
 				button_continue.ShowBitmap();
 				continue_what = 2;
 				phase += 1;
+				show_image_by_phase();
 			}
 
 
@@ -949,6 +951,14 @@ void CGameStateRun::show_image_by_phase() {
 	//////////// 物件在不同關卡的初始位置
 	/////////////////////////////////////////////////////////////////////////////
 	if (phase <= 6) {
+		door.setObject(phase);
+		button.setObject(phase);
+		ramp.setObject(phase);
+		box.setObject(phase);
+		pond.setObject(phase);
+		diamond.setObject(phase);
+		joystick.setObject(phase);
+
 		if (phase == 1 && sub_phase == 1) {
 			// 角色與箱子
 			character1[0].SetTopLeft(25, 640);

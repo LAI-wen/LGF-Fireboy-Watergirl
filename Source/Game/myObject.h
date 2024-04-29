@@ -13,15 +13,17 @@ namespace Object {
 	class Object {
 	public:
 		virtual void generateObject() = 0;
+		virtual void setObject(int map_stage) = 0;
 		virtual void showObject(int map_stage) = 0;
-
 	};
 
 	class Door : public Object {
 	public:
 		CMovingBitmap door1;
 		CMovingBitmap door2;
+
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 	};
 
@@ -33,6 +35,7 @@ namespace Object {
 		int button2_y;
 
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 
 	};
@@ -47,6 +50,7 @@ namespace Object {
 		int ramp2_y2;
 
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 	};
 
@@ -57,6 +61,7 @@ namespace Object {
 		CMovingBitmap box_right;
 
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 
 	};
@@ -66,7 +71,12 @@ namespace Object {
 		CMovingBitmap pond;
 		CMovingBitmap red_pond;
 		CMovingBitmap blue_pond;
+		CMovingBitmap long_pond[2];
+		CMovingBitmap long_red_pond[2];
+		CMovingBitmap long_blue_pond[2];
+
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 	};
 
@@ -74,14 +84,18 @@ namespace Object {
 	public:
 		CMovingBitmap red_diamond[4];
 		CMovingBitmap blue_diamond[4];
+
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 	};
 
 	class Joystick : public Object {
 	public:
 		CMovingBitmap joystick;
+
 		void generateObject();
+		void setObject(int map_stage);
 		void showObject(int map_stage);
 	};
 }
