@@ -298,11 +298,13 @@ void Object::Joystick::setObject(int map_stage) {
 	case 1:
 		joystick.SetTopLeft(300, 535);
 		joystick.SetAnimation(100, true);
+		joystick.SetFrameIndexOfBitmap(0);
 		break;
 
 	case 2:
 		joystick.SetTopLeft(0, 0);
 		joystick.SetAnimation(100, true);
+		joystick.SetFrameIndexOfBitmap(0);
 		break;
 	}
 }
