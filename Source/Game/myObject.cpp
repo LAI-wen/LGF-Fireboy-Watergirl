@@ -200,6 +200,9 @@ void Object::Pond::setObject(int map_stage) {
 		break;
 
 	case 2:
+		pond.SetTopLeft(0, 0);
+		red_pond.SetTopLeft(0, 0);
+		blue_pond.SetTopLeft(0, 0);
 		long_pond[0].SetTopLeft(308, 420);
 		long_pond[1].SetTopLeft(807, 420);
 		long_red_pond[0].SetTopLeft(280, 840);
