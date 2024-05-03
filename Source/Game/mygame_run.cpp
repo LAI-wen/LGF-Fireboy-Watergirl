@@ -705,29 +705,30 @@ void CGameStateRun::gravety() {
 	}
 
 	// 箱子重力
-	bool gravity_flag_box = false;
+	if (phase == 1) {
+		bool gravity_flag_box = false;
 
-	if (CMovingBitmap::IsOverlap(box.box, ramp.ramp) == true) {
-		gravity_flag_box = true;
-	}
+		if (CMovingBitmap::IsOverlap(box.box, ramp.ramp) == true) {
+			gravity_flag_box = true;
+		}
 
 
-	int box_y = (box.box.GetTop()) / 30;
-	for (int j = box_y; j < min(box_y + 3, 29); j++) {
-		for (int i = 0; i < 40; i++) {
-			if (map.int_map[phase - 1][j][i] == 1) {
-				if (CMovingBitmap::IsOverlap(box.box, map.map1[phase - 1][j][i]) == true) {
-					gravity_flag_box = true;
-					break;
+		int box_y = (box.box.GetTop()) / 30;
+		for (int j = box_y; j < min(box_y + 3, 29); j++) {
+			for (int i = 0; i < 40; i++) {
+				if (map.int_map[phase - 1][j][i] == 1) {
+					if (CMovingBitmap::IsOverlap(box.box, map.map1[phase - 1][j][i]) == true) {
+						gravity_flag_box = true;
+						break;
+					}
 				}
 			}
 		}
-	}
 
-	if (gravity_flag_box == false) {
-		box.box.SetTopLeft(box.box.GetLeft(), box.box.GetTop() + 5);
+		if (gravity_flag_box == false) {
+			box.box.SetTopLeft(box.box.GetLeft(), box.box.GetTop() + 5);
+		}
 	}
-
 }
 
 
