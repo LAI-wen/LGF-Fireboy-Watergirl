@@ -32,9 +32,12 @@ namespace Object {
 		CMovingBitmap button1;
 		CMovingBitmap button2;
 		CMovingBitmap purple_button[2];
+		CMovingBitmap white_button;
+
 		int button1_y;
 		int button2_y;
 		int purple_button_y[2];
+		int white_button_y;
 
 		void generateObject();
 		void setObject(int map_stage);
@@ -48,6 +51,8 @@ namespace Object {
 		CMovingBitmap ramp2;
 		CMovingBitmap purple_ramp;
 		CMovingBitmap white_ramp;
+		CMovingBitmap green_ramp;
+		CMovingBitmap red_ramp;
 
 		int ramp_y1;
 		int ramp_y2;
@@ -57,6 +62,10 @@ namespace Object {
 		int purple_ramp_x2;
 		int white_ramp_y1;
 		int white_ramp_y2;
+		int green_ramp_y1;
+		int green_ramp_y2;
+		int red_ramp_y1;
+		int red_ramp_y2;
 
 		void generateObject();
 		void setObject(int map_stage);
@@ -102,6 +111,17 @@ namespace Object {
 	class Joystick : public Object {
 	public:
 		CMovingBitmap joystick;
+		CMovingBitmap green_joystick;
+		CMovingBitmap red_joystick;
+
+		void generateObject();
+		void setObject(int map_stage);
+		void showObject(int map_stage);
+	};
+
+	class Ball : public Object {
+	public:
+		CMovingBitmap ball[2];
 
 		void generateObject();
 		void setObject(int map_stage);
