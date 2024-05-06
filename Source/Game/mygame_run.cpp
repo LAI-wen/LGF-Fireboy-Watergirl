@@ -77,7 +77,35 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	else {
 		ramp.ramp2.SetTopLeft(ramp.ramp2.GetLeft(), max(ramp.ramp2_y1, ramp.ramp2.GetTop() - 5));
 	}
+
+	// button1 && button2 操控 white ramp
+	if (button.button1.GetTop() > button.button1_y || button.button2.GetTop() > button.button2_y) {
+		ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), min(ramp.white_ramp_y2, ramp.white_ramp.GetTop() + 5));
+	}
+	else {
+		ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), max(ramp.white_ramp_y1, ramp.white_ramp.GetTop() - 5));
+	}
 	
+	// purple button
+	for (int i = 0; i < 2; i++) {
+		if (CMovingBitmap::IsOverlap(foot1, button.purple_button[i]) == true || CMovingBitmap::IsOverlap(foot2, button.purple_button[i]) == true) {
+			button.purple_button[i].SetTopLeft(button.purple_button[i].GetLeft(), button.purple_button[i].GetTop() + 1);
+		}
+		else if (button.purple_button[i].GetTop() > button.purple_button_y[i]) {
+			button.purple_button[i].SetTopLeft(button.purple_button[i].GetLeft(), button.purple_button[i].GetTop() - 2);
+		}
+		else if (button.purple_button[i].GetTop() == button.purple_button_y[i] + 15) {
+			button.purple_button[i].SetTopLeft(button.purple_button[i].GetLeft(), button.purple_button[i].GetTop());
+		}
+	}
+
+	// purple button 操控 purple ramp
+	if (button.purple_button[0].GetTop() > button.purple_button_y[0] || button.purple_button[1].GetTop() > button.purple_button_y[1]) {
+		ramp.purple_ramp.SetTopLeft(min(ramp.purple_ramp_x2, ramp.purple_ramp.GetLeft() + 5), ramp.purple_ramp.GetTop());
+	}
+	else {
+		ramp.purple_ramp.SetTopLeft(max(ramp.purple_ramp_x1, ramp.purple_ramp.GetLeft() - 5), ramp.purple_ramp.GetTop());
+	}
 
 
 	// joystick 控制 ramp1
@@ -107,6 +135,30 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 	
+	// purple ramp
+	if (CMovingBitmap::IsOverlap(foot1, ramp.purple_ramp) == true) {
+		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
+	}
+
+	if (CMovingBitmap::IsOverlap(foot2, ramp.purple_ramp) == true) {
+		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
+	}
+
+	// white ramp
+	if (CMovingBitmap::IsOverlap(character1_left, ramp.white_ramp) == true) {
+		character1[0].SetTopLeft(character1[0].GetLeft() + 8, character1[0].GetTop());
+	}
+	if (CMovingBitmap::IsOverlap(character2_left, ramp.white_ramp) == true) {
+		character2[0].SetTopLeft(character2[0].GetLeft() + 8, character2[0].GetTop());
+	}
+
+	if (CMovingBitmap::IsOverlap(character1_right, ramp.white_ramp) == true) {
+		character1[0].SetTopLeft(character1[0].GetLeft() - 8, character1[0].GetTop());
+	}
+
+	if (CMovingBitmap::IsOverlap(character2_right, ramp.white_ramp) == true) {
+		character2[0].SetTopLeft(character2[0].GetLeft() - 8, character2[0].GetTop());
+	}
 
 
 
@@ -115,23 +167,37 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	//角色一
 	if (CMovingBitmap::IsOverlap(foot1, pond.pond) == true) {
 		isdead = true;
-		TRACE("isdead2=%d\n", isdead);
+		//TRACE("isdead2=%d\n", isdead);
 	}
 	else if (CMovingBitmap::IsOverlap(foot1, pond.blue_pond) == true) {
 		isdead = true;
-		TRACE("blue_isdead2=%d\n", isdead);
+		//TRACE("blue_isdead2=%d\n", isdead);
 
 	}
+
+	for (int i = 0; i < 2; i++) {
+		if (CMovingBitmap::IsOverlap(foot1, pond.long_pond[i]) == true)
+			isdead = true;
+		else if (CMovingBitmap::IsOverlap(foot1, pond.long_blue_pond[i]) == true)
+			isdead = true;
+	}
 	
-	TRACE("00isdead1=%d\n", isdead);
+	//TRACE("00isdead1=%d\n", isdead);
 	//角色二
 	if (CMovingBitmap::IsOverlap(foot2, pond.pond) == true) {
 		isdead = true;
-		TRACE("isdead1=%d\n", isdead);
+		//TRACE("isdead1=%d\n", isdead);
 	}
 	else if (CMovingBitmap::IsOverlap(foot2, pond.red_pond) == true) {
 		isdead = true;
-		TRACE("red_isdead1=%d\n", isdead);
+		//TRACE("red_isdead1=%d\n", isdead);
+	}
+
+	for (int i = 0; i < 2; i++) {
+		if (CMovingBitmap::IsOverlap(foot2, pond.long_pond[i]) == true)
+			isdead = true;
+		else if (CMovingBitmap::IsOverlap(foot2, pond.long_red_pond[i]) == true)
+			isdead = true;
 	}
 
 	
@@ -145,7 +211,7 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	}
 	else if (isdead == true && clock() - button_retry_time <= 25500 ) {
 		//isdead = false;
-		TRACE("isdead=%d\n", isdead);
+		//TRACE("isdead=%d\n", isdead);
 
 	}
 
@@ -269,6 +335,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	button_retry.SetTopLeft(772, 536);
 	button_continue.LoadBitmapByString({ "resources/button_continue1.bmp","resources/continue_button.bmp" });
 	button_continue.SetTopLeft(230, 560);
+
+
+	
 
 
 	show_image_by_phase();
@@ -448,24 +517,26 @@ void CGameStateRun::OnShow()
 	
 	
 
-
-	//寶石
-	for (int i = 0; i < 4; i++) {
-		diamond.red_diamond[i].ShowBitmap();
+	
+	//吃寶石
+	for (int i = 0; i < 8; i++) {
 		if (CMovingBitmap::IsOverlap(character1[0], diamond.red_diamond[i]) == true) {
 			diamond.red_diamond[i].SetFrameIndexOfBitmap(1);
+			diamond.red_diamond[i].SetTopLeft(0, 0);
 			diamond_num++;
 		}
 
-		diamond.blue_diamond[i].ShowBitmap();
 		if (CMovingBitmap::IsOverlap(character2[0], diamond.blue_diamond[i]) == true) {
 			diamond.blue_diamond[i].SetFrameIndexOfBitmap(1);
+			diamond.blue_diamond[i].SetTopLeft(0, 0);
 			diamond_num++;
 		}
 	}
 	
 	
-
+	//判斷吃幾顆寶石
+	eat_diamond = diamondNum();
+	//TRACE("diamond = %d", eat_diamond);
 	
 
 	
@@ -550,7 +621,9 @@ void CGameStateRun::OnShow()
 
 		if (phase == 1) {
 
-			if (diamond_num == 7) {
+			
+
+			if (eat_diamond == 7) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
@@ -983,6 +1056,7 @@ void CGameStateRun::boxMove() {
 
 
 
+
 void CGameStateRun::show_image_by_phase() {
 	/////////////////////////////////////////////////////////////////////////////
 	//////////// 物件在不同關卡的初始位置
@@ -1002,7 +1076,7 @@ void CGameStateRun::show_image_by_phase() {
 			character2[0].SetTopLeft(25, 760);
 
 
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 8; i++) {
 				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
 				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
 			}
@@ -1022,6 +1096,12 @@ void CGameStateRun::show_image_by_phase() {
 		if (phase == 2 && sub_phase == 1) {
 			character1[0].SetTopLeft(25, 640);
 			character2[0].SetTopLeft(25, 760);
+
+			for (int i = 0; i < 8; i++) {
+				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
+				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
+			}
+
 			isdead = false;
 
 
@@ -1043,60 +1123,21 @@ void CGameStateRun::show_image_by_phase() {
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-void CGameStateRun::show_text_by_phase() {
-	CDC *pDC = CDDraw::GetBackCDC();
 
-	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(0, 0, 0), 800);
+//寶石記數
+int CGameStateRun::diamondNum() {
+	for (int i = 0; i < 8; i++) {
+		if (CMovingBitmap::IsOverlap(character1[0], diamond.red_diamond[i]) == true) {
+			diamond_num++;
+			//TRACE("eat %d red = %d\n", i, diamond_num);
+		}
 
-	if (phase == 1 && sub_phase == 1) {
-
+		if (CMovingBitmap::IsOverlap(character2[0], diamond.blue_diamond[i]) == true) {
+			diamond_num++;
+			//TRACE("eat %d blue = %d\n", i, diamond_num);
+		}
 	}
-	else if (phase == 2 && sub_phase == 1) {
-
-	}
-	else if (phase == 3 && sub_phase == 1) {
-
-	}
-	else if (phase == 4 && sub_phase == 1) {
-
-	}
-	else if (phase == 5 && sub_phase == 1) {
-
-	}
-	else if (phase == 6 && sub_phase == 1) {
-
-	}
-	else if (sub_phase == 2) {
-
-	}
-
-	CDDraw::ReleaseBackCDC();
+	
+	//TRACE("diamond num = %d\n", diamond_num);
+	return diamond_num;
 }
-
-bool CGameStateRun::validate_phase_1() {
-
-	return 0;
-}
-
-bool CGameStateRun::validate_phase_2() {
-	return 0;
-}
-
-bool CGameStateRun::validate_phase_3() {
-	return 0;
-}
-
-bool CGameStateRun::validate_phase_4() {
-	return 0;
-}
-
-bool CGameStateRun::validate_phase_5() {
-	return 0;
-}
-
-bool CGameStateRun::validate_phase_6() {
-	return 0;
-}
-
-
-
