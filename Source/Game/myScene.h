@@ -7,7 +7,7 @@
 class Scene {
 public:
 
-	game_framework::CMovingBitmap window[9];
+	game_framework::CMovingBitmap window[10];
 
 	void loadScene();
 	void showScene(int page_phase);
