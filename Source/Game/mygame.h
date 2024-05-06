@@ -135,6 +135,9 @@ namespace game_framework {
 		void show_image_by_phase();
 		bool isdead = false;
 		bool ispause = false;
+		bool ismenu = false;
+
+		int pass_phase = 0;
 
 		int continue_what;
 		int floor[6] = {40,40,40,40,40,40};
