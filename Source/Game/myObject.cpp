@@ -34,7 +34,7 @@ void Object::Door::setObject(int map_stage) {
 		door1.SetFrameIndexOfBitmap(0);
 		door2.SetFrameIndexOfBitmap(0);
 		break;
-	
+
 	case 2:
 		door1.SetTopLeft(50, 70);
 		door1.SetAnimation(100, true);
@@ -45,10 +45,19 @@ void Object::Door::setObject(int map_stage) {
 		door1.SetFrameIndexOfBitmap(0);
 		door2.SetFrameIndexOfBitmap(0);
 		break;
-	
-	}
-	
 
+	case 3:
+		door1.SetTopLeft(410, 245);
+		door1.SetAnimation(100, true);
+
+		door2.SetTopLeft(765, 245);
+		door2.SetAnimation(100, true);
+
+		door1.SetFrameIndexOfBitmap(0);
+		door2.SetFrameIndexOfBitmap(0);
+		break;
+
+	}
 }
 
 void Object::Door::showObject(int map_stage) {
@@ -61,7 +70,11 @@ void Object::Door::showObject(int map_stage) {
 	case 2:
 		door1.ShowBitmap();
 		door2.ShowBitmap();
+		break;
 
+	case 3:
+		door1.ShowBitmap();
+		door2.ShowBitmap();
 		break;
 	}
 
@@ -73,6 +86,8 @@ void Object::Button::generateObject() {
 	button2.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
 	purple_button[0].LoadBitmapByString({ "Resources/purple_button.bmp" }, RGB(255, 255, 255));
 	purple_button[1].LoadBitmapByString({ "Resources/purple_button.bmp" }, RGB(255, 255, 255));
+	white_button.LoadBitmapByString({ "Resources/white_button.bmp" }, RGB(255, 255, 255));
+
 }
 
 void Object::Button::setObject(int map_stage) {
@@ -95,6 +110,21 @@ void Object::Button::setObject(int map_stage) {
 		purple_button[0].SetTopLeft(300, purple_button_y[0]);
 		purple_button[1].SetTopLeft(900, purple_button_y[1]);
 		break;
+
+	case 3:
+		button1_y = 0;
+		button2_y = 0;
+		button1.SetTopLeft(0, button1_y);
+		button2.SetTopLeft(0, button2_y);
+
+		white_button_y = 830;
+		white_button.SetTopLeft(1185, white_button_y);
+
+		purple_button_y[0] = 830;
+		purple_button_y[1] = 0;
+		purple_button[0].SetTopLeft(1290, purple_button_y[0]);
+		purple_button[1].SetTopLeft(0, purple_button_y[1]);
+		break;
 	}
 }
 
@@ -112,6 +142,11 @@ void Object::Button::showObject(int map_stage) {
 		purple_button[1].ShowBitmap();
 		break;
 
+	case 3:
+		white_button.ShowBitmap();
+		purple_button[0].ShowBitmap();
+		break;
+
 	}
 	
 
@@ -123,6 +158,9 @@ void Object::Ramp::generateObject() {
 	ramp2.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
 	purple_ramp.LoadBitmapByString({ "Resources/purple_ramp.bmp" });
 	white_ramp.LoadBitmapByString({ "Resources/white_ramp2.bmp" });
+	green_ramp.LoadBitmapByString({ "Resources/green_ramp.bmp" });
+	red_ramp.LoadBitmapByString({ "Resources/red_ramp.bmp" });
+
 }
 
 void Object::Ramp::setObject(int map_stage) {
@@ -163,6 +201,32 @@ void Object::Ramp::setObject(int map_stage) {
 		white_ramp.SetTopLeft(680, white_ramp_y1);
 
 		break;
+
+	case 3:
+		ramp_y1 = 0;
+		ramp_y2 = 0;
+		ramp.SetTopLeft(0, ramp_y1);
+
+		ramp2_y1 = 0;
+		ramp2_y2 = 0;
+		ramp2.SetTopLeft(0, ramp2_y1);
+
+		purple_ramp_x1 = 0;
+		purple_ramp_x2 = 0;
+		purple_ramp.SetTopLeft(purple_ramp_x1, 0);
+
+		white_ramp_y1 = 0;
+		white_ramp_y2 = 0;
+		white_ramp.SetTopLeft(0, white_ramp_y1);
+
+		green_ramp_y1 = 195;
+		green_ramp_y2 = 95;
+		green_ramp.SetTopLeft(540, green_ramp_y1);
+
+		red_ramp_y1 = 195;
+		red_ramp_y2 = 95;
+		red_ramp.SetTopLeft(700, red_ramp_y1);
+		break;
 	}
 	
 }
@@ -177,6 +241,11 @@ void Object::Ramp::showObject(int map_stage) {
 	case 2:
 		purple_ramp.ShowBitmap();
 		white_ramp.ShowBitmap();
+		break;
+
+	case 3:
+		green_ramp.ShowBitmap();
+		red_ramp.ShowBitmap();
 		break;
 	}
 }
@@ -209,7 +278,6 @@ void Object::Box::showObject(int map_stage) {
 		break;
 
 	case 2:
-		
 		break;
 	}
 }
@@ -350,6 +418,9 @@ void Object::Diamond::showObject(int map_stage) {
 //Joystick
 void Object::Joystick::generateObject() {
 	joystick.LoadBitmapByString({ "Resources/joystick_1.bmp", "Resources/joystick_2.bmp" , "Resources/joystick_3.bmp" }, RGB(255, 255, 255));
+	green_joystick.LoadBitmapByString({ "Resources/green_joystick.bmp", "Resources/green_joystick1.bmp" }, RGB(255, 255, 255));
+	red_joystick.LoadBitmapByString({ "Resources/red_joystick.bmp", "Resources/red_joystick1.bmp" }, RGB(255, 255, 255));
+
 }
 
 void Object::Joystick::setObject(int map_stage) {
@@ -365,6 +436,15 @@ void Object::Joystick::setObject(int map_stage) {
 		joystick.SetAnimation(100, true);
 		joystick.SetFrameIndexOfBitmap(0);
 		break;
+
+	case 3:
+		joystick.SetTopLeft(0, 0);
+		joystick.SetAnimation(100, true);
+		joystick.SetFrameIndexOfBitmap(0);
+
+		green_joystick.SetTopLeft(180, 805);
+		red_joystick.SetTopLeft(450, 805);
+		break;
 	}
 }
 
@@ -375,6 +455,52 @@ void Object::Joystick::showObject(int map_stage) {
 		break;
 
 	case 2:
+		break;
+
+	case 3:
+		green_joystick.ShowBitmap();
+		red_joystick.ShowBitmap();
+		break;
+	}
+}
+
+//Ball
+void Object::Ball::generateObject() {
+	for (int i = 0; i < 2; i++) {
+		ball[i].LoadBitmapByString({ "Resources/ball.bmp" }, RGB(255, 255, 255));
+	}
+}
+
+void Object::Ball::setObject(int map_stage) {
+	switch (map_stage) {
+	case 1:
+		ball[0].SetTopLeft(0, 0);
+		ball[1].SetTopLeft(0, 0);
+		break;
+
+	case 2:
+		ball[0].SetTopLeft(0, 0);
+		ball[1].SetTopLeft(0, 0);
+		break;
+
+	case 3:
+		ball[0].SetTopLeft(1150, 125);
+		ball[1].SetTopLeft(1100, 305);
+		break;
+	}
+}
+
+void Object::Ball::showObject(int map_stage) {
+	switch (map_stage) {
+	case 1:
+		break;
+
+	case 2:
+		break;
+
+	case 3:
+		ball[0].ShowBitmap();
+		ball[1].ShowBitmap();
 		break;
 	}
 }

@@ -128,6 +128,7 @@ namespace game_framework {
 		void gravety();
 		void boxMove();
 		void characterMove();
+		void ballMove();
 
 		int diamondNum();
 		int eat_diamond;
@@ -174,7 +175,7 @@ namespace game_framework {
 		Object::Pond pond;
 		Object::Diamond diamond;
 		Object::Joystick joystick;
-
+		Object::Ball ball;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
