@@ -97,15 +97,26 @@ void Object::Button::setObject(int map_stage) {
 		button2_y = 317;
 		button1.SetTopLeft(400, button1_y);
 		button2.SetTopLeft(1000, button2_y);
+
+		white_button_y = 0;
+		white_button.SetTopLeft(0, white_button_y);
+
+		purple_button_y[0] = 0;
+		purple_button_y[1] = 0;
+		purple_button[0].SetTopLeft(0, purple_button_y[0]);
+		purple_button[1].SetTopLeft(0, purple_button_y[1]);
 		break;
 
 	case 2:
-		button1_y = 555;
+		button1_y = 555;	//¥Õ¦â
 		button2_y = 555;
 		button1.SetTopLeft(300, button1_y);
 		button2.SetTopLeft(1050, button2_y);
 
-		purple_button_y[0] = 135; 
+		white_button_y = 0;
+		white_button.SetTopLeft(0, white_button_y);
+
+		purple_button_y[0] = 835; 
 		purple_button_y[1] = 135; 
 		purple_button[0].SetTopLeft(300, purple_button_y[0]);
 		purple_button[1].SetTopLeft(900, purple_button_y[1]);
@@ -181,6 +192,14 @@ void Object::Ramp::setObject(int map_stage) {
 		white_ramp_y1 = 0;
 		white_ramp_y2 = 0;
 		white_ramp.SetTopLeft(0, white_ramp_y1);
+
+		green_ramp_y1 = 0;
+		green_ramp_y2 = 0;
+		green_ramp.SetTopLeft(0, green_ramp_y1);
+
+		red_ramp_y1 = 0;
+		red_ramp_y2 = 0;
+		red_ramp.SetTopLeft(0, red_ramp_y1);
 		break;
 	
 	case 2:
@@ -199,6 +218,14 @@ void Object::Ramp::setObject(int map_stage) {
 		white_ramp_y1 = 460;
 		white_ramp_y2 = 350;
 		white_ramp.SetTopLeft(680, white_ramp_y1);
+
+		green_ramp_y1 = 0;
+		green_ramp_y2 = 0;
+		green_ramp.SetTopLeft(0, green_ramp_y1);
+
+		red_ramp_y1 = 0;
+		red_ramp_y2 = 0;
+		red_ramp.SetTopLeft(0, red_ramp_y1);
 
 		break;
 
@@ -321,6 +348,7 @@ void Object::Pond::setObject(int map_stage) {
 		long_blue_pond[0].SetTopLeft(280, 720);
 		long_blue_pond[1].SetTopLeft(770, 840);
 		break;
+
 	}
 }
 
@@ -429,12 +457,18 @@ void Object::Joystick::setObject(int map_stage) {
 		joystick.SetTopLeft(300, 535);
 		joystick.SetAnimation(100, true);
 		joystick.SetFrameIndexOfBitmap(0);
+
+		green_joystick.SetTopLeft(0, 0);
+		red_joystick.SetTopLeft(0, 0);
 		break;
 
 	case 2:
 		joystick.SetTopLeft(0, 0);
 		joystick.SetAnimation(100, true);
 		joystick.SetFrameIndexOfBitmap(0);
+
+		green_joystick.SetTopLeft(0, 0);
+		red_joystick.SetTopLeft(0, 0);
 		break;
 
 	case 3:
