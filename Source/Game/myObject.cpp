@@ -64,6 +64,8 @@ void Object::Door::showObject(int map_stage) {
 void Object::Button::generateObject() {
 	button1.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
 	button2.LoadBitmapByString({ "Resources/button1(1).bmp" }, RGB(255, 255, 255));
+	purple_button[0].LoadBitmapByString({ "Resources/purple_button.bmp" }, RGB(255, 255, 255));
+	purple_button[1].LoadBitmapByString({ "Resources/purple_button.bmp" }, RGB(255, 255, 255));
 }
 
 void Object::Button::setObject(int map_stage) {
@@ -80,6 +82,11 @@ void Object::Button::setObject(int map_stage) {
 		button2_y = 555;
 		button1.SetTopLeft(300, button1_y);
 		button2.SetTopLeft(1050, button2_y);
+
+		purple_button_y[0] = 135; 
+		purple_button_y[1] = 135; 
+		purple_button[0].SetTopLeft(300, purple_button_y[0]);
+		purple_button[1].SetTopLeft(900, purple_button_y[1]);
 		break;
 	}
 }
@@ -94,6 +101,8 @@ void Object::Button::showObject(int map_stage) {
 	case 2:
 		button1.ShowBitmap();
 		button2.ShowBitmap();
+		purple_button[0].ShowBitmap();
+		purple_button[1].ShowBitmap();
 		break;
 
 	}
@@ -105,6 +114,8 @@ void Object::Button::showObject(int map_stage) {
 void Object::Ramp::generateObject() {
 	ramp.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
 	ramp2.LoadBitmapByString({ "Resources/ramp.bmp", "Resources/ramp1.bmp" });
+	purple_ramp.LoadBitmapByString({ "Resources/purple_ramp.bmp" });
+	white_ramp.LoadBitmapByString({ "Resources/white_ramp2.bmp" });
 }
 
 void Object::Ramp::setObject(int map_stage) {
@@ -127,6 +138,15 @@ void Object::Ramp::setObject(int map_stage) {
 		ramp2_y1 = 0;
 		ramp2_y2 = 0;
 		ramp2.SetTopLeft(0, ramp2_y1);
+
+		purple_ramp_x1 = 740;
+		purple_ramp_x2 = 595;
+		purple_ramp.SetTopLeft(purple_ramp_x1, 150);
+
+		white_ramp_y1 = 460;
+		white_ramp_y2 = 350;
+		white_ramp.SetTopLeft(680, white_ramp_y1);
+
 		break;
 	}
 	
@@ -140,6 +160,8 @@ void Object::Ramp::showObject(int map_stage) {
 		break;
 
 	case 2:
+		purple_ramp.ShowBitmap();
+		white_ramp.ShowBitmap();
 		break;
 	}
 }
@@ -234,7 +256,7 @@ void Object::Pond::showObject(int map_stage) {
 
 //Diamond
 void Object::Diamond::generateObject() {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 8; i++) {
 		blue_diamond[i].LoadBitmapByString({ "Resources/blue_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
 		red_diamond[i].LoadBitmapByString({ "Resources/red_diamond.bmp", "Resources/diamond_ignore.bmp" }, RGB(255, 255, 255));
 	}
@@ -247,23 +269,39 @@ void Object::Diamond::setObject(int map_stage) {
 		red_diamond[1].SetTopLeft(300, 400);
 		red_diamond[2].SetTopLeft(400, 100);
 		red_diamond[3].SetTopLeft(0, 0);
+		red_diamond[4].SetTopLeft(0, 0);
+		red_diamond[5].SetTopLeft(0, 0);
+		red_diamond[6].SetTopLeft(0, 0);
+		red_diamond[7].SetTopLeft(0, 0);
 
 		blue_diamond[0].SetTopLeft(935, 780);
 		blue_diamond[1].SetTopLeft(850, 420);
 		blue_diamond[2].SetTopLeft(80, 150);
 		blue_diamond[3].SetTopLeft(750, 130);
+		blue_diamond[4].SetTopLeft(0, 0);
+		blue_diamond[5].SetTopLeft(0, 0);
+		blue_diamond[6].SetTopLeft(0, 0);
+		blue_diamond[7].SetTopLeft(0, 0);
 		break;
 
 	case 2:
-		red_diamond[0].SetTopLeft(700, 780);
-		red_diamond[1].SetTopLeft(300, 400);
-		red_diamond[2].SetTopLeft(400, 100);
-		red_diamond[3].SetTopLeft(0, 0);
+		red_diamond[0].SetTopLeft(350, 785);
+		red_diamond[1].SetTopLeft(450, 785);
+		red_diamond[2].SetTopLeft(840, 665);
+		red_diamond[3].SetTopLeft(940, 665);
+		red_diamond[4].SetTopLeft(940, 510);
+		red_diamond[5].SetTopLeft(550, 510);
+		red_diamond[6].SetTopLeft(650, 330);
+		red_diamond[7].SetTopLeft(620, 100);
 
-		blue_diamond[0].SetTopLeft(935, 780);
-		blue_diamond[1].SetTopLeft(850, 420);
-		blue_diamond[2].SetTopLeft(80, 150);
-		blue_diamond[3].SetTopLeft(750, 130);
+		blue_diamond[0].SetTopLeft(350, 665);
+		blue_diamond[1].SetTopLeft(450, 665);
+		blue_diamond[2].SetTopLeft(840, 785);
+		blue_diamond[3].SetTopLeft(940, 785);
+		blue_diamond[4].SetTopLeft(840, 510);
+		blue_diamond[5].SetTopLeft(450, 510);
+		blue_diamond[6].SetTopLeft(710, 330);
+		blue_diamond[7].SetTopLeft(680, 100);
 		break;
 	}
 }
@@ -271,7 +309,7 @@ void Object::Diamond::setObject(int map_stage) {
 void Object::Diamond::showObject(int map_stage) {
 	switch (map_stage) {
 	case 1:
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			red_diamond[i].ShowBitmap();
 			blue_diamond[i].ShowBitmap();
 
@@ -279,7 +317,7 @@ void Object::Diamond::showObject(int map_stage) {
 		break;
 
 	case 2:
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			red_diamond[i].ShowBitmap();
 			blue_diamond[i].ShowBitmap();
 

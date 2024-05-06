@@ -31,8 +31,10 @@ namespace Object {
 	public:
 		CMovingBitmap button1;
 		CMovingBitmap button2;
+		CMovingBitmap purple_button[2];
 		int button1_y;
 		int button2_y;
+		int purple_button_y[2];
 
 		void generateObject();
 		void setObject(int map_stage);
@@ -44,10 +46,17 @@ namespace Object {
 	public:
 		CMovingBitmap ramp;
 		CMovingBitmap ramp2;
+		CMovingBitmap purple_ramp;
+		CMovingBitmap white_ramp;
+
 		int ramp_y1;
 		int ramp_y2;
 		int ramp2_y1;
 		int ramp2_y2;
+		int purple_ramp_x1;
+		int purple_ramp_x2;
+		int white_ramp_y1;
+		int white_ramp_y2;
 
 		void generateObject();
 		void setObject(int map_stage);
@@ -82,8 +91,8 @@ namespace Object {
 
 	class Diamond : public Object {
 	public:
-		CMovingBitmap red_diamond[4];
-		CMovingBitmap blue_diamond[4];
+		CMovingBitmap red_diamond[8];
+		CMovingBitmap blue_diamond[8];
 
 		void generateObject();
 		void setObject(int map_stage);

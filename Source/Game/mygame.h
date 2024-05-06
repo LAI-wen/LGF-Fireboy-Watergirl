@@ -129,14 +129,10 @@ namespace game_framework {
 		void boxMove();
 		void characterMove();
 
+		int diamondNum();
+		int eat_diamond;
+
 		void show_image_by_phase();
-		void show_text_by_phase();
-		bool validate_phase_1();
-		bool validate_phase_2();
-		bool validate_phase_3();
-		bool validate_phase_4();
-		bool validate_phase_5();
-		bool validate_phase_6();
 		bool isdead = false;
 
 		int continue_what;
