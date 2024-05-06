@@ -552,7 +552,6 @@ void CGameStateRun::OnShow()
 	
 	//判斷吃幾顆寶石
 	eat_diamond = diamondNum();
-	//TRACE("diamond = %d", eat_diamond);
 	
 
 	
@@ -633,17 +632,13 @@ void CGameStateRun::OnShow()
 	}
 
 	// 判斷通關條件
-	if ((door.door1.GetFrameIndexOfBitmap() == 5 && door.door2.GetFrameIndexOfBitmap() == 5) || GetAsyncKeyState(0x32) & 0x8000) {
+	if ((door.door1.GetFrameIndexOfBitmap() == 5 && door.door2.GetFrameIndexOfBitmap() == 5) || GetAsyncKeyState(0x32) & 0x8000 ) {
 
 		if (phase == 1) {
-
-			
-
 			if (eat_diamond == 7) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
-
 			}
 			else {
 				button_continue.ShowBitmap();
@@ -651,12 +646,10 @@ void CGameStateRun::OnShow()
 				phase += 1;
 				show_image_by_phase();
 			}
-
-
-
-
 		}
-
+		
+		
+		
 
 
 	}
@@ -1107,8 +1100,7 @@ void CGameStateRun::show_image_by_phase() {
 				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
 			}
 
-			//
-
+	
 			pause.SetTopLeft(1350,15);
 
 
@@ -1133,9 +1125,8 @@ void CGameStateRun::show_image_by_phase() {
 			
 			door.door1.SetFrameIndexOfBitmap(0);
 			door.door2.SetFrameIndexOfBitmap(0);
-
-
 		}
+
 		if (phase == 3 && sub_phase == 1) {
 
 		}
@@ -1159,15 +1150,12 @@ int CGameStateRun::diamondNum() {
 	for (int i = 0; i < 8; i++) {
 		if (CMovingBitmap::IsOverlap(character1[0], diamond.red_diamond[i]) == true) {
 			diamond_num++;
-			//TRACE("eat %d red = %d\n", i, diamond_num);
 		}
 
 		if (CMovingBitmap::IsOverlap(character2[0], diamond.blue_diamond[i]) == true) {
 			diamond_num++;
-			//TRACE("eat %d blue = %d\n", i, diamond_num);
 		}
 	}
 	
-	//TRACE("diamond num = %d\n", diamond_num);
 	return diamond_num;
 }
