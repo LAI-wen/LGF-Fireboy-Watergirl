@@ -69,22 +69,29 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		button.button2.SetTopLeft(button.button2.GetLeft(), button.button2.GetTop());
 	}
 
-	
-	// button1 && button2 操控 ramp2
-	if (button.button1.GetTop() > button.button1_y || button.button2.GetTop() > button.button2_y) {
-		ramp.ramp2.SetTopLeft(ramp.ramp2.GetLeft(), min(ramp.ramp2_y2, ramp.ramp2.GetTop() + 5));
-	}
-	else {
-		ramp.ramp2.SetTopLeft(ramp.ramp2.GetLeft(), max(ramp.ramp2_y1, ramp.ramp2.GetTop() - 5));
-	}
+	if (phase == 1) {
+		// button1 && button2 操控 ramp2
+		if (button.button1.GetTop() > button.button1_y || button.button2.GetTop() > button.button2_y) {
+			ramp.ramp2.SetTopLeft(ramp.ramp2.GetLeft(), min(ramp.ramp2_y2, ramp.ramp2.GetTop() + 5));
+		}
+		else {
+			ramp.ramp2.SetTopLeft(ramp.ramp2.GetLeft(), max(ramp.ramp2_y1, ramp.ramp2.GetTop() - 5));
+		}
 
-	// button1 && button2 操控 white ramp
-	if (button.button1.GetTop() > button.button1_y || button.button2.GetTop() > button.button2_y) {
-		ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), min(ramp.white_ramp_y2, ramp.white_ramp.GetTop() + 5));
 	}
-	else {
-		ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), max(ramp.white_ramp_y1, ramp.white_ramp.GetTop() - 5));
+	else if (phase == 2) {
+		// button1 && button2 操控 white ramp
+		if (button.button1.GetTop() > button.button1_y || button.button2.GetTop() > button.button2_y) {
+			ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), min(ramp.white_ramp_y2, ramp.white_ramp.GetTop() + 5));
+		}
+		else {
+			ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), max(ramp.white_ramp_y1, ramp.white_ramp.GetTop() - 5));
+		}
+
 	}
+	
+
+	
 	
 	// purple button
 	for (int i = 0; i < 2; i++) {
@@ -906,7 +913,7 @@ void CGameStateRun::characterMove() {
 
 	////	 角色 1 跳躍
 
-	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(foot1, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot1, ramp.ramp2) == true || CMovingBitmap::IsOverlap(foot1, box.box) == true)) {
+	if (GetAsyncKeyState(0x57) & 0x8000 && (CMovingBitmap::IsOverlap(foot1, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot1, ramp.ramp2) == true || CMovingBitmap::IsOverlap(foot1, ramp.purple_ramp) == true || CMovingBitmap::IsOverlap(foot1, box.box) == true)) {
 		jump1 = true;
 		jump1_time = clock();
 	}
@@ -967,7 +974,7 @@ void CGameStateRun::characterMove() {
 	for (int j = head1_y; j < min(head1_y + 3, 29); j++) {
 		for (int i = 0; i < 40; i++) {
 			if (map.int_map[phase - 1][j][i] == 1) {
-				if (CMovingBitmap::IsOverlap(head1, map.map1[phase - 1][j][i]) == true || CMovingBitmap::IsOverlap(head1, ramp.ramp) == true || CMovingBitmap::IsOverlap(head1, ramp.ramp2) == true) {
+				if (CMovingBitmap::IsOverlap(head1, map.map1[phase - 1][j][i]) == true || CMovingBitmap::IsOverlap(head1, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot1, ramp.ramp2) == true || CMovingBitmap::IsOverlap(foot1, ramp.purple_ramp) == true) {
 					jump1 = false;
 					break;
 				}
@@ -1033,7 +1040,7 @@ void CGameStateRun::characterMove() {
 	for (int j = head2_y; j < min(head2_y + 3, 29); j++) {
 		for (int i = 0; i < 40; i++) {
 			if (map.int_map[phase - 1][j][i] == 1) {
-				if (CMovingBitmap::IsOverlap(head2, map.map1[phase - 1][j][i]) == true || CMovingBitmap::IsOverlap(head2, ramp.ramp) == true || CMovingBitmap::IsOverlap(head2, ramp.ramp2) == true) {
+				if (CMovingBitmap::IsOverlap(head2, map.map1[phase - 1][j][i]) == true || CMovingBitmap::IsOverlap(head2, ramp.ramp) == true || CMovingBitmap::IsOverlap(head2, ramp.ramp2) == true || CMovingBitmap::IsOverlap(head2, ramp.purple_ramp) == true) {
 					jump2 = false;
 				}
 
