@@ -108,6 +108,26 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		}
 
 	}
+	else if (phase == 3) {
+		
+		// purple button[0] 操控 purple ramp3
+		if (button.purple_button[0].GetTop() > button.purple_button_y[0]) {
+			ramp.purple_ramp3.SetTopLeft(min(ramp.purple_ramp3_x2, ramp.purple_ramp3.GetLeft() + 5), ramp.purple_ramp3.GetTop());
+		}
+		else {
+			ramp.purple_ramp3.SetTopLeft(max(ramp.purple_ramp3_x1, ramp.purple_ramp3.GetLeft() - 5), ramp.purple_ramp3.GetTop());
+		}
+		
+		// white button 操控 short white ramp
+		if (button.white_button.GetTop() > button.white_button_y) {
+			ramp.short_white_ramp.SetTopLeft(ramp.short_white_ramp.GetLeft(), min(ramp.short_white_ramp_y2, ramp.short_white_ramp.GetTop() + 5));
+		}
+		else {
+			ramp.short_white_ramp.SetTopLeft(ramp.short_white_ramp.GetLeft(), max(ramp.short_white_ramp_y1, ramp.short_white_ramp.GetTop() - 5));
+		}
+
+
+	}
 	
 
 	
@@ -147,6 +167,22 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		ramp.ramp.SetTopLeft(ramp.ramp.GetLeft(), max(ramp.ramp_y1, ramp.ramp.GetTop() - 5));
 	}
 
+	// red joystick 控制 red ramp
+	if (joystick.red_joystick.GetFrameIndexOfBitmap() == 1) {
+		ramp.red_ramp.SetTopLeft(ramp.red_ramp.GetLeft(), max(ramp.red_ramp_y2, ramp.red_ramp.GetTop() - 5));
+	}
+	else {
+		ramp.red_ramp.SetTopLeft(ramp.red_ramp.GetLeft(), min(ramp.red_ramp_y1, ramp.red_ramp.GetTop() + 5));
+	}
+
+	// green joystick 控制 green ramp
+	if (joystick.green_joystick.GetFrameIndexOfBitmap() == 1) {
+		ramp.green_ramp.SetTopLeft(ramp.green_ramp.GetLeft(), max(ramp.green_ramp_y2, ramp.green_ramp.GetTop() - 5));
+	}
+	else {
+		ramp.green_ramp.SetTopLeft(ramp.green_ramp.GetLeft(), min(ramp.green_ramp_y1, ramp.green_ramp.GetTop() + 5));
+	}
+
 
 
 
@@ -155,7 +191,7 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	if (CMovingBitmap::IsOverlap(foot1, pond.pond) == true) {
 		isdead = true;
 	}
-	else if (CMovingBitmap::IsOverlap(foot1, pond.blue_pond) == true) {
+	else if (CMovingBitmap::IsOverlap(foot1, pond.blue_pond[0]) == true) {
 		isdead = true;
 
 	}
@@ -715,43 +751,54 @@ void CGameStateRun::OnShow()
 
 	
 	//搖桿
-	//joystick.ShowBitmap();
 	if (CMovingBitmap::IsOverlap(character1_left, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 0) {
 		joystick.joystick.ToggleAnimation();
 	}
-
 	if (CMovingBitmap::IsOverlap(character1_right, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 2) {
 		joystick.joystick.SetFrameIndexOfBitmap(0);
 	}
-
 	if (CMovingBitmap::IsOverlap(character2_left, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 0) {
 		joystick.joystick.ToggleAnimation();
 	}
-
 	if (CMovingBitmap::IsOverlap(character2_right, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 2) {
 		joystick.joystick.SetFrameIndexOfBitmap(0);
 	}
 
-	
-	
-	
-	//搖桿
-	//joystick.ShowBitmap();
-	if (CMovingBitmap::IsOverlap(character1_left, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 0) {
-		joystick.joystick.ToggleAnimation();
+	// red joystick
+	if (CMovingBitmap::IsOverlap(character1_left, joystick.red_joystick) == true && joystick.red_joystick.GetFrameIndexOfBitmap() == 0) {
+		joystick.red_joystick.SetFrameIndexOfBitmap(1);
+	}
+	if (CMovingBitmap::IsOverlap(character1_right, joystick.red_joystick) == true && joystick.red_joystick.GetFrameIndexOfBitmap() == 1) {
+		joystick.red_joystick.SetFrameIndexOfBitmap(0);
+	}
+	if (CMovingBitmap::IsOverlap(character2_left, joystick.red_joystick) == true && joystick.red_joystick.GetFrameIndexOfBitmap() == 0) {
+		joystick.red_joystick.SetFrameIndexOfBitmap(1);
+	}
+	if (CMovingBitmap::IsOverlap(character2_right, joystick.red_joystick) == true && joystick.red_joystick.GetFrameIndexOfBitmap() == 1) {
+		joystick.red_joystick.SetFrameIndexOfBitmap(0);
 	}
 
-	if (CMovingBitmap::IsOverlap(character1_right, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 2) {
-		joystick.joystick.SetFrameIndexOfBitmap(0);
+	// green joystick
+	if (CMovingBitmap::IsOverlap(character1_right, joystick.green_joystick) == true && joystick.green_joystick.GetFrameIndexOfBitmap() == 0) {
+		joystick.green_joystick.SetFrameIndexOfBitmap(1);
 	}
+	if (CMovingBitmap::IsOverlap(character1_left, joystick.green_joystick) == true && joystick.green_joystick.GetFrameIndexOfBitmap() == 1) {
+		joystick.green_joystick.SetFrameIndexOfBitmap(0);
+	}
+	if (CMovingBitmap::IsOverlap(character2_right, joystick.green_joystick) == true && joystick.green_joystick.GetFrameIndexOfBitmap() == 0) {
+		joystick.green_joystick.SetFrameIndexOfBitmap(1);
+	}
+	if (CMovingBitmap::IsOverlap(character2_left, joystick.green_joystick) == true && joystick.green_joystick.GetFrameIndexOfBitmap() == 1) {
+		joystick.green_joystick.SetFrameIndexOfBitmap(0);
+	}
+	
 
-	if (CMovingBitmap::IsOverlap(character2_left, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 0) {
-		joystick.joystick.ToggleAnimation();
-	}
+	
 
-	if (CMovingBitmap::IsOverlap(character2_right, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 2) {
-		joystick.joystick.SetFrameIndexOfBitmap(0);
-	}
+	
+
+	
+	
 
 
 	
@@ -1338,6 +1385,11 @@ void CGameStateRun::show_image_by_phase() {
 		if (phase == 3 && sub_phase == 1) {
 			character1[0].SetTopLeft(50, 50);
 			character2[0].SetTopLeft(100, 50);
+
+			for (int i = 0; i < 8; i++) {
+				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
+				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
+			}
 
 			diamond_num = 0;
 			isdead = false;

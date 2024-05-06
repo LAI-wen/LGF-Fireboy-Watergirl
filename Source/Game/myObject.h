@@ -53,6 +53,8 @@ namespace Object {
 		CMovingBitmap white_ramp;
 		CMovingBitmap green_ramp;
 		CMovingBitmap red_ramp;
+		CMovingBitmap short_white_ramp;
+		CMovingBitmap purple_ramp3;
 
 		int ramp_y1;
 		int ramp_y2;
@@ -66,6 +68,10 @@ namespace Object {
 		int green_ramp_y2;
 		int red_ramp_y1;
 		int red_ramp_y2;
+		int short_white_ramp_y1;
+		int short_white_ramp_y2;
+		int purple_ramp3_x1;
+		int purple_ramp3_x2;
 
 		void generateObject();
 		void setObject(int map_stage);
@@ -88,10 +94,12 @@ namespace Object {
 	public:
 		CMovingBitmap pond;
 		CMovingBitmap red_pond;
-		CMovingBitmap blue_pond;
+		CMovingBitmap blue_pond[3];
 		CMovingBitmap long_pond[2];
 		CMovingBitmap long_red_pond[2];
 		CMovingBitmap long_blue_pond[2];
+		CMovingBitmap short_red_pond;
+		CMovingBitmap mid_red_pond[2];
 
 		void generateObject();
 		void setObject(int map_stage);

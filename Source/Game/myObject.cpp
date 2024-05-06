@@ -171,7 +171,8 @@ void Object::Ramp::generateObject() {
 	white_ramp.LoadBitmapByString({ "Resources/white_ramp2.bmp" });
 	green_ramp.LoadBitmapByString({ "Resources/green_ramp.bmp" });
 	red_ramp.LoadBitmapByString({ "Resources/red_ramp.bmp" });
-
+	short_white_ramp.LoadBitmapByString({ "Resources/white_ramp3.bmp" });
+	purple_ramp3.LoadBitmapByString({ "Resources/purple_ramp3.bmp" });
 }
 
 void Object::Ramp::setObject(int map_stage) {
@@ -247,12 +248,20 @@ void Object::Ramp::setObject(int map_stage) {
 		white_ramp.SetTopLeft(0, white_ramp_y1);
 
 		green_ramp_y1 = 195;
-		green_ramp_y2 = 95;
+		green_ramp_y2 = 60;
 		green_ramp.SetTopLeft(540, green_ramp_y1);
 
 		red_ramp_y1 = 195;
-		red_ramp_y2 = 95;
+		red_ramp_y2 = 60;
 		red_ramp.SetTopLeft(700, red_ramp_y1);
+
+		short_white_ramp_y1 = 370;
+		short_white_ramp_y2 = 480;
+		short_white_ramp.SetTopLeft(700, short_white_ramp_y1);
+
+		purple_ramp3_x1 = 1180;
+		purple_ramp3_x2 = 1225;
+		purple_ramp3.SetTopLeft(purple_ramp3_x1, 750);
 		break;
 	}
 	
@@ -273,6 +282,8 @@ void Object::Ramp::showObject(int map_stage) {
 	case 3:
 		green_ramp.ShowBitmap();
 		red_ramp.ShowBitmap();
+		short_white_ramp.ShowBitmap();
+		purple_ramp3.ShowBitmap();
 		break;
 	}
 }
@@ -313,12 +324,18 @@ void Object::Box::showObject(int map_stage) {
 void Object::Pond::generateObject() {
 	pond.LoadBitmapByString({ "Resources/pond.bmp" }, RGB(255, 255, 255));
 	red_pond.LoadBitmapByString({ "Resources/red_pond.bmp" }, RGB(255, 255, 255));
-	blue_pond.LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
+	blue_pond[0].LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
+	short_red_pond.LoadBitmapByString({ "Resources/red_short_pond.bmp" }, RGB(255, 255, 255));
 
 	for (int i = 0; i < 2; i++) {
 		long_pond[i].LoadBitmapByString({ "Resources/long_green_pond.bmp" }, RGB(255, 255, 255));
 		long_red_pond[i].LoadBitmapByString({ "Resources/long_red_pond.bmp" }, RGB(255, 255, 255));
 		long_blue_pond[i].LoadBitmapByString({ "Resources/long_blue_pond.bmp" }, RGB(255, 255, 255));
+		mid_red_pond[i].LoadBitmapByString({ "Resources/red_mid_pond.bmp" }, RGB(255, 255, 255));
+	}
+
+	for (int i = 0; i < 3; i++) {
+		blue_pond[i].LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
 	}
 	
 }
@@ -328,25 +345,52 @@ void Object::Pond::setObject(int map_stage) {
 	case 1:
 		pond.SetTopLeft(840, 660);
 		red_pond.SetTopLeft(630, 840);
-		blue_pond.SetTopLeft(872, 840);
+		blue_pond[0].SetTopLeft(872, 840);
+		blue_pond[1].SetTopLeft(0, 0);
+		blue_pond[2].SetTopLeft(0, 0);
 		long_pond[0].SetTopLeft(0, 0);
 		long_pond[1].SetTopLeft(0, 0);
 		long_red_pond[0].SetTopLeft(0, 0);
 		long_red_pond[1].SetTopLeft(0, 0);
 		long_blue_pond[0].SetTopLeft(0, 0);
 		long_blue_pond[1].SetTopLeft(0, 0);
+		short_red_pond.SetTopLeft(0, 0);
+		mid_red_pond[0].SetTopLeft(0, 0);
+		mid_red_pond[1].SetTopLeft(0, 0);
 		break;
 
 	case 2:
 		pond.SetTopLeft(0, 0);
 		red_pond.SetTopLeft(0, 0);
-		blue_pond.SetTopLeft(0, 0);
+		blue_pond[0].SetTopLeft(0, 0);
+		blue_pond[1].SetTopLeft(0, 0);
+		blue_pond[2].SetTopLeft(0, 0);
 		long_pond[0].SetTopLeft(308, 420);
 		long_pond[1].SetTopLeft(807, 420);
 		long_red_pond[0].SetTopLeft(280, 840);
 		long_red_pond[1].SetTopLeft(770, 720);
 		long_blue_pond[0].SetTopLeft(280, 720);
 		long_blue_pond[1].SetTopLeft(770, 840);
+		short_red_pond.SetTopLeft(0, 0);
+		mid_red_pond[0].SetTopLeft(0, 0);
+		mid_red_pond[1].SetTopLeft(0, 0);
+		break;
+
+	case 3:
+		pond.SetTopLeft(0, 0);
+		red_pond.SetTopLeft(0, 0);
+		blue_pond[0].SetTopLeft(385, 150);
+		blue_pond[1].SetTopLeft(695, 150);
+		blue_pond[2].SetTopLeft(240, 690);
+		long_pond[0].SetTopLeft(0, 0);
+		long_pond[1].SetTopLeft(0, 0);
+		long_red_pond[0].SetTopLeft(0, 0);
+		long_red_pond[1].SetTopLeft(0, 0);
+		long_blue_pond[0].SetTopLeft(0, 0);
+		long_blue_pond[1].SetTopLeft(0, 0);
+		short_red_pond.SetTopLeft(580, 150);
+		mid_red_pond[0].SetTopLeft(770, 720);
+		mid_red_pond[1].SetTopLeft(730, 840);
 		break;
 
 	}
@@ -357,7 +401,7 @@ void Object::Pond::showObject(int map_stage) {
 	case 1:
 		pond.ShowBitmap();
 		red_pond.ShowBitmap();
-		blue_pond.ShowBitmap();
+		blue_pond[0].ShowBitmap();
 		break;
 
 	case 2:
@@ -367,6 +411,15 @@ void Object::Pond::showObject(int map_stage) {
 		long_pond[1].ShowBitmap();
 		long_red_pond[1].ShowBitmap();
 		long_blue_pond[1].ShowBitmap();
+		break;
+
+	case 3:
+		blue_pond[0].ShowBitmap();
+		blue_pond[1].ShowBitmap();
+		blue_pond[2].ShowBitmap();
+		short_red_pond.ShowBitmap();
+		mid_red_pond[0].ShowBitmap();
+		mid_red_pond[1].ShowBitmap();
 		break;
 	}
 }
@@ -420,6 +473,26 @@ void Object::Diamond::setObject(int map_stage) {
 		blue_diamond[6].SetTopLeft(710, 330);
 		blue_diamond[7].SetTopLeft(680, 100);
 		break;
+
+	case 3:
+		red_diamond[0].SetTopLeft(1280, 50);
+		red_diamond[1].SetTopLeft(150, 470);
+		red_diamond[2].SetTopLeft(820, 660);
+		red_diamond[3].SetTopLeft(780, 790);
+		red_diamond[4].SetTopLeft(0, 0);
+		red_diamond[5].SetTopLeft(0, 0);
+		red_diamond[6].SetTopLeft(0, 0);
+		red_diamond[7].SetTopLeft(0, 0);
+
+		blue_diamond[0].SetTopLeft(450, 100);
+		blue_diamond[1].SetTopLeft(765, 100);
+		blue_diamond[2].SetTopLeft(50, 430);
+		blue_diamond[3].SetTopLeft(860, 410);
+		blue_diamond[4].SetTopLeft(310, 640);
+		blue_diamond[5].SetTopLeft(0, 0);
+		blue_diamond[6].SetTopLeft(0, 0);
+		blue_diamond[7].SetTopLeft(0, 0);
+		break;
 	}
 }
 
@@ -434,6 +507,14 @@ void Object::Diamond::showObject(int map_stage) {
 		break;
 
 	case 2:
+		for (int i = 0; i < 8; i++) {
+			red_diamond[i].ShowBitmap();
+			blue_diamond[i].ShowBitmap();
+
+		}
+		break;
+
+	case 3:
 		for (int i = 0; i < 8; i++) {
 			red_diamond[i].ShowBitmap();
 			blue_diamond[i].ShowBitmap();
@@ -476,7 +557,7 @@ void Object::Joystick::setObject(int map_stage) {
 		joystick.SetAnimation(100, true);
 		joystick.SetFrameIndexOfBitmap(0);
 
-		green_joystick.SetTopLeft(180, 805);
+		green_joystick.SetTopLeft(180, 805); 
 		red_joystick.SetTopLeft(450, 805);
 		break;
 	}
