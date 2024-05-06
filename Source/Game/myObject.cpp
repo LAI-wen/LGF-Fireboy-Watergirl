@@ -30,6 +30,9 @@ void Object::Door::setObject(int map_stage) {
 
 		door2.SetTopLeft(1100, 95);
 		door2.SetAnimation(100, true);
+
+		door1.SetFrameIndexOfBitmap(0);
+		door2.SetFrameIndexOfBitmap(0);
 		break;
 	
 	case 2:
@@ -38,6 +41,9 @@ void Object::Door::setObject(int map_stage) {
 
 		door2.SetTopLeft(150, 70);
 		door2.SetAnimation(100, true);
+
+		door1.SetFrameIndexOfBitmap(0);
+		door2.SetFrameIndexOfBitmap(0);
 		break;
 	
 	}
@@ -55,6 +61,7 @@ void Object::Door::showObject(int map_stage) {
 	case 2:
 		door1.ShowBitmap();
 		door2.ShowBitmap();
+
 		break;
 	}
 
@@ -125,9 +132,17 @@ void Object::Ramp::setObject(int map_stage) {
 		ramp_y2 = 558;
 		ramp.SetTopLeft(50, ramp_y1);
 
-		ramp2_y1 = 330;
+		ramp2_y1 = 325;
 		ramp2_y2 = 440;
 		ramp2.SetTopLeft(1245, ramp2_y1);
+
+		purple_ramp_x1 = 0;
+		purple_ramp_x2 = 0;
+		purple_ramp.SetTopLeft(purple_ramp_x1, 0);
+
+		white_ramp_y1 = 0;
+		white_ramp_y2 = 0;
+		white_ramp.SetTopLeft(0, white_ramp_y1);
 		break;
 	
 	case 2:
@@ -219,6 +234,12 @@ void Object::Pond::setObject(int map_stage) {
 		pond.SetTopLeft(840, 660);
 		red_pond.SetTopLeft(630, 840);
 		blue_pond.SetTopLeft(872, 840);
+		long_pond[0].SetTopLeft(0, 0);
+		long_pond[1].SetTopLeft(0, 0);
+		long_red_pond[0].SetTopLeft(0, 0);
+		long_red_pond[1].SetTopLeft(0, 0);
+		long_blue_pond[0].SetTopLeft(0, 0);
+		long_blue_pond[1].SetTopLeft(0, 0);
 		break;
 
 	case 2:

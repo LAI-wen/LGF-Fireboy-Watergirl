@@ -415,6 +415,8 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_menu.SetFrameIndexOfBitmap(1);
 			button_menu.ShowBitmap();
 			button_menu_time = clock();
+			ismenu = true;
+			isdead == false;
 		}
 		
 	
@@ -454,10 +456,44 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_menu.SetFrameIndexOfBitmap(1);
 			button_menu.ShowBitmap();
 			button_menu_time = clock();
+			ismenu = true;
+			ispause = false;
 		}
 		else if (idx1 >= 610 && idy1 > 434 && idx1 <= 811 && idy1 <= 504) {
 			ispause = false;
 		}
+
+	}
+
+	//選關畫面
+	if (ismenu == true && (WM_LBUTTONDOWN)) {
+		int idx1 = point.x;
+		int idy1 = point.y;
+
+		
+		if ((pass_phase >=0)&&idx1 >= 666 && idy1 > 742 && idx1 <= 730 && idy1 <= 822) {
+			phase = 1;
+			show_image_by_phase();
+			ismenu = false;
+			ispause = false;
+			isdead = false;
+
+		}
+		else if ((pass_phase >= 1) && idx1 >= 722 && idy1 > 660 && idx1 <= 776 && idy1 <= 730) {
+			phase = 2;
+			show_image_by_phase();
+			ismenu = false;
+			ispause = false;
+			isdead = false;
+		}
+		else if ((pass_phase >= 2) && idx1 >= 666 && idy1 > 584 && idx1 <= 730 && idy1 <= 644) {
+			phase = 3;
+			show_image_by_phase();
+			ismenu = false;
+			ispause = false;
+			isdead = false;
+		}
+
 
 	}
 
@@ -473,6 +509,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_continue.SetFrameIndexOfBitmap(1);
 			button_continue.ShowBitmap();
 			button_continue_time = clock();
+			show_image_by_phase();
 		}
 	}
 
@@ -562,7 +599,7 @@ void CGameStateRun::OnShow()
 	///////////////////////人物與動畫//////////////////////////////////////
 	// character1
 	//角色碰撞感測器
-	foot1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 85);
+	foot1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 82);
 	foot1.ShowBitmap();
 
 	head1.SetTopLeft(character1[0].GetLeft() + 25, character1[0].GetTop() + 10);
@@ -631,8 +668,23 @@ void CGameStateRun::OnShow()
 		door.door2.ToggleAnimation();
 	}
 
+	//跳關卡
+	if (GetAsyncKeyState(0x32) & 0x8000) {
+		phase = 2;
+		show_image_by_phase();
+
+	}
+	else if(GetAsyncKeyState(0x33) & 0x8000) {
+		phase = 3;
+		show_image_by_phase();
+	}
+	else if (GetAsyncKeyState(0x31) & 0x8000) {
+		phase = 1;
+		show_image_by_phase();
+	}
+
 	// 判斷通關條件
-	if ((door.door1.GetFrameIndexOfBitmap() == 5 && door.door2.GetFrameIndexOfBitmap() == 5) || GetAsyncKeyState(0x32) & 0x8000 ) {
+	if ((door.door1.GetFrameIndexOfBitmap() == 5 && door.door2.GetFrameIndexOfBitmap() == 5)) {
 
 		if (phase == 1) {
 			if (eat_diamond == 7) {
@@ -646,6 +698,20 @@ void CGameStateRun::OnShow()
 				phase += 1;
 				show_image_by_phase();
 			}
+			pass_phase = 1;
+		}else if (phase == 2) {
+			if (eat_diamond == 16) {
+				continue_what = 1;
+				phase += 1;
+				show_image_by_phase();
+			}
+			else {
+				button_continue.ShowBitmap();
+				continue_what = 2;
+				phase += 1;
+				show_image_by_phase();
+			}
+			pass_phase = 2;
 		}
 		
 		
@@ -735,6 +801,15 @@ void CGameStateRun::OnShow()
 		button_menu.ShowBitmap();
 		button_retry.ShowBitmap();
 
+	}
+
+
+	//mune
+
+	if (ismenu == true) {
+
+		scene.showScene(pass_phase+3);
+		
 	}
 	
 
@@ -1108,6 +1183,8 @@ void CGameStateRun::show_image_by_phase() {
 			isdead = false;
 			ispause = false;
 
+			door.door1.SetFrameIndexOfBitmap(0);
+			door.door2.SetFrameIndexOfBitmap(0);
 
 
 		}
