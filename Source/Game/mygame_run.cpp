@@ -135,14 +135,7 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop() - 5);
 	}
 	
-	// purple ramp
-	if (CMovingBitmap::IsOverlap(foot1, ramp.purple_ramp) == true) {
-		character1[0].SetTopLeft(character1[0].GetLeft(), character1[0].GetTop());
-	}
 
-	if (CMovingBitmap::IsOverlap(foot2, ramp.purple_ramp) == true) {
-		character2[0].SetTopLeft(character2[0].GetLeft(), character2[0].GetTop());
-	}
 
 	// white ramp
 	if (CMovingBitmap::IsOverlap(character1_left, ramp.white_ramp) == true) {
@@ -209,11 +202,7 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		button_retry.SetFrameIndexOfBitmap(0);
 		button_retry.ShowBitmap();
 	}
-	else if (isdead == true && clock() - button_retry_time <= 25500 ) {
-		//isdead = false;
-		//TRACE("isdead=%d\n", isdead);
 
-	}
 
 
 	if (clock() - button_continue_time == 21000) {
@@ -418,6 +407,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_retry.SetFrameIndexOfBitmap(1);
 			button_retry.ShowBitmap();
 			button_retry_time = clock();
+			show_image_by_phase();
 
 		}
 		else if (idx1 >= 455 && idy1 > 536 && idx1 <= 661 && idy1 <= 600) {
@@ -426,22 +416,48 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_menu.ShowBitmap();
 			button_menu_time = clock();
 		}
-		show_image_by_phase();
+		
 	
 	}
-	//pause call pause meau
+	//call pause call 
 
 	if ((WM_LBUTTONDOWN)) {
 		int idx1 = point.x;
 		int idy1 = point.y;
 
-		/*
+		
 		if (idx1 >= 1350 && idy1 > 15 && idx1 <= 1383 && idy1 <= 51 ) {
-			scene.showScene(3);
+			ispause = true;
+
 
 		}
-		*/
-		
+
+	}
+
+	//pause meau
+
+	if (ispause == true && (WM_LBUTTONDOWN)) {
+		int idx1 = point.x;
+		int idy1 = point.y;
+
+
+		if (idx1 >= 752 && idy1 > 536 && idx1 <= 955 && idy1 <= 600) {
+			button_retry.SetTopLeft(768, 530);
+			button_retry.SetFrameIndexOfBitmap(1);
+			button_retry.ShowBitmap();
+			button_retry_time = clock();
+			show_image_by_phase();
+
+		}
+		else if (idx1 >= 455 && idy1 > 536 && idx1 <= 661 && idy1 <= 600) {
+			button_menu.SetTopLeft(450, 530);
+			button_menu.SetFrameIndexOfBitmap(1);
+			button_menu.ShowBitmap();
+			button_menu_time = clock();
+		}
+		else if (idx1 >= 610 && idy1 > 434 && idx1 <= 811 && idy1 <= 504) {
+			ispause = false;
+		}
 
 	}
 
@@ -711,13 +727,23 @@ void CGameStateRun::OnShow()
 	//死亡畫面
 	if (isdead == true) {
 		scene.showScene(0);
-		gameover.ShowBitmap();
 		button_menu.ShowBitmap();
 		button_retry.ShowBitmap();
 		
 		
 
 	}
+
+
+	//pause
+
+	if (ispause == true) {
+		scene.showScene(9);
+		button_menu.ShowBitmap();
+		button_retry.ShowBitmap();
+
+	}
+	
 
 
 
@@ -733,7 +759,7 @@ void CGameStateRun::gravety() {
 	// 當角色1	沒有碰到 地板 以及 移動板，會往下掉
 	bool gravity_flag1 = false;
 
-	if (CMovingBitmap::IsOverlap(foot1, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot1, ramp.ramp2) == true) {
+	if (CMovingBitmap::IsOverlap(foot1, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot1, ramp.ramp2) == true || CMovingBitmap::IsOverlap(foot1, ramp.purple_ramp) == true) {
 		gravity_flag1 = true;
 	}
 
@@ -757,7 +783,7 @@ void CGameStateRun::gravety() {
 	// 當角色2	沒有碰到 地板 以及 移動板，會往下掉
 	bool gravity_flag2 = false;
 
-	if (CMovingBitmap::IsOverlap(foot2, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot2, ramp.ramp2) == true) {
+	if (CMovingBitmap::IsOverlap(foot2, ramp.ramp) == true || CMovingBitmap::IsOverlap(foot2, ramp.ramp2) == true || CMovingBitmap::IsOverlap(foot1, ramp.purple_ramp) == true) {
 		gravity_flag2 = true;
 	}
 
@@ -1088,6 +1114,7 @@ void CGameStateRun::show_image_by_phase() {
 
 			diamond_num = 0;
 			isdead = false;
+			ispause = false;
 
 
 
@@ -1103,6 +1130,9 @@ void CGameStateRun::show_image_by_phase() {
 			}
 
 			isdead = false;
+			
+			door.door1.SetFrameIndexOfBitmap(0);
+			door.door2.SetFrameIndexOfBitmap(0);
 
 
 		}
