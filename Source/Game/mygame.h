@@ -130,6 +130,8 @@ namespace game_framework {
 		void characterMove();
 		void ballMove();
 
+		void show_text_by_phase();
+
 		int diamondNum();
 		int eat_diamond;
 
@@ -137,6 +139,7 @@ namespace game_framework {
 		bool isdead = false;
 		bool ispause = false;
 		bool ismenu = false;
+		bool test_no_dead = false;
 
 		int pass_phase = 0;
 
