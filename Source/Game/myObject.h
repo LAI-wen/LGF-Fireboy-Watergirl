@@ -100,6 +100,7 @@ namespace Object {
 		CMovingBitmap long_blue_pond[2];
 		CMovingBitmap short_red_pond;
 		CMovingBitmap mid_red_pond[2];
+		CMovingBitmap mid_blue_pond;
 
 		void generateObject();
 		void setObject(int map_stage);
@@ -130,6 +131,15 @@ namespace Object {
 	class Ball : public Object {
 	public:
 		CMovingBitmap ball[2];
+
+		void generateObject();
+		void setObject(int map_stage);
+		void showObject(int map_stage);
+	};
+
+	class Fan : public Object {
+	public:
+		CMovingBitmap fan[2];
 
 		void generateObject();
 		void setObject(int map_stage);

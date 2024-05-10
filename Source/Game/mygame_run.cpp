@@ -169,7 +169,14 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		ramp.green_ramp.SetTopLeft(ramp.green_ramp.GetLeft(), min(ramp.green_ramp_y1, ramp.green_ramp.GetTop() + 5));
 	}
 
-
+	// 碰到 fan 飛起
+	if (foot1.GetLeft() > 35 && foot1.GetLeft() < 125 && foot1.GetTop() < 600 && foot1.GetTop() > 250) {
+		character1[0].SetTopLeft(character1[0].GetLeft(), max(character1[0].GetTop() - 8, 250));
+	}
+	
+	if (foot2.GetLeft() > 35 && foot2.GetLeft() < 125 && foot2.GetTop() < 600 && foot2.GetTop() > 250) {
+		character2[0].SetTopLeft(character2[0].GetLeft(), max(character2[0].GetTop() - 8, 250));
+	}
 
 
 	//碰到水池死亡
@@ -256,6 +263,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	diamond.generateObject();
 	joystick.generateObject();
 	ball.generateObject();
+	fan.generateObject();
 
 	pause.LoadBitmapByString({ "Resources/pause_img.bmp" }, RGB(255, 255, 255));;
 	
@@ -579,7 +587,7 @@ void CGameStateRun::OnShow()
 	diamond.showObject(phase);
 	joystick.showObject(phase);
 	ball.showObject(phase);
-
+	fan.showObject(phase);
 
 	
 	box.box_left.SetTopLeft(box.box.GetLeft() - 5, box.box.GetTop());
@@ -701,6 +709,10 @@ void CGameStateRun::OnShow()
 	}
 	else if (GetAsyncKeyState(0x34) & 0x8000) {
 		phase = 4;
+		show_image_by_phase();
+	}
+	else if (GetAsyncKeyState(0x35) & 0x8000) {
+		phase = 5;
 		show_image_by_phase();
 	}
 
@@ -1389,6 +1401,7 @@ void CGameStateRun::show_image_by_phase() {
 		diamond.setObject(phase);
 		joystick.setObject(phase);
 		ball.setObject(phase);
+		fan.setObject(phase);
 
 		if (phase == 1 && sub_phase == 1) {
 			// 角色與箱子
@@ -1447,8 +1460,8 @@ void CGameStateRun::show_image_by_phase() {
 
 		}
 		if (phase == 4 && sub_phase == 1) {
-			character1[0].SetTopLeft(50, 50);
-			character2[0].SetTopLeft(100, 50);
+			character1[0].SetTopLeft(50, 700);
+			character2[0].SetTopLeft(100, 700);
 
 			for (int i = 0; i < 8; i++) {
 				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);

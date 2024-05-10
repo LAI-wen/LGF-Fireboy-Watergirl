@@ -67,6 +67,17 @@ void Object::Door::setObject(int map_stage) {
 		door1.SetFrameIndexOfBitmap(0);
 		door2.SetFrameIndexOfBitmap(0);
 		break;
+
+	case 5:
+		door1.SetTopLeft(380, 370);
+		door1.SetAnimation(100, true);
+
+		door2.SetTopLeft(940, 370);
+		door2.SetAnimation(100, true);
+
+		door1.SetFrameIndexOfBitmap(0);
+		door2.SetFrameIndexOfBitmap(0);
+		break;
 	}
 }
 
@@ -87,6 +98,10 @@ void Object::Door::showObject(int map_stage) {
 		door2.ShowBitmap();
 		break;
 	case 4:
+		door1.ShowBitmap();
+		door2.ShowBitmap();
+		break;
+	case 5:
 		door1.ShowBitmap();
 		door2.ShowBitmap();
 		break;
@@ -407,6 +422,7 @@ void Object::Pond::generateObject() {
 	red_pond.LoadBitmapByString({ "Resources/red_pond.bmp" }, RGB(255, 255, 255));
 	blue_pond[0].LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
 	short_red_pond.LoadBitmapByString({ "Resources/red_short_pond.bmp" }, RGB(255, 255, 255));
+	mid_blue_pond.LoadBitmapByString({ "Resources/blue_mid_pond.bmp" }, RGB(255, 255, 255));
 
 	for (int i = 0; i < 2; i++) {
 		long_pond[i].LoadBitmapByString({ "Resources/long_green_pond.bmp" }, RGB(255, 255, 255));
@@ -438,6 +454,7 @@ void Object::Pond::setObject(int map_stage) {
 		short_red_pond.SetTopLeft(0, 0);
 		mid_red_pond[0].SetTopLeft(0, 0);
 		mid_red_pond[1].SetTopLeft(0, 0);
+		mid_blue_pond.SetTopLeft(0, 0);
 		break;
 
 	case 2:
@@ -455,6 +472,7 @@ void Object::Pond::setObject(int map_stage) {
 		short_red_pond.SetTopLeft(0, 0);
 		mid_red_pond[0].SetTopLeft(0, 0);
 		mid_red_pond[1].SetTopLeft(0, 0);
+		mid_blue_pond.SetTopLeft(0, 0);
 		break;
 
 	case 3:
@@ -472,6 +490,7 @@ void Object::Pond::setObject(int map_stage) {
 		short_red_pond.SetTopLeft(580, 150);
 		mid_red_pond[0].SetTopLeft(770, 720);
 		mid_red_pond[1].SetTopLeft(730, 840);
+		mid_blue_pond.SetTopLeft(0, 0);
 		break;
 	case 4:
 		pond.SetTopLeft(0, 0);
@@ -488,6 +507,25 @@ void Object::Pond::setObject(int map_stage) {
 		short_red_pond.SetTopLeft(0, 0);
 		mid_red_pond[0].SetTopLeft(0, 0);
 		mid_red_pond[1].SetTopLeft(0, 0);
+		mid_blue_pond.SetTopLeft(0, 0);
+		break;
+
+	case 5:
+		pond.SetTopLeft(0, 0);
+		red_pond.SetTopLeft(0, 0);
+		blue_pond[0].SetTopLeft(0, 0);
+		blue_pond[1].SetTopLeft(0, 0);
+		blue_pond[2].SetTopLeft(0, 0);
+		long_pond[0].SetTopLeft(0, 0);
+		long_pond[1].SetTopLeft(0, 0);
+		long_red_pond[0].SetTopLeft(910, 600);
+		long_red_pond[1].SetTopLeft(200, 840);
+		long_blue_pond[0].SetTopLeft(200, 600);
+		long_blue_pond[1].SetTopLeft(910, 840);
+		short_red_pond.SetTopLeft(0, 0);
+		mid_red_pond[0].SetTopLeft(345, 300);
+		mid_red_pond[1].SetTopLeft(0, 0);
+		mid_blue_pond.SetTopLeft(905, 300);
 		break;
 
 	}
@@ -519,7 +557,15 @@ void Object::Pond::showObject(int map_stage) {
 		mid_red_pond[1].ShowBitmap();
 		break;
 	case 4:
+		break;
 
+	case 5:
+		mid_red_pond[0].ShowBitmap();
+		long_red_pond[0].ShowBitmap();
+		long_blue_pond[0].ShowBitmap();
+		long_red_pond[1].ShowBitmap();
+		long_blue_pond[1].ShowBitmap();
+		mid_blue_pond.ShowBitmap();
 		break;
 	}
 }
@@ -759,6 +805,64 @@ void Object::Ball::showObject(int map_stage) {
 		ball[1].ShowBitmap();
 		break;
 	case 4:
+		break;
+	}
+}
+
+// Fan
+void Object::Fan::generateObject() {
+	for (int i = 0; i < 2; i++) {
+		fan[i].LoadBitmapByString({ "Resources/fan.bmp" }, RGB(255, 255, 255));
+	}
+}
+
+void Object::Fan::setObject(int map_stage) {
+	switch (map_stage) {
+	case 1:
+		fan[0].SetTopLeft(0, 0);
+		fan[1].SetTopLeft(0, 0);
+		break;
+
+	case 2:
+		fan[0].SetTopLeft(0, 0);
+		fan[1].SetTopLeft(0, 0);
+		break;
+
+	case 3:
+		fan[0].SetTopLeft(0, 0);
+		fan[1].SetTopLeft(0, 0);
+		break;
+
+	case 4:
+		fan[0].SetTopLeft(35, 600);
+		fan[1].SetTopLeft(0, 0);
+		break;
+
+	case 5:
+		fan[0].SetTopLeft(30, 330);
+		fan[1].SetTopLeft(1280, 330);
+		break;
+	}
+}
+
+void Object::Fan::showObject(int map_stage) {
+	switch (map_stage) {
+	case 1:
+		break;
+
+	case 2:
+		break;
+
+	case 3:
+		break;
+
+	case 4:
+		fan[0].ShowBitmap();
+		break;
+
+	case 5:
+		fan[0].ShowBitmap();
+		fan[1].ShowBitmap();
 		break;
 	}
 }
