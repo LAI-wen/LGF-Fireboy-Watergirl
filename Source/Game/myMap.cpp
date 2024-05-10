@@ -43,6 +43,19 @@ void Map::generateMap() {
 		}
 	}
 	map3.close();
+
+	std::ifstream map4("map/map4.map");
+	for (int i = 0; i < 29; i++) {
+		for (int j = 0; j < 40; j++) {
+			map4 >> this->int_map[3][i][j];
+			if (this->int_map[3][i][j] == 1) {
+				this->map1[3][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
+				this->map1[3][i][j].SetTopLeft(j * 35, i * 30);
+			}
+
+		}
+	}
+	map4.close();
 	
 }
 
@@ -73,6 +86,16 @@ void Map::showMap(int map_stage) {
 			for (int j = 0; j < 40; j++) {
 				if (this->int_map[2][i][j] == 1) {
 					this->map1[2][i][j].ShowBitmap();
+				}
+			}
+		}
+
+	}
+	else if (map_stage == 4) {
+		for (int i = 0; i < 29; i++) {
+			for (int j = 0; j < 40; j++) {
+				if (this->int_map[3][i][j] == 1) {
+					this->map1[3][i][j].ShowBitmap();
 				}
 			}
 		}

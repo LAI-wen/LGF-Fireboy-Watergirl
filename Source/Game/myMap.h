@@ -7,9 +7,9 @@
 
 class Map {
 public:
-	int int_map[3][29][40];
+	int int_map[4][29][40];
 
-	game_framework::CMovingBitmap map1[3][29][40];
+	game_framework::CMovingBitmap map1[4][29][40];
 	
 	void generateMap();
 	void showMap(int map_stage);

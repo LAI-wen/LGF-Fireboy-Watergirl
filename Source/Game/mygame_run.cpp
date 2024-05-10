@@ -46,7 +46,7 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	
 	//機關 按鈕觸發
 	
-	if (phase == 1 || phase == 2) {
+	if (phase == 1 || phase == 2 || phase == 4) {
 
 		//角色 1  2 和箱子 碰到 button1 會按下
 		if (CMovingBitmap::IsOverlap(foot2, button.button1) == true || CMovingBitmap::IsOverlap(foot1, button.button1) == true || CMovingBitmap::IsOverlap(box.box, button.button1) == true) {
@@ -94,7 +94,7 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 
 
 	//機關 ramp 移動
-	if (phase == 1) {
+	if (phase == 1 || phase == 4) {
 		// button1 && button2 操控 ramp2 上下移動
 		if (button.button1.GetTop() > button.button1_y || button.button2.GetTop() > button.button2_y) {
 			ramp.ramp2.SetTopLeft(ramp.ramp2.GetLeft(), min(ramp.ramp2_y2, ramp.ramp2.GetTop() + 5));
@@ -699,6 +699,10 @@ void CGameStateRun::OnShow()
 		phase = 1;
 		show_image_by_phase();
 	}
+	else if (GetAsyncKeyState(0x34) & 0x8000) {
+		phase = 4;
+		show_image_by_phase();
+	}
 
 	//不會死
 	if (GetAsyncKeyState(0x30) & 0x8000) {
@@ -928,7 +932,7 @@ void CGameStateRun::gravety() {
 	}
 
 	// 箱子重力
-	if (phase == 1) {
+	if (phase == 1 || phase == 4) {
 		bool gravity_flag_box = false;
 
 		if (CMovingBitmap::IsOverlap(box.box, ramp.ramp) == true) {
@@ -1443,6 +1447,20 @@ void CGameStateRun::show_image_by_phase() {
 
 		}
 		if (phase == 4 && sub_phase == 1) {
+			character1[0].SetTopLeft(50, 50);
+			character2[0].SetTopLeft(100, 50);
+
+			for (int i = 0; i < 8; i++) {
+				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
+				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
+			}
+
+			diamond_num = 0;
+			isdead = false;
+			ispause = false;
+
+			door.door1.SetFrameIndexOfBitmap(0);
+			door.door2.SetFrameIndexOfBitmap(0);
 
 		}
 		if (phase == 5 && sub_phase == 1) {
