@@ -56,6 +56,19 @@ void Map::generateMap() {
 		}
 	}
 	map4.close();
+
+	std::ifstream map5("map/map5.map");
+	for (int i = 0; i < 29; i++) {
+		for (int j = 0; j < 40; j++) {
+			map5 >> this->int_map[4][i][j];
+			if (this->int_map[4][i][j] == 1) {
+				this->map1[4][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
+				this->map1[4][i][j].SetTopLeft(j * 35, i * 30);
+			}
+
+		}
+	}
+	map5.close();
 	
 }
 
@@ -96,6 +109,16 @@ void Map::showMap(int map_stage) {
 			for (int j = 0; j < 40; j++) {
 				if (this->int_map[3][i][j] == 1) {
 					this->map1[3][i][j].ShowBitmap();
+				}
+			}
+		}
+
+	}
+	else if (map_stage == 5) {
+		for (int i = 0; i < 29; i++) {
+			for (int j = 0; j < 40; j++) {
+				if (this->int_map[4][i][j] == 1) {
+					this->map1[4][i][j].ShowBitmap();
 				}
 			}
 		}

@@ -179,6 +179,7 @@ namespace game_framework {
 		Object::Diamond diamond;
 		Object::Joystick joystick;
 		Object::Ball ball;
+		Object::Fan fan;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
