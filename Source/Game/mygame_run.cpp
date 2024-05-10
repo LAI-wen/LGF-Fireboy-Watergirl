@@ -170,12 +170,22 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 	}
 
 	// 碰到 fan 飛起
-	if (foot1.GetLeft() > 35 && foot1.GetLeft() < 125 && foot1.GetTop() < 600 && foot1.GetTop() > 250) {
-		character1[0].SetTopLeft(character1[0].GetLeft(), max(character1[0].GetTop() - 8, 250));
+	if (phase == 4) {
+		if (foot1.GetLeft() > 35 && foot1.GetLeft() < 125 && foot1.GetTop() < 600 && foot1.GetTop() > 250) {
+			character1[0].SetTopLeft(character1[0].GetLeft(), max(character1[0].GetTop() - 8, 250));
+		}
+		if (foot2.GetLeft() > 35 && foot2.GetLeft() < 125 && foot2.GetTop() < 600 && foot2.GetTop() > 250) {
+			character2[0].SetTopLeft(character2[0].GetLeft(), max(character2[0].GetTop() - 8, 250));
+		}
 	}
-	
-	if (foot2.GetLeft() > 35 && foot2.GetLeft() < 125 && foot2.GetTop() < 600 && foot2.GetTop() > 250) {
-		character2[0].SetTopLeft(character2[0].GetLeft(), max(character2[0].GetTop() - 8, 250));
+
+	if (phase == 5) {
+		if (foot1.GetLeft() > 1280 && foot1.GetLeft() < 1370 && foot1.GetTop() < 330 && foot1.GetTop() > 30) {
+			character1[0].SetTopLeft(character1[0].GetLeft(), max(character1[0].GetTop() - 8, 30));
+		}
+		if (foot2.GetLeft() > 30 && foot2.GetLeft() < 120 && foot2.GetTop() < 330 && foot2.GetTop() > 30) {
+			character2[0].SetTopLeft(character2[0].GetLeft(), max(character2[0].GetTop() - 8, 30));
+		}
 	}
 
 
@@ -1477,14 +1487,22 @@ void CGameStateRun::show_image_by_phase() {
 
 		}
 		if (phase == 5 && sub_phase == 1) {
+			character1[0].SetTopLeft(30, 750);
+			character2[0].SetTopLeft(1300, 750);
 
-		}
-		if (phase == 6 && sub_phase == 1) {
+			for (int i = 0; i < 8; i++) {
+				diamond.red_diamond[i].SetFrameIndexOfBitmap(0);
+				diamond.blue_diamond[i].SetFrameIndexOfBitmap(0);
+			}
 
+			diamond_num = 0;
+			isdead = false;
+			ispause = false;
+
+			door.door1.SetFrameIndexOfBitmap(0);
+			door.door2.SetFrameIndexOfBitmap(0);
 		}
 	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 
