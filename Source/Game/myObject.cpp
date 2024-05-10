@@ -180,6 +180,21 @@ void Object::Button::setObject(int map_stage) {
 		purple_button[1].SetTopLeft(0, purple_button_y[1]);
 		break;
 
+	case 5:
+		button1_y = 0;
+		button2_y = 0;
+		button1.SetTopLeft(0, button1_y);
+		button2.SetTopLeft(0, button2_y);
+
+		white_button_y = 0;
+		white_button.SetTopLeft(0, white_button_y);
+
+		purple_button_y[0] = 0;
+		purple_button_y[1] = 0;
+		purple_button[0].SetTopLeft(0, purple_button_y[0]);
+		purple_button[1].SetTopLeft(0, purple_button_y[1]);
+		break;
+
 	}
 }
 
@@ -205,9 +220,10 @@ void Object::Button::showObject(int map_stage) {
 		button1.ShowBitmap();
 		break;
 
-	}
-	
+	case 5:
+		break;
 
+	}
 }
 
 //Ramp
@@ -248,6 +264,14 @@ void Object::Ramp::setObject(int map_stage) {
 		red_ramp_y1 = 0;
 		red_ramp_y2 = 0;
 		red_ramp.SetTopLeft(0, red_ramp_y1);
+
+		short_white_ramp_y1 = 0;
+		short_white_ramp_y2 = 0;
+		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
+
+		purple_ramp3_x1 = 0;
+		purple_ramp3_x2 = 0;
+		purple_ramp3.SetTopLeft(purple_ramp3_x1, 0);
 		break;
 	
 	case 2:
@@ -275,6 +299,13 @@ void Object::Ramp::setObject(int map_stage) {
 		red_ramp_y2 = 0;
 		red_ramp.SetTopLeft(0, red_ramp_y1);
 
+		short_white_ramp_y1 = 0;
+		short_white_ramp_y2 = 0;
+		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
+
+		purple_ramp3_x1 = 0;
+		purple_ramp3_x2 = 0;
+		purple_ramp3.SetTopLeft(purple_ramp3_x1, 0);
 		break;
 
 	case 3:
@@ -343,6 +374,40 @@ void Object::Ramp::setObject(int map_stage) {
 		purple_ramp3_x2 = 0;
 		purple_ramp3.SetTopLeft(purple_ramp3_x1, 0);
 		break;
+
+	case 5:
+		ramp_y1 = 0;
+		ramp_y2 = 0;
+		ramp.SetTopLeft(0, ramp_y1);
+
+		ramp2_y1 = 0;
+		ramp2_y2 = 0;
+		ramp2.SetTopLeft(0, ramp2_y1);
+
+		purple_ramp_x1 = 0;
+		purple_ramp_x2 = 0;
+		purple_ramp.SetTopLeft(purple_ramp_x1, 0);
+
+		white_ramp_y1 = 0;
+		white_ramp_y2 = 0;
+		white_ramp.SetTopLeft(0, white_ramp_y1);
+
+		green_ramp_y1 = 0;
+		green_ramp_y2 = 0;
+		green_ramp.SetTopLeft(0, green_ramp_y1);
+
+		red_ramp_y1 = 0;
+		red_ramp_y2 = 0;
+		red_ramp.SetTopLeft(0, red_ramp_y1);
+
+		short_white_ramp_y1 = 0;
+		short_white_ramp_y2 = 0;
+		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
+
+		purple_ramp3_x1 = 0;
+		purple_ramp3_x2 = 0;
+		purple_ramp3.SetTopLeft(purple_ramp3_x1, 0);
+		break;
 	}
 	
 }
@@ -367,6 +432,8 @@ void Object::Ramp::showObject(int map_stage) {
 		break;
 	case 4:
 		ramp2.ShowBitmap();
+		break;
+	case 5:
 		break;
 	}
 }
@@ -393,6 +460,9 @@ void Object::Box::setObject(int map_stage) {
 	case 4:
 		box.SetTopLeft(900, 100);
 		break;
+	case 5:
+		box.SetTopLeft(0, 0);
+		break;
 	}
 }
 
@@ -412,6 +482,8 @@ void Object::Box::showObject(int map_stage) {
 		box.ShowBitmap();
 		box_left.ShowBitmap();
 		box_right.ShowBitmap();
+		break;
+	case 5:
 		break;
 	}
 }
@@ -658,6 +730,26 @@ void Object::Diamond::setObject(int map_stage) {
 		blue_diamond[6].SetTopLeft(450, 130);
 		blue_diamond[7].SetTopLeft(0, 0);
 		break;
+
+	case 5:
+		red_diamond[0].SetTopLeft(1300, 100);
+		red_diamond[1].SetTopLeft(1300, 180);
+		red_diamond[2].SetTopLeft(1300, 260);
+		red_diamond[3].SetTopLeft(400, 250);
+		red_diamond[4].SetTopLeft(760, 220);
+		red_diamond[5].SetTopLeft(860, 70);
+		red_diamond[6].SetTopLeft(1030, 550);
+		red_diamond[7].SetTopLeft(330, 780);
+
+		blue_diamond[0].SetTopLeft(60, 100);
+		blue_diamond[1].SetTopLeft(60, 180);
+		blue_diamond[2].SetTopLeft(60, 260);
+		blue_diamond[3].SetTopLeft(960, 250);
+		blue_diamond[4].SetTopLeft(600, 220);
+		blue_diamond[5].SetTopLeft(500, 70);
+		blue_diamond[6].SetTopLeft(330, 550);
+		blue_diamond[7].SetTopLeft(1030, 780);
+		break;
 	}
 }
 
@@ -687,6 +779,14 @@ void Object::Diamond::showObject(int map_stage) {
 		}
 		break;
 	case 4:
+		for (int i = 0; i < 8; i++) {
+			red_diamond[i].ShowBitmap();
+			blue_diamond[i].ShowBitmap();
+
+		}
+		break;
+
+	case 5:
 		for (int i = 0; i < 8; i++) {
 			red_diamond[i].ShowBitmap();
 			blue_diamond[i].ShowBitmap();
@@ -740,7 +840,16 @@ void Object::Joystick::setObject(int map_stage) {
 		green_joystick.SetTopLeft(0, 0);
 		red_joystick.SetTopLeft(0, 0);
 		break;
+	case 5:
+		joystick.SetTopLeft(0, 0);
+		joystick.SetAnimation(0, true);
+		joystick.SetFrameIndexOfBitmap(0);
+
+		green_joystick.SetTopLeft(0, 0);
+		red_joystick.SetTopLeft(0, 0);
+		break;
 	}
+
 }
 
 void Object::Joystick::showObject(int map_stage) {
@@ -757,7 +866,8 @@ void Object::Joystick::showObject(int map_stage) {
 		red_joystick.ShowBitmap();
 		break;
 	case 4:
-
+		break;
+	case 5:
 		break;
 	}
 }
@@ -789,6 +899,10 @@ void Object::Ball::setObject(int map_stage) {
 		ball[0].SetTopLeft(0, 0);
 		ball[1].SetTopLeft(0, 0);
 		break;
+	case 5:
+		ball[0].SetTopLeft(0, 0);
+		ball[1].SetTopLeft(0, 0);
+		break;
 	}
 }
 
@@ -805,6 +919,8 @@ void Object::Ball::showObject(int map_stage) {
 		ball[1].ShowBitmap();
 		break;
 	case 4:
+		break;
+	case 5:
 		break;
 	}
 }
