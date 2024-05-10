@@ -116,7 +116,7 @@ void Object::Button::setObject(int map_stage) {
 		white_button_y = 0;
 		white_button.SetTopLeft(0, white_button_y);
 
-		purple_button_y[0] = 835; 
+		purple_button_y[0] = 135; 
 		purple_button_y[1] = 135; 
 		purple_button[0].SetTopLeft(300, purple_button_y[0]);
 		purple_button[1].SetTopLeft(900, purple_button_y[1]);
@@ -128,10 +128,10 @@ void Object::Button::setObject(int map_stage) {
 		button1.SetTopLeft(0, button1_y);
 		button2.SetTopLeft(0, button2_y);
 
-		white_button_y = 830;
+		white_button_y = 825;
 		white_button.SetTopLeft(1185, white_button_y);
 
-		purple_button_y[0] = 830;
+		purple_button_y[0] = 825;
 		purple_button_y[1] = 0;
 		purple_button[0].SetTopLeft(1290, purple_button_y[0]);
 		purple_button[1].SetTopLeft(0, purple_button_y[1]);
