@@ -569,7 +569,6 @@ void Object::Pond::showObject(int map_stage) {
 		break;
 	}
 }
-
 //Diamond
 void Object::Diamond::generateObject() {
 	for (int i = 0; i < 8; i++) {
@@ -647,7 +646,7 @@ void Object::Diamond::setObject(int map_stage) {
 		red_diamond[4].SetTopLeft(70, 440);
 		red_diamond[5].SetTopLeft(270, 310);
 		red_diamond[6].SetTopLeft(640, 300);
-		red_diamond[7].SetTopLeft(380, 130);	
+		red_diamond[7].SetTopLeft(380, 130);
 
 		blue_diamond[0].SetTopLeft(70, 520);
 		blue_diamond[1].SetTopLeft(640, 450);

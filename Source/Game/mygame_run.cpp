@@ -1143,7 +1143,9 @@ void CGameStateRun::characterMove() {
 		box.box.SetTopLeft(box.box.GetLeft() + 8, box.box.GetTop());
 	}
 
-	if (box_moveleft == true && CMovingBitmap::IsOverlap(box.box, character1[0]) == true) {
+	
+	/*
+		if (box_moveleft == true && CMovingBitmap::IsOverlap(box.box, character1[0]) == true) {
 		character1[0].SetTopLeft(character1[0].GetLeft() - 8, character1[0].GetTop());
 	}
 	if (box_moveright == true && CMovingBitmap::IsOverlap(box.box, character1[0]) == true) {
@@ -1156,6 +1158,12 @@ void CGameStateRun::characterMove() {
 	if (box_moveright == true && CMovingBitmap::IsOverlap(box.box, character2[0]) == true) {
 		character2[0].SetTopLeft(character2[0].GetLeft() + 8, character2[0].GetTop());
 	}
+	*/
+	
+	
+	
+
+
 
 
 
