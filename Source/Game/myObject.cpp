@@ -165,6 +165,7 @@ void Object::Button::setObject(int map_stage) {
 		purple_button[0].SetTopLeft(1290, purple_button_y[0]);
 		purple_button[1].SetTopLeft(0, purple_button_y[1]);
 		break;
+
 	case 4:
 		button1_y = 344;
 		button2_y = 0;
@@ -832,13 +833,16 @@ void Object::Joystick::setObject(int map_stage) {
 		break;
 
 	case 3:
-		joystick.SetTopLeft(0, 0);
+		joystick.SetTopLeft(0, 900);
 		joystick.SetAnimation(100, true);
 		joystick.SetFrameIndexOfBitmap(0);
 
 		green_joystick.SetTopLeft(180, 805); 
 		red_joystick.SetTopLeft(450, 805);
+		green_joystick.SetFrameIndexOfBitmap(0);
+		red_joystick.SetFrameIndexOfBitmap(0);
 		break;
+
 	case 4:
 		joystick.SetTopLeft(0, 0);
 		joystick.SetAnimation(0, true);
@@ -847,6 +851,7 @@ void Object::Joystick::setObject(int map_stage) {
 		green_joystick.SetTopLeft(0, 0);
 		red_joystick.SetTopLeft(0, 0);
 		break;
+
 	case 5:
 		joystick.SetTopLeft(0, 0);
 		joystick.SetAnimation(0, true);
