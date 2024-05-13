@@ -442,8 +442,8 @@ void Object::Ramp::showObject(int map_stage) {
 //Box
 void Object::Box::generateObject() {
 	box.LoadBitmapByString({ "Resources/box.bmp" }, RGB(255, 255, 255));
-	box_left.LoadBitmapByString({ "Resources/box_side.bmp" });
-	box_right.LoadBitmapByString({ "Resources/box_side.bmp" });
+	box_left.LoadBitmapByString({ "Resources/box_side.bmp" }, RGB(255, 255, 255));
+	box_right.LoadBitmapByString({ "Resources/box_side.bmp" }, RGB(255, 255, 255));
 }
 
 void Object::Box::setObject(int map_stage) {
