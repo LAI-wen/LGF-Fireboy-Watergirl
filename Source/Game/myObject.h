@@ -101,6 +101,7 @@ namespace Object {
 		CMovingBitmap short_red_pond;
 		CMovingBitmap mid_red_pond[2];
 		CMovingBitmap mid_blue_pond;
+		CMovingBitmap long_long_pond;
 
 		void generateObject();
 		void setObject(int map_stage);
