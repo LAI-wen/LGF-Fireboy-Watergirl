@@ -715,7 +715,7 @@ void Object::Diamond::setObject(int map_stage) {
 		blue_diamond[2].SetTopLeft(50, 430);
 		blue_diamond[3].SetTopLeft(860, 410);
 		blue_diamond[4].SetTopLeft(310, 640);
-		blue_diamond[5].SetTopLeft(380, 100);
+		blue_diamond[5].SetTopLeft(0, 0);
 		blue_diamond[6].SetTopLeft(0, 0);
 		blue_diamond[7].SetTopLeft(0, 0);
 		break;
