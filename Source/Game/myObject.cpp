@@ -495,6 +495,7 @@ void Object::Pond::generateObject() {
 	blue_pond[0].LoadBitmapByString({ "Resources/blue_pond.bmp" }, RGB(255, 255, 255));
 	short_red_pond.LoadBitmapByString({ "Resources/red_short_pond.bmp" }, RGB(255, 255, 255));
 	mid_blue_pond.LoadBitmapByString({ "Resources/blue_mid_pond.bmp" }, RGB(255, 255, 255));
+	long_long_pond.LoadBitmapByString({ "Resources/long_long_pond.bmp" }, RGB(255, 255, 255));
 
 	for (int i = 0; i < 2; i++) {
 		long_pond[i].LoadBitmapByString({ "Resources/long_green_pond.bmp" }, RGB(255, 255, 255));
@@ -527,6 +528,7 @@ void Object::Pond::setObject(int map_stage) {
 		mid_red_pond[0].SetTopLeft(0, 0);
 		mid_red_pond[1].SetTopLeft(0, 0);
 		mid_blue_pond.SetTopLeft(0, 0);
+		long_long_pond.SetTopLeft(0, 0);
 		break;
 
 	case 2:
@@ -545,6 +547,7 @@ void Object::Pond::setObject(int map_stage) {
 		mid_red_pond[0].SetTopLeft(0, 0);
 		mid_red_pond[1].SetTopLeft(0, 0);
 		mid_blue_pond.SetTopLeft(0, 0);
+		long_long_pond.SetTopLeft(0, 0);
 		break;
 
 	case 3:
@@ -563,6 +566,7 @@ void Object::Pond::setObject(int map_stage) {
 		mid_red_pond[0].SetTopLeft(770, 720);
 		mid_red_pond[1].SetTopLeft(730, 840);
 		mid_blue_pond.SetTopLeft(0, 0);
+		long_long_pond.SetTopLeft(0, 0);
 		break;
 	case 4:
 		pond.SetTopLeft(0, 0);
@@ -580,6 +584,7 @@ void Object::Pond::setObject(int map_stage) {
 		mid_red_pond[0].SetTopLeft(0, 0);
 		mid_red_pond[1].SetTopLeft(0, 0);
 		mid_blue_pond.SetTopLeft(0, 0);
+		long_long_pond.SetTopLeft(280, 840);
 		break;
 
 	case 5:
@@ -598,6 +603,7 @@ void Object::Pond::setObject(int map_stage) {
 		mid_red_pond[0].SetTopLeft(345, 300);
 		mid_red_pond[1].SetTopLeft(0, 0);
 		mid_blue_pond.SetTopLeft(905, 300);
+		long_long_pond.SetTopLeft(0, 0);
 		break;
 
 	}
@@ -627,8 +633,10 @@ void Object::Pond::showObject(int map_stage) {
 		short_red_pond.ShowBitmap();
 		mid_red_pond[0].ShowBitmap();
 		mid_red_pond[1].ShowBitmap();
+		
 		break;
 	case 4:
+		long_long_pond.ShowBitmap();
 		break;
 
 	case 5:
@@ -641,7 +649,6 @@ void Object::Pond::showObject(int map_stage) {
 		break;
 	}
 }
-
 //Diamond
 void Object::Diamond::generateObject() {
 	for (int i = 0; i < 8; i++) {
@@ -719,7 +726,7 @@ void Object::Diamond::setObject(int map_stage) {
 		red_diamond[4].SetTopLeft(70, 440);
 		red_diamond[5].SetTopLeft(270, 310);
 		red_diamond[6].SetTopLeft(640, 300);
-		red_diamond[7].SetTopLeft(380, 130);	
+		red_diamond[7].SetTopLeft(380, 130);
 
 		blue_diamond[0].SetTopLeft(70, 520);
 		blue_diamond[1].SetTopLeft(640, 450);
