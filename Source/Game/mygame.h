@@ -117,8 +117,6 @@ namespace game_framework {
 		CMovingBitmap foot2;
 		CMovingBitmap head1;
 		CMovingBitmap head2;					
-		CMovingBitmap cube[5][40];
-		CMovingBitmap floor1;
 		
 		CMovingBitmap continueUI;
 		CMovingBitmap gameover;
@@ -126,7 +124,6 @@ namespace game_framework {
 		CMovingBitmap pause;
 
 		void gravety();
-		void boxMove();
 		void characterMove();
 		void ballMove();
 
@@ -144,14 +141,12 @@ namespace game_framework {
 		int pass_phase = 0;
 
 		int continue_what;
-		int floor[6] = {40,40,40,40,40,40};
-		int floor_num = 4;
 		int diamond_num = 0;
 	
 
 		CMovingBitmap maps[29][40];
 
-
+		int button_continue_time;
 
 
 		bool keepLeft = false;
@@ -161,9 +156,7 @@ namespace game_framework {
 		bool jump2 = false;
 		int jump2_time = 0;
 
-		int button_retry_time;
-		int button_menu_time;
-		int button_continue_time;
+
 		CMovingBitmap button_continue;
 		CMovingBitmap button_retry;
 		CMovingBitmap button_menu;
