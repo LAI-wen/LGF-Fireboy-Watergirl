@@ -243,6 +243,7 @@
     <ClCompile Include="Source\Core\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp">
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatWarningAsError>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">false</TreatWarningAsError>
@@ -280,6 +281,7 @@
     <ClInclude Include="Source\Core\MainFrm.h" />
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\Core\StdAfx.h" />
+    <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\config.h" />
     <ClInclude Include="Source\Game\mygame.h" />
     <ClInclude Include="Source\Game\myMap.h" />

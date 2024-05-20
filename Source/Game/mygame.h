@@ -42,7 +42,13 @@
 #include "myMap.h"
 #include "myObject.h"
 #include "myScene.h"
+#include "Character.h"
 
+#define VK_W 0x57
+#define VK_A 0x41
+#define VK_D 0x44
+#define CHARACTER_WATERGIRL "watergirl"
+#define CHARACTER_FIREBOY   "fireboy"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -101,22 +107,12 @@ namespace game_framework {
 		void OnMove();									// ���ʹC������
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
-
-
 		int phase = 1;									//���d
-		int sub_phase = 1;								//�l���d
+		int sub_phase = 1;								
+		Character fireBoy = Character(CHARACTER_FIREBOY);
+		Character waterGirl = Character(CHARACTER_WATERGIRL);
 		CMovingBitmap background;						//�I��
-		CMovingBitmap bg;
-		CMovingBitmap character1[3];						//�n�n
-		CMovingBitmap character2[3];						//�̧�
-		CMovingBitmap character1_left;
-		CMovingBitmap character2_left;
-		CMovingBitmap character1_right;
-		CMovingBitmap character2_right;
-		CMovingBitmap foot1;
-		CMovingBitmap foot2;
-		CMovingBitmap head1;
-		CMovingBitmap head2;					
+		CMovingBitmap bg;					
 		
 		CMovingBitmap continueUI;
 		CMovingBitmap gameover;
@@ -125,8 +121,8 @@ namespace game_framework {
 
 		void gravety();
 		void characterMove();
-		void ballMove();
-
+		void BallMove(CMovingBitmap &ball, Character &character); // New version 
+		void CheckDeadOnPool(Character &character);
 		void show_text_by_phase();
 
 		int diamondNum();
