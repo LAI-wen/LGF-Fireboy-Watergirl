@@ -123,6 +123,9 @@ void Map::showMap(int map_stage) {
 			}
 		}
 
-	}
-	
+	}	
+}
+
+bool Map::IsBlock(int stage, int x, int y) {
+	return int_map[stage][y / 30][x / 35];
 }
