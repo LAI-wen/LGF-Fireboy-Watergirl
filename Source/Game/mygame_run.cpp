@@ -308,7 +308,10 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	////////角色2 跳
 	
-	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp) == true || CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp2) == true || CMovingBitmap::IsOverlap(waterGirl.foot, box.box) == true || CMovingBitmap::IsOverlap(waterGirl.foot, ramp.purple_ramp) == true)) {
+	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp) == true || 
+						   CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp2) == true || 
+						   CMovingBitmap::IsOverlap(waterGirl.foot, box.box) == true || 
+						   CMovingBitmap::IsOverlap(waterGirl.foot, ramp.purple_ramp) == true)) {
 		jump2 = true;
 		jump2_time = clock();
 	}
@@ -986,13 +989,11 @@ void CGameStateRun::characterMove() {
 					wall_right1 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true &&
-					CMovingBitmap::IsOverlap(fireBoy.leftArm, box.box_right) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true ) {
 					wall_box_left1 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true &&
-					CMovingBitmap::IsOverlap(fireBoy.rightArm, box.box_left) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true ) {
 					wall_box_right1 = true;
 					break;
 				}
@@ -1007,11 +1008,15 @@ void CGameStateRun::characterMove() {
 	////	 角色 1 移動 箱子移動
 	/////////////////////////////////////////////////////////////////////////////
 
-	if (GetAsyncKeyState(VK_A) & 0x8000 && wall_left1 == false && wall_box_left1==false) {  // 當角色1按A向左
-		fireBoy.SetTopLeft(fireBoy.GetLeft() - 8, fireBoy.GetTop());
+	if (GetAsyncKeyState(VK_A) & 0x8000 && wall_left1 == false ) {  // 當角色1按 A 向左
+		if (CMovingBitmap::IsOverlap(fireBoy.leftArm, box.box_right) == false) {
+			fireBoy.SetTopLeft(fireBoy.GetLeft() - 8, fireBoy.GetTop());
+		}
 	}
-	if (GetAsyncKeyState(VK_D) & 0x8000 && wall_right1 == false && wall_box_right1 == false) {  //當角色1按D向右
-		fireBoy.SetTopLeft(fireBoy.GetLeft() + 8, fireBoy.GetTop());
+	if (GetAsyncKeyState(VK_D) & 0x8000 && wall_right1 == false ) {  //當角色1按 D 向右
+		if (CMovingBitmap::IsOverlap(fireBoy.rightArm, box.box_left) == false) {
+			fireBoy.SetTopLeft(fireBoy.GetLeft() + 8, fireBoy.GetTop());
+		}
 	}
 
 	
@@ -1059,11 +1064,11 @@ void CGameStateRun::characterMove() {
 					wall_right2 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(waterGirl.rightArm, box.box) == true && CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true) {
 					wall_box_right2 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(waterGirl.leftArm, box.box) == true && CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true) {
 					wall_box_left2 = true;
 					
 				}
@@ -1074,12 +1079,15 @@ void CGameStateRun::characterMove() {
 	////	 角色 2 移動 且 碰到牆壁停止
 
 
-	if (keepLeft == true && wall_left2 == false && wall_box_left2 == false) {
-		waterGirl.SetTopLeft(waterGirl.GetLeft() - 8, waterGirl.GetTop());
-
+	if (keepLeft == true && wall_left2 == false) {
+		if (CMovingBitmap::IsOverlap(waterGirl.leftArm, box.box_right) == false) {
+			waterGirl.SetTopLeft(waterGirl.GetLeft() - 8, waterGirl.GetTop());
+		}
 	}
-	if (keepRight == true && wall_right2 == false && wall_box_right2 == false) {
-		waterGirl.SetTopLeft(waterGirl.GetLeft() + 8, waterGirl.GetTop());
+	if (keepRight == true && wall_right2 == false) {
+		if (CMovingBitmap::IsOverlap(waterGirl.rightArm, box.box_left) == false) {
+			waterGirl.SetTopLeft(waterGirl.GetLeft() + 8, waterGirl.GetTop());
+		}
 	}
 
 
