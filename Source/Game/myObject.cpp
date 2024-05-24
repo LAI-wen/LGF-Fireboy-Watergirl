@@ -235,7 +235,6 @@ void Object::Ramp::generateObject() {
 	white_ramp.LoadBitmapByString({ "Resources/white_ramp2.bmp" });
 	green_ramp.LoadBitmapByString({ "Resources/green_ramp.bmp" });
 	red_ramp.LoadBitmapByString({ "Resources/red_ramp.bmp" });
-	short_white_ramp.LoadBitmapByString({ "Resources/white_ramp3.bmp" });
 	purple_ramp3.LoadBitmapByString({ "Resources/purple_ramp3.bmp" });
 }
 
@@ -266,9 +265,7 @@ void Object::Ramp::setObject(int map_stage) {
 		red_ramp_y2 = 0;
 		red_ramp.SetTopLeft(0, red_ramp_y1);
 
-		short_white_ramp_y1 = 0;
-		short_white_ramp_y2 = 0;
-		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
+		
 
 		purple_ramp3_x1 = 0;
 		purple_ramp3_x2 = 0;
@@ -300,10 +297,6 @@ void Object::Ramp::setObject(int map_stage) {
 		red_ramp_y2 = 0;
 		red_ramp.SetTopLeft(0, red_ramp_y1);
 
-		short_white_ramp_y1 = 0;
-		short_white_ramp_y2 = 0;
-		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
-
 		purple_ramp3_x1 = 0;
 		purple_ramp3_x2 = 0;
 		purple_ramp3.SetTopLeft(purple_ramp3_x1, 0);
@@ -322,21 +315,17 @@ void Object::Ramp::setObject(int map_stage) {
 		purple_ramp_x2 = 0;
 		purple_ramp.SetTopLeft(purple_ramp_x1, 0);
 
-		white_ramp_y1 = 0;
-		white_ramp_y2 = 0;
-		white_ramp.SetTopLeft(0, white_ramp_y1);
+		white_ramp_y1 = 370;
+		white_ramp_y2 = 480;
+		white_ramp.SetTopLeft(730, white_ramp_y1);
 
 		green_ramp_y1 = 195;
 		green_ramp_y2 = 60;
-		green_ramp.SetTopLeft(540, green_ramp_y1);
+		green_ramp.SetTopLeft(505, green_ramp_y1);
 
 		red_ramp_y1 = 195;
 		red_ramp_y2 = 60;
-		red_ramp.SetTopLeft(700, red_ramp_y1);
-
-		short_white_ramp_y1 = 370;
-		short_white_ramp_y2 = 480;
-		short_white_ramp.SetTopLeft(700, short_white_ramp_y1);
+		red_ramp.SetTopLeft(730, red_ramp_y1);
 
 		purple_ramp3_x1 = 1180;
 		purple_ramp3_x2 = 1225;
@@ -366,10 +355,6 @@ void Object::Ramp::setObject(int map_stage) {
 		red_ramp_y1 = 0;
 		red_ramp_y2 = 0;
 		red_ramp.SetTopLeft(0, red_ramp_y1);
-
-		short_white_ramp_y1 = 0;
-		short_white_ramp_y2 = 0;
-		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
 
 		purple_ramp3_x1 = 0;
 		purple_ramp3_x2 = 0;
@@ -401,10 +386,6 @@ void Object::Ramp::setObject(int map_stage) {
 		red_ramp_y2 = 0;
 		red_ramp.SetTopLeft(0, red_ramp_y1);
 
-		short_white_ramp_y1 = 0;
-		short_white_ramp_y2 = 0;
-		short_white_ramp.SetTopLeft(0, short_white_ramp_y1);
-
 		purple_ramp3_x1 = 0;
 		purple_ramp3_x2 = 0;
 		purple_ramp3.SetTopLeft(purple_ramp3_x1, 0);
@@ -428,7 +409,7 @@ void Object::Ramp::showObject(int map_stage) {
 	case 3:
 		green_ramp.ShowBitmap();
 		red_ramp.ShowBitmap();
-		short_white_ramp.ShowBitmap();
+		white_ramp.ShowBitmap();
 		purple_ramp3.ShowBitmap();
 		break;
 	case 4:

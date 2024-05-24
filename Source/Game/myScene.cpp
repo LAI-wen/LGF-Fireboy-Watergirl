@@ -22,10 +22,10 @@ void Scene::loadScene() {
 	window[7].LoadBitmapByString({ "Resources/w_choose4.bmp" });				// 通過第四關
 	window[8].LoadBitmapByString({ "Resources/w_choose5.bmp" });				// 通過第五關
 	window[9].LoadBitmapByString({ "Resources/w_pause.bmp" });				// pause
+	window[10].LoadBitmapByString({ "Resources/w_END.bmp" });				// END
 
 
-
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 11; i++) {
 		window[i].SetTopLeft(0, 0);
 	}
 
