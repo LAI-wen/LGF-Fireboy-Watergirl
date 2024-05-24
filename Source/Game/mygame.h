@@ -164,7 +164,6 @@ namespace game_framework {
 		Object::Button button;
 		Object::Ramp ramp;
 		Object::Box box;
-		Object::Pond pond;
 		Object::Diamond diamond;
 		Object::Joystick joystick;
 		Object::Ball ball;
