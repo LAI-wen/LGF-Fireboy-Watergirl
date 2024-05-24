@@ -126,12 +126,12 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		else {
 			ramp.purple_ramp3.SetTopLeft(max(ramp.purple_ramp3_x1, ramp.purple_ramp3.GetLeft() - 5), ramp.purple_ramp3.GetTop());
 		}
-		// white button 操控 short white ramp 上下移動
+		// white button 操控 white ramp 上下移動
 		if (button.white_button.GetTop() > button.white_button_y) {
-			ramp.short_white_ramp.SetTopLeft(ramp.short_white_ramp.GetLeft(), min(ramp.short_white_ramp_y2, ramp.short_white_ramp.GetTop() + 5));
+			ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), min(ramp.white_ramp_y2, ramp.white_ramp.GetTop() + 5));
 		}
 		else {
-			ramp.short_white_ramp.SetTopLeft(ramp.short_white_ramp.GetLeft(), max(ramp.short_white_ramp_y1, ramp.short_white_ramp.GetTop() - 5));
+			ramp.white_ramp.SetTopLeft(ramp.white_ramp.GetLeft(), max(ramp.white_ramp_y1, ramp.white_ramp.GetTop() - 5));
 		}
 	}
 
@@ -308,7 +308,10 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	////////角色2 跳
 	
-	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp) == true || CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp2) == true || CMovingBitmap::IsOverlap(waterGirl.foot, box.box) == true || CMovingBitmap::IsOverlap(waterGirl.foot, ramp.purple_ramp) == true)) {
+	if (nChar == VK_UP && (CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp) == true || 
+						   CMovingBitmap::IsOverlap(waterGirl.foot, ramp.ramp2) == true || 
+						   CMovingBitmap::IsOverlap(waterGirl.foot, box.box) == true || 
+						   CMovingBitmap::IsOverlap(waterGirl.foot, ramp.purple_ramp) == true)) {
 		jump2 = true;
 		jump2_time = clock();
 	}
@@ -986,13 +989,11 @@ void CGameStateRun::characterMove() {
 					wall_right1 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true &&
-					CMovingBitmap::IsOverlap(fireBoy.leftArm, box.box_right) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true ) {
 					wall_box_left1 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true &&
-					CMovingBitmap::IsOverlap(fireBoy.rightArm, box.box_left) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true ) {
 					wall_box_right1 = true;
 					break;
 				}
@@ -1007,11 +1008,15 @@ void CGameStateRun::characterMove() {
 	////	 角色 1 移動 箱子移動
 	/////////////////////////////////////////////////////////////////////////////
 
-	if (GetAsyncKeyState(VK_A) & 0x8000 && wall_left1 == false && wall_box_left1==false) {  // 當角色1按A向左
-		fireBoy.SetTopLeft(fireBoy.GetLeft() - 8, fireBoy.GetTop());
+	if (GetAsyncKeyState(VK_A) & 0x8000 && wall_left1 == false ) {  // 當角色1按 A 向左
+		if (CMovingBitmap::IsOverlap(fireBoy.leftArm, box.box_right) == false) {
+			fireBoy.SetTopLeft(fireBoy.GetLeft() - 8, fireBoy.GetTop());
+		}
 	}
-	if (GetAsyncKeyState(VK_D) & 0x8000 && wall_right1 == false && wall_box_right1 == false) {  //當角色1按D向右
-		fireBoy.SetTopLeft(fireBoy.GetLeft() + 8, fireBoy.GetTop());
+	if (GetAsyncKeyState(VK_D) & 0x8000 && wall_right1 == false ) {  //當角色1按 D 向右
+		if (CMovingBitmap::IsOverlap(fireBoy.rightArm, box.box_left) == false) {
+			fireBoy.SetTopLeft(fireBoy.GetLeft() + 8, fireBoy.GetTop());
+		}
 	}
 
 	
@@ -1042,14 +1047,28 @@ void CGameStateRun::characterMove() {
 	bool wall_box_left2 = false;
 
 
+	int head2_y = (waterGirl.head.GetTop()) / 30;
 
-	int head_y = (waterGirl.head.GetTop()) / 30;
-	for (int j = head_y; j < min(head_y + 3, 29); j++) {
+	// 判斷 character2 頭上的物件是否有重疊
+	for (int j = head2_y; j >= head2_y - 4; j--) {
 		for (int i = 0; i < 40; i++) {
 			if (map.int_map[phase - 1][j][i] != 0) {
-				if (CMovingBitmap::IsOverlap(waterGirl.head, map.map1[phase - 1][j][i]) == true || CMovingBitmap::IsOverlap(waterGirl.head, ramp.ramp) == true || CMovingBitmap::IsOverlap(waterGirl.head, ramp.ramp2) == true || CMovingBitmap::IsOverlap(waterGirl.head, ramp.purple_ramp) == true) {
+				if (
+					CMovingBitmap::IsOverlap(waterGirl.head, map.map1[phase - 1][j][i]) ||
+					CMovingBitmap::IsOverlap(waterGirl.head, ramp.ramp) ||
+					CMovingBitmap::IsOverlap(waterGirl.head, ramp.ramp2) ||
+					CMovingBitmap::IsOverlap(waterGirl.head, ramp.purple_ramp)
+					) {
 					jump2 = false;
+					break;
 				}
+			}
+		}
+	}
+
+	for (int j = head2_y - 3; j < min(head2_y + 3, 29); j++) {
+		for (int i = 0; i < 40; i++) {
+			if (map.int_map[phase - 1][j][i] != 0) {
 
 				if (CMovingBitmap::IsOverlap(waterGirl.leftArm, map.map1[phase - 1][j][i]) == true) {
 					wall_left2 = true;
@@ -1059,11 +1078,11 @@ void CGameStateRun::characterMove() {
 					wall_right2 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(waterGirl.rightArm, box.box) == true && CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_right, map.map1[phase - 1][j][i]) == true) {
 					wall_box_right2 = true;
 					break;
 				}
-				if (CMovingBitmap::IsOverlap(waterGirl.leftArm, box.box) == true && CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true) {
+				if (CMovingBitmap::IsOverlap(box.box_left, map.map1[phase - 1][j][i]) == true) {
 					wall_box_left2 = true;
 					
 				}
@@ -1074,12 +1093,15 @@ void CGameStateRun::characterMove() {
 	////	 角色 2 移動 且 碰到牆壁停止
 
 
-	if (keepLeft == true && wall_left2 == false && wall_box_left2 == false) {
-		waterGirl.SetTopLeft(waterGirl.GetLeft() - 8, waterGirl.GetTop());
-
+	if (keepLeft == true && wall_left2 == false) {
+		if (CMovingBitmap::IsOverlap(waterGirl.leftArm, box.box_right) == false) {
+			waterGirl.SetTopLeft(waterGirl.GetLeft() - 8, waterGirl.GetTop());
+		}
 	}
-	if (keepRight == true && wall_right2 == false && wall_box_right2 == false) {
-		waterGirl.SetTopLeft(waterGirl.GetLeft() + 8, waterGirl.GetTop());
+	if (keepRight == true && wall_right2 == false) {
+		if (CMovingBitmap::IsOverlap(waterGirl.rightArm, box.box_left) == false) {
+			waterGirl.SetTopLeft(waterGirl.GetLeft() + 8, waterGirl.GetTop());
+		}
 	}
 
 
@@ -1109,8 +1131,7 @@ void CGameStateRun::characterMove() {
 		CMovingBitmap::IsOverlap(fireBoy.leftArm, ramp.green_ramp) == true ||
 		CMovingBitmap::IsOverlap(fireBoy.leftArm, ramp.red_ramp) == true ||
 		CMovingBitmap::IsOverlap(fireBoy.leftArm, ramp.ramp2) == true ||
-		CMovingBitmap::IsOverlap(fireBoy.leftArm, ramp.white_ramp) == true ||
-		CMovingBitmap::IsOverlap(fireBoy.leftArm, ramp.short_white_ramp) == true
+		CMovingBitmap::IsOverlap(fireBoy.leftArm, ramp.white_ramp) == true
 		) {
 		fireBoy.SetTopLeft(fireBoy.GetLeft() + 8, fireBoy.GetTop());
 	}
@@ -1120,8 +1141,7 @@ void CGameStateRun::characterMove() {
 		CMovingBitmap::IsOverlap(fireBoy.rightArm, ramp.green_ramp) == true ||
 		CMovingBitmap::IsOverlap(fireBoy.rightArm, ramp.red_ramp) == true ||
 		CMovingBitmap::IsOverlap(fireBoy.rightArm, ramp.ramp2) == true ||
-		CMovingBitmap::IsOverlap(fireBoy.rightArm, ramp.white_ramp) == true ||
-		CMovingBitmap::IsOverlap(fireBoy.rightArm, ramp.short_white_ramp) == true
+		CMovingBitmap::IsOverlap(fireBoy.rightArm, ramp.white_ramp) == true
 		) {
 		fireBoy.SetTopLeft(fireBoy.GetLeft() - 8, fireBoy.GetTop());
 	}
@@ -1130,8 +1150,7 @@ void CGameStateRun::characterMove() {
 		CMovingBitmap::IsOverlap(waterGirl.leftArm, ramp.green_ramp) == true ||
 		CMovingBitmap::IsOverlap(waterGirl.leftArm, ramp.red_ramp) == true ||
 		CMovingBitmap::IsOverlap(waterGirl.leftArm, ramp.ramp2) == true ||
-		CMovingBitmap::IsOverlap(waterGirl.leftArm, ramp.white_ramp) == true ||
-		CMovingBitmap::IsOverlap(waterGirl.leftArm, ramp.short_white_ramp) == true
+		CMovingBitmap::IsOverlap(waterGirl.leftArm, ramp.white_ramp) == true
 		) {
 		waterGirl.SetTopLeft(waterGirl.GetLeft() + 8, waterGirl.GetTop());
 	}
@@ -1139,8 +1158,7 @@ void CGameStateRun::characterMove() {
 		CMovingBitmap::IsOverlap(waterGirl.rightArm, ramp.green_ramp) == true ||
 		CMovingBitmap::IsOverlap(waterGirl.rightArm, ramp.red_ramp) == true ||
 		CMovingBitmap::IsOverlap(waterGirl.rightArm, ramp.ramp2) == true ||
-		CMovingBitmap::IsOverlap(waterGirl.rightArm, ramp.white_ramp) == true ||
-		CMovingBitmap::IsOverlap(waterGirl.rightArm, ramp.short_white_ramp) == true
+		CMovingBitmap::IsOverlap(waterGirl.rightArm, ramp.white_ramp) == true
 		) {
 		waterGirl.SetTopLeft(waterGirl.GetLeft() - 8, waterGirl.GetTop());
 	}
@@ -1263,6 +1281,12 @@ void CGameStateRun::show_image_by_phase() {
 
 			door.door1.SetFrameIndexOfBitmap(0);
 			door.door2.SetFrameIndexOfBitmap(0);
+		}
+
+		if (phase == 6 && sub_phase == 1) {
+			scene.showScene(10);
+
+
 		}
 	}
 }
