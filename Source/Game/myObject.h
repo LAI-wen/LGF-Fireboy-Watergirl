@@ -90,23 +90,6 @@ namespace Object {
 
 	};
 
-	class Pond : public Object {
-	public:
-		CMovingBitmap pond;
-		CMovingBitmap red_pond;
-		CMovingBitmap blue_pond[3];
-		CMovingBitmap long_pond[2];
-		CMovingBitmap long_red_pond[2];
-		CMovingBitmap long_blue_pond[2];
-		CMovingBitmap short_red_pond;
-		CMovingBitmap mid_red_pond[2];
-		CMovingBitmap mid_blue_pond;
-		CMovingBitmap long_long_pond;
-
-		void generateObject();
-		void setObject(int map_stage);
-		void showObject(int map_stage);
-	};
 
 	class Diamond : public Object {
 	public:
