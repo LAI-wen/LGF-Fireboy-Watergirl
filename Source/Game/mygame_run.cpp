@@ -789,6 +789,7 @@ void CGameStateRun::gravety() {
 	// 當角色2	沒有碰到 地板 以及 移動板，會往下掉
 	bool gravity_flag2 = false;
 
+
 	if (CheckMapComponentOverlap(waterGirl.foot)) {
 		gravity_flag2 = true;
 		jumpable2 = true;
@@ -1195,12 +1196,10 @@ void CGameStateRun::show_image_by_phase() {
 		door.door1.SetFrameIndexOfBitmap(0);
 		door.door2.SetFrameIndexOfBitmap(0);
 
-		
 		if (phase == 6 && sub_phase == 1) {
 			scene.showScene(10);
 			GotoGameState(GAME_STATE_OVER);
 		}
-		
 	}
 }
 
