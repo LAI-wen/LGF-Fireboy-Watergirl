@@ -42,7 +42,6 @@ namespace Object {
 		void generateObject();
 		void setObject(int map_stage);
 		void showObject(int map_stage);
-
 	};
 
 	class Ramp : public Object {
