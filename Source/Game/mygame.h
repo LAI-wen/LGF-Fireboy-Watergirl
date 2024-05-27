@@ -151,7 +151,8 @@ namespace game_framework {
 		int jump1_time = 0;
 		bool jump2 = false;
 		int jump2_time = 0;
-
+		bool jumpable1 = true;
+		bool jumpable2 = true;
 
 		CMovingBitmap button_continue;
 		CMovingBitmap button_retry;
