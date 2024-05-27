@@ -4,9 +4,29 @@
 
 #define MYOBJECT_H
 #include "../Library/gameutil.h"
-#include "../Game/myMap.h"
 
 using namespace game_framework;
+
+class Component {
+public:
+	CMovingBitmap component;
+	vector<string> resourcePaths;
+
+	Component() {};
+	Component(vector<string> resourcePaths) {
+		this->resourcePaths = resourcePaths;
+	}
+	void OnInit() {
+		component.LoadBitmapByString(resourcePaths);
+		component.SetTopLeft(0, 0);
+	}
+	void SetTopLeft(int x, int y) {
+		component.SetTopLeft(x, y);
+	}
+	void OnShow() {
+		component.ShowBitmap();
+	}
+};
 
 namespace Object {
 
