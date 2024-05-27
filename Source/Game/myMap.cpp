@@ -2,8 +2,10 @@
 #include "../Game/myMap.h"
 #include <fstream>
 
-
 void Map::generateMap() {
+
+	door1.OnInit();
+	door2.OnInit();
 	
 	std::ifstream map1("map/map1.map");
 	for (int i = 0; i < 29; i++) {
@@ -29,6 +31,18 @@ void Map::generateMap() {
 		}
 	}
 	map1.close();
+
+	std::ifstream map1comp("map/map_component_1.map");
+	int n;
+	map1comp >> n;
+	for (int i = 0; i < n; i++) {
+		int componentID;
+		int x;
+		int y;
+		map1comp >> componentID >> x >> y;
+		placeComponent(ComponentType(componentID), x, y);
+	}
+	map1comp.close();
 
 	std::ifstream map2("map/map2.map");
 	for (int i = 0; i < 29; i++) {
@@ -141,6 +155,8 @@ void Map::showMap(int map_stage) {
 				
 			}
 		}
+		door1.OnShow();
+		door2.OnShow();
 	}
 
 	else if (map_stage == 2) {
@@ -186,4 +202,13 @@ void Map::showMap(int map_stage) {
 
 bool Map::IsBlock(int stage, int x, int y) {
 	return int_map[stage][y / 30][x / 35];
+}
+
+void Map::placeComponent(ComponentType componentId, int x, int y) {
+	if (componentId == ComponentType::DOOR1) {
+		door1.SetTopLeft(x, y);
+	}
+	if (componentId == ComponentType::DOOR2) {
+		door2.SetTopLeft(x, y);
+	}
 }

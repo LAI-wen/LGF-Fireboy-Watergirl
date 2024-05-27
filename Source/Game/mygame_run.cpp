@@ -484,14 +484,14 @@ void CGameStateRun::OnShow()
 	map.showMap(phase);
 
 	pause.ShowBitmap();
-	door.showObject(phase);
+	/*door.showObject(phase);
 	button.showObject(phase);
 	ramp.showObject(phase);
 	box.showObject(phase);
 	diamond.showObject(phase);
 	joystick.showObject(phase);
 	ball.showObject(phase);
-	fan.showObject(phase);
+	fan.showObject(phase);*/
 
 	//箱子碰撞器
 	box.box_left.SetTopLeft(box.box.GetLeft() - 5, box.box.GetTop());
