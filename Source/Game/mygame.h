@@ -124,6 +124,7 @@ namespace game_framework {
 		void BallMove(CMovingBitmap &ball, Character &character); // New version 
 		void CheckDeadOnPool(Character &character);
 		void show_text_by_phase();
+		bool CheckMapComponentOverlap(CMovingBitmap characterPart);
 
 		int diamondNum();
 		int eat_diamond;
