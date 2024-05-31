@@ -42,7 +42,13 @@
 #include "myMap.h"
 #include "myObject.h"
 #include "myScene.h"
+#include "Character.h"
 
+#define VK_W 0x57
+#define VK_A 0x41
+#define VK_D 0x44
+#define CHARACTER_WATERGIRL "watergirl"
+#define CHARACTER_FIREBOY   "fireboy"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -101,24 +107,12 @@ namespace game_framework {
 		void OnMove();									// ���ʹC������
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
-
-
 		int phase = 1;									//���d
-		int sub_phase = 1;								//�l���d
+		int sub_phase = 1;								
+		Character fireBoy = Character(CHARACTER_FIREBOY);
+		Character waterGirl = Character(CHARACTER_WATERGIRL);
 		CMovingBitmap background;						//�I��
-		CMovingBitmap bg;
-		CMovingBitmap character1[3];						//�n�n
-		CMovingBitmap character2[3];						//�̧�
-		CMovingBitmap character1_left;
-		CMovingBitmap character2_left;
-		CMovingBitmap character1_right;
-		CMovingBitmap character2_right;
-		CMovingBitmap foot1;
-		CMovingBitmap foot2;
-		CMovingBitmap head1;
-		CMovingBitmap head2;					
-		CMovingBitmap cube[5][40];
-		CMovingBitmap floor1;
+		CMovingBitmap bg;					
 		
 		CMovingBitmap continueUI;
 		CMovingBitmap gameover;
@@ -126,11 +120,11 @@ namespace game_framework {
 		CMovingBitmap pause;
 
 		void gravety();
-		void boxMove();
 		void characterMove();
-		void ballMove();
-
+		void BallMove(CMovingBitmap &ball, Character &character); // New version 
+		void CheckDeadOnPool(Character &character);
 		void show_text_by_phase();
+		bool CheckMapComponentOverlap(CMovingBitmap characterPart);
 
 		int diamondNum();
 		int eat_diamond;
@@ -144,14 +138,12 @@ namespace game_framework {
 		int pass_phase = 0;
 
 		int continue_what;
-		int floor[6] = {40,40,40,40,40,40};
-		int floor_num = 4;
 		int diamond_num = 0;
 	
 
 		CMovingBitmap maps[29][40];
 
-
+		int button_continue_time;
 
 
 		bool keepLeft = false;
@@ -160,10 +152,9 @@ namespace game_framework {
 		int jump1_time = 0;
 		bool jump2 = false;
 		int jump2_time = 0;
+		bool jumpable1 = true;
+		bool jumpable2 = true;
 
-		int button_retry_time;
-		int button_menu_time;
-		int button_continue_time;
 		CMovingBitmap button_continue;
 		CMovingBitmap button_retry;
 		CMovingBitmap button_menu;
@@ -175,7 +166,6 @@ namespace game_framework {
 		Object::Button button;
 		Object::Ramp ramp;
 		Object::Box box;
-		Object::Pond pond;
 		Object::Diamond diamond;
 		Object::Joystick joystick;
 		Object::Ball ball;
