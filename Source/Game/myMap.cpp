@@ -2,8 +2,10 @@
 #include "../Game/myMap.h"
 #include <fstream>
 
-
 void Map::generateMap() {
+
+	door1.OnInit();
+	door2.OnInit();
 	
 	std::ifstream map1("map/map1.map");
 	for (int i = 0; i < 29; i++) {
@@ -13,10 +15,34 @@ void Map::generateMap() {
 				this->map1[0][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
 				this->map1[0][i][j].SetTopLeft(j * 35, i * 30);
 			}
+			else if (this->int_map[0][i][j] == 2) {
+				this->map1[0][i][j].LoadBitmapByString({ "Resources/red_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[0][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[0][i][j] == 3) {
+				this->map1[0][i][j].LoadBitmapByString({ "Resources/blue_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[0][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[0][i][j] == 4) {
+				this->map1[0][i][j].LoadBitmapByString({ "Resources/green_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[0][i][j].SetTopLeft(j * 35, i * 30);
+			}
 			
 		}
 	}
 	map1.close();
+
+	std::ifstream map1comp("map/map_component_1.map");
+	int n;
+	map1comp >> n;
+	for (int i = 0; i < n; i++) {
+		int componentID;
+		int x;
+		int y;
+		map1comp >> componentID >> x >> y;
+		placeComponent(ComponentType(componentID), x, y);
+	}
+	map1comp.close();
 
 	std::ifstream map2("map/map2.map");
 	for (int i = 0; i < 29; i++) {
@@ -25,7 +51,18 @@ void Map::generateMap() {
 			if (this->int_map[1][i][j] == 1) {
 				this->map1[1][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
 				this->map1[1][i][j].SetTopLeft(j * 35, i * 30);
-
+			}
+			else if (this->int_map[1][i][j] == 2) {
+				this->map1[1][i][j].LoadBitmapByString({ "Resources/red_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[1][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[1][i][j] == 3) {
+				this->map1[1][i][j].LoadBitmapByString({ "Resources/blue_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[1][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[1][i][j] == 4) {
+				this->map1[1][i][j].LoadBitmapByString({ "Resources/green_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[1][i][j].SetTopLeft(j * 35, i * 30);
 			}
 		}
 	}
@@ -38,7 +75,18 @@ void Map::generateMap() {
 			if (this->int_map[2][i][j] == 1) {
 				this->map1[2][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
 				this->map1[2][i][j].SetTopLeft(j * 35, i * 30);
-
+			}
+			else if (this->int_map[2][i][j] == 2) {
+				this->map1[2][i][j].LoadBitmapByString({ "Resources/red_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[2][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[2][i][j] == 3) {
+				this->map1[2][i][j].LoadBitmapByString({ "Resources/blue_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[2][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[2][i][j] == 4) {
+				this->map1[2][i][j].LoadBitmapByString({ "Resources/green_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[2][i][j].SetTopLeft(j * 35, i * 30);
 			}
 		}
 	}
@@ -50,6 +98,18 @@ void Map::generateMap() {
 			map4 >> this->int_map[3][i][j];
 			if (this->int_map[3][i][j] == 1) {
 				this->map1[3][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
+				this->map1[3][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[3][i][j] == 2) {
+				this->map1[3][i][j].LoadBitmapByString({ "Resources/red_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[3][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[3][i][j] == 3) {
+				this->map1[3][i][j].LoadBitmapByString({ "Resources/blue_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[3][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[3][i][j] == 4) {
+				this->map1[3][i][j].LoadBitmapByString({ "Resources/green_cube.bmp" }, RGB(255, 255, 255));
 				this->map1[3][i][j].SetTopLeft(j * 35, i * 30);
 			}
 
@@ -65,6 +125,18 @@ void Map::generateMap() {
 				this->map1[4][i][j].LoadBitmapByString({ "Resources/cube.bmp" });
 				this->map1[4][i][j].SetTopLeft(j * 35, i * 30);
 			}
+			else if (this->int_map[4][i][j] == 2) {
+				this->map1[4][i][j].LoadBitmapByString({ "Resources/red_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[4][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[4][i][j] == 3) {
+				this->map1[4][i][j].LoadBitmapByString({ "Resources/blue_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[4][i][j].SetTopLeft(j * 35, i * 30);
+			}
+			else if (this->int_map[4][i][j] == 4) {
+				this->map1[4][i][j].LoadBitmapByString({ "Resources/green_cube.bmp" }, RGB(255, 255, 255));
+				this->map1[4][i][j].SetTopLeft(j * 35, i * 30);
+			}
 
 		}
 	}
@@ -77,52 +149,66 @@ void Map::showMap(int map_stage) {
 	if(map_stage == 1) {
 		for (int i = 0; i < 29; i++) {
 			for (int j = 0; j < 40; j++) {
-				if (this->int_map[0][i][j] == 1) {
+				if (this->int_map[0][i][j] != 0) {
 					this->map1[0][i][j].ShowBitmap();
 				}
 				
 			}
 		}
+		door1.OnShow();
+		door2.OnShow();
 	}
+
 	else if (map_stage == 2) {
 		for (int i = 0; i < 29; i++) {
 			for (int j = 0; j < 40; j++) {
-				if (this->int_map[1][i][j] == 1) {
+				if (this->int_map[1][i][j] != 0) {
 					this->map1[1][i][j].ShowBitmap();
 				}
 			}
 		}
-
 	}
+
 	else if (map_stage == 3) {
 		for (int i = 0; i < 29; i++) {
 			for (int j = 0; j < 40; j++) {
-				if (this->int_map[2][i][j] == 1) {
+				if (this->int_map[2][i][j] != 0) {
 					this->map1[2][i][j].ShowBitmap();
 				}
 			}
 		}
-
 	}
+
 	else if (map_stage == 4) {
 		for (int i = 0; i < 29; i++) {
 			for (int j = 0; j < 40; j++) {
-				if (this->int_map[3][i][j] == 1) {
+				if (this->int_map[3][i][j] != 0) {
 					this->map1[3][i][j].ShowBitmap();
 				}
 			}
 		}
-
 	}
+
 	else if (map_stage == 5) {
 		for (int i = 0; i < 29; i++) {
 			for (int j = 0; j < 40; j++) {
-				if (this->int_map[4][i][j] == 1) {
+				if (this->int_map[4][i][j] != 0) {
 					this->map1[4][i][j].ShowBitmap();
 				}
 			}
 		}
+	}	
+}
 
+bool Map::IsBlock(int stage, int x, int y) {
+	return int_map[stage][y / 30][x / 35];
+}
+
+void Map::placeComponent(ComponentType componentId, int x, int y) {
+	if (componentId == ComponentType::DOOR1) {
+		door1.SetTopLeft(x, y);
 	}
-	
+	if (componentId == ComponentType::DOOR2) {
+		door2.SetTopLeft(x, y);
+	}
 }
