@@ -39,6 +39,17 @@
 */
 
 
+#include "myMap.h"
+#include "myObject.h"
+#include "myScene.h"
+#include "Character.h"
+
+#define VK_W 0x57
+#define VK_A 0x41
+#define VK_D 0x44
+#define CHARACTER_WATERGIRL "watergirl"
+#define CHARACTER_FIREBOY   "fireboy"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -97,156 +108,42 @@ namespace game_framework {
 		void OnShow();									// ��ܳo�Ӫ��A���C���e��
 	private:
 		int phase = 1;									//���d
-		int sub_phase = 1;								//�l���d
+		int sub_phase = 1;								
+		Character fireBoy = Character(CHARACTER_FIREBOY);
+		Character waterGirl = Character(CHARACTER_WATERGIRL);
 		CMovingBitmap background;						//�I��
-		CMovingBitmap bg;
-		CMovingBitmap character1[3];						//�n�n
-		CMovingBitmap character2[3];						//�̧�
-		CMovingBitmap character1_left;
-		CMovingBitmap character2_left;
-		CMovingBitmap character1_right;
-		CMovingBitmap character2_right;
-		CMovingBitmap foot1;
-		CMovingBitmap foot2;
-		CMovingBitmap head1;
-		CMovingBitmap head2;
-		CMovingBitmap door1;							//�n�n��
-		CMovingBitmap door2;							//�̧̪�
-		CMovingBitmap cube[5][40];
-		CMovingBitmap floor1;
-		CMovingBitmap floor2_up;
-		CMovingBitmap floor2_down;
-		CMovingBitmap floor2_right;
-		CMovingBitmap floor3_up;
-		CMovingBitmap floor3_down;
-		CMovingBitmap floor3_right;
-		CMovingBitmap map_left;
-		CMovingBitmap map_right;
-		CMovingBitmap map_top;
-		CMovingBitmap button1;
-		CMovingBitmap button2;
-		CMovingBitmap ramp;
-		CMovingBitmap ramp2;
-		CMovingBitmap box;
-		CMovingBitmap box_left;
-		CMovingBitmap box_right;
-		CMovingBitmap pond;
-		CMovingBitmap red_pond;
-		CMovingBitmap blue_pond;
-		CMovingBitmap blue_diamond[4];
-		CMovingBitmap red_diamond[4];
-		CMovingBitmap joystick;
+		CMovingBitmap bg;					
+		
 		CMovingBitmap continueUI;
 		CMovingBitmap gameover;
 
-		void show_image_by_phase();
+		CMovingBitmap pause;
+
+		void gravety();
+		void characterMove();
+		void BallMove(CMovingBitmap &ball, Character &character); // New version 
+		void CheckDeadOnPool(Character &character);
 		void show_text_by_phase();
-		bool validate_phase_1();
-		bool validate_phase_2();
-		bool validate_phase_3();
-		bool validate_phase_4();
-		bool validate_phase_5();
-		bool validate_phase_6();
+		bool CheckMapComponentOverlap(CMovingBitmap characterPart);
+
+		int diamondNum();
+		int eat_diamond;
+
+		void show_image_by_phase();
 		bool isdead = false;
+		bool ispause = false;
+		bool ismenu = false;
+		bool test_no_dead = false;
+
+		int pass_phase = 0;
 
 		int continue_what;
-		int floor[6] = {40,40,40,40,40,40};
-		int floor_num = 4;
 		int diamond_num = 0;
+	
 
-		int map[3][10][40] = {
-			 { //1
-				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},  // 1
+		CMovingBitmap maps[29][40];
 
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 2
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 3
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 4
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 5
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 6
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},  // 7
-
-				{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 8
-
-				{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 9
-
-				{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}  // 10
-
-			},
-			{//2
-
-				{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 11
-
-				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1},  // 12
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 13
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 14
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 15
-
-				{1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 16
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},  // 17
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},  // 18
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},  // 19
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}  // 20
-
-			},
-
-			{
-				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 21
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 22
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},  // 23
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 24
-
-				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  // 25
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},  // 26
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},  // 27
-
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},  // 28
-
-				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},  // 29
-
-				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},  // 30
-
-			}
-
-		
-		};
-
-
-		int button1_y;
-		int button2_y;
-		int ramp_y1;
-		int ramp_y2;
-		int ramp2_y1;
-		int ramp2_y2;
-
-		CMovingBitmap maps[3][10][40];
-
-		int map_test[5][5] = {
-			{1, 1, 1, 1, 0},
-			{1, 1, 1, 1, 0},
-			{1, 1, 1, 1, 0},
-			{1, 0, 0, 0, 0},
-			{1, 1, 1, 1, 1}
-		};
-		CMovingBitmap maps_test[5][5];
-
-
+		int button_continue_time;
 
 
 		bool keepLeft = false;
@@ -255,20 +152,28 @@ namespace game_framework {
 		int jump1_time = 0;
 		bool jump2 = false;
 		int jump2_time = 0;
+		bool jumpable1 = true;
+		bool jumpable2 = true;
 
-		int button_retry_time;
-		int button_menu_time;
-		int button_continue_time;
 		CMovingBitmap button_continue;
 		CMovingBitmap button_retry;
 		CMovingBitmap button_menu;
+		
+		Scene scene;
 
-
-
+		Map map;
+		Object::Door door;
+		Object::Button button;
+		Object::Ramp ramp;
+		Object::Box box;
+		Object::Diamond diamond;
+		Object::Joystick joystick;
+		Object::Ball ball;
+		Object::Fan fan;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	// �o��class���C�����������A(Game Over)
+	// �o
 	// �C��Member function��Implementation���n����
 	/////////////////////////////////////////////////////////////////////////////
 
@@ -287,8 +192,8 @@ namespace game_framework {
 		int button_retry_time;
 		int button_menu_time;
 		CMovingBitmap background;
-		CMovingBitmap button_retry;
-		CMovingBitmap button_menu;
+		CMovingBitmap END;
+
 	};
 
 }
