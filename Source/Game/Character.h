@@ -39,10 +39,10 @@ public:
 		);
 		body[1].LoadBitmapByString(rightAnimation, RGB(255, 255, 255));
 		body[2].LoadBitmapByString(leftAnimation, RGB(255, 255, 255));
-		foot.LoadBitmapByString({ "Resources/foot.bmp" });
-		head.LoadBitmapByString({ "Resources/head.bmp" });
-		leftArm.LoadBitmapByString({ "Resources/left.bmp" });
-		rightArm.LoadBitmapByString({ "Resources/left.bmp" });
+		foot.LoadBitmapByString({ "Resources/foot.bmp" }, RGB(255, 255, 255));
+		head.LoadBitmapByString({ "Resources/head.bmp" }, RGB(255, 255, 255));
+		leftArm.LoadBitmapByString({ "Resources/left.bmp" }, RGB(255, 255, 255));
+		rightArm.LoadBitmapByString({ "Resources/left.bmp" }, RGB(255, 255, 255));
 	}
 
 	void SetTopLeft(int x, int y) {

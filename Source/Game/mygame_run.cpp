@@ -286,6 +286,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	button_continue.LoadBitmapByString({ "resources/button_continue1.bmp","resources/continue_button.bmp" });
 	button_continue.SetTopLeft(230, 560);
 
+	ismenu = true;
 	show_image_by_phase();
 }
 
@@ -441,6 +442,20 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			isdead = false;
 			show_image_by_phase();
 		}
+		else if ((pass_phase >= 3) && idx1 >= 666 && idy1 > 458 && idx1 <= 730 && idy1 <= 517) {
+			phase = 4;
+			ismenu = false;
+			ispause = false;
+			isdead = false;
+			show_image_by_phase();
+		}
+		else if ((pass_phase >= 4) && idx1 >= 666 && idy1 > 335 && idx1 <= 730 && idy1 <= 396) {
+			phase = 5;
+			ismenu = false;
+			ispause = false;
+			isdead = false;
+			show_image_by_phase();
+		}
 	}
 
 
@@ -454,6 +469,9 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 			button_continue.ShowBitmap();
 			button_continue_time = clock();
 			show_image_by_phase();
+			if (phase == 6) {
+				phase = 7;
+			}
 		}
 	}
 }
@@ -478,20 +496,27 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// �B�z�ƹ��
 void CGameStateRun::OnShow()
 {
 	/////////////////////////////////圖片 顯示///////////////////////////////////   
-
+	if (phase == 7) {
+		continue_what = 0;
+		GotoGameState(GAME_STATE_OVER);
+	}
 
 	bg.ShowBitmap();
-	map.showMap(phase);
-
-	pause.ShowBitmap();
-	/*door.showObject(phase);
+	
+	
+	door.showObject(phase);
 	button.showObject(phase);
 	ramp.showObject(phase);
 	box.showObject(phase);
+	
+	
+	ball.showObject(phase);
+	
+	map.showMap(phase);
 	diamond.showObject(phase);
 	joystick.showObject(phase);
-	ball.showObject(phase);
-	fan.showObject(phase);*/
+	pause.ShowBitmap();
+	fan.showObject(phase);
 
 	//箱子碰撞器
 	box.box_left.SetTopLeft(box.box.GetLeft() - 5, box.box.GetTop());
@@ -575,6 +600,7 @@ void CGameStateRun::OnShow()
 	if ((door.door1.GetFrameIndexOfBitmap() == 5 && door.door2.GetFrameIndexOfBitmap() == 5)) {
 
 		if (phase == 1) {
+			TRACE("diamond = %d", eat_diamond);
 			if (eat_diamond == 7) {
 				continue_what = 1;
 				phase += 1;
@@ -788,7 +814,6 @@ void CGameStateRun::gravety() {
 
 	// 當角色2	沒有碰到 地板 以及 移動板，會往下掉
 	bool gravity_flag2 = false;
-
 
 	if (CheckMapComponentOverlap(waterGirl.foot)) {
 		gravity_flag2 = true;
@@ -1157,6 +1182,7 @@ void CGameStateRun::show_image_by_phase() {
 		joystick.setObject(phase);
 		ball.setObject(phase);
 		fan.setObject(phase);
+		
 
 		if (phase == 1 && sub_phase == 1) {
 			// 角色與箱子
@@ -1165,6 +1191,7 @@ void CGameStateRun::show_image_by_phase() {
 
 		}
 		if (phase == 2 && sub_phase == 1) {
+
 			fireBoy.SetTopLeft(25, 640);
 			waterGirl.SetTopLeft(25, 760);
 		}
@@ -1196,10 +1223,9 @@ void CGameStateRun::show_image_by_phase() {
 		door.door1.SetFrameIndexOfBitmap(0);
 		door.door2.SetFrameIndexOfBitmap(0);
 
-		if (phase == 6 && sub_phase == 1) {
-			scene.showScene(10);
-			GotoGameState(GAME_STATE_OVER);
-		}
+		
+		
+		
 	}
 }
 
