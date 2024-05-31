@@ -485,20 +485,20 @@ void Object::Diamond::setObject(int map_stage) {
 		red_diamond[0].SetTopLeft(700, 780);
 		red_diamond[1].SetTopLeft(300, 400);
 		red_diamond[2].SetTopLeft(400, 100);
-		red_diamond[3].SetTopLeft(0, 0);
-		red_diamond[4].SetTopLeft(0, 0);
-		red_diamond[5].SetTopLeft(0, 0);
-		red_diamond[6].SetTopLeft(0, 0);
-		red_diamond[7].SetTopLeft(0, 0);
+		red_diamond[3].SetTopLeft(1350, 850);
+		red_diamond[4].SetTopLeft(1350, 850);
+		red_diamond[5].SetTopLeft(1350, 850);
+		red_diamond[6].SetTopLeft(1350, 850);
+		red_diamond[7].SetTopLeft(1350, 850);
 
 		blue_diamond[0].SetTopLeft(935, 780);
 		blue_diamond[1].SetTopLeft(850, 420);
 		blue_diamond[2].SetTopLeft(80, 150);
 		blue_diamond[3].SetTopLeft(750, 130);
-		blue_diamond[4].SetTopLeft(0, 0);
-		blue_diamond[5].SetTopLeft(0, 0);
-		blue_diamond[6].SetTopLeft(0, 0);
-		blue_diamond[7].SetTopLeft(0, 0);
+		blue_diamond[4].SetTopLeft(1350, 850);
+		blue_diamond[5].SetTopLeft(1350, 850);
+		blue_diamond[6].SetTopLeft(1350, 850);
+		blue_diamond[7].SetTopLeft(1350, 850);
 		break;
 
 	case 2:
@@ -526,19 +526,19 @@ void Object::Diamond::setObject(int map_stage) {
 		red_diamond[1].SetTopLeft(150, 470);
 		red_diamond[2].SetTopLeft(820, 660);
 		red_diamond[3].SetTopLeft(780, 790);
-		red_diamond[4].SetTopLeft(0, 0);
-		red_diamond[5].SetTopLeft(0, 0);
-		red_diamond[6].SetTopLeft(0, 0);
-		red_diamond[7].SetTopLeft(0, 0);
+		red_diamond[4].SetTopLeft(1350, 850);
+		red_diamond[5].SetTopLeft(1350, 850);
+		red_diamond[6].SetTopLeft(1350, 850);
+		red_diamond[7].SetTopLeft(1350, 850);
 
 		blue_diamond[0].SetTopLeft(450, 100);
 		blue_diamond[1].SetTopLeft(765, 100);
 		blue_diamond[2].SetTopLeft(50, 430);
 		blue_diamond[3].SetTopLeft(860, 410);
 		blue_diamond[4].SetTopLeft(310, 640);
-		blue_diamond[5].SetTopLeft(0, 0);
-		blue_diamond[6].SetTopLeft(0, 0);
-		blue_diamond[7].SetTopLeft(0, 0);
+		blue_diamond[5].SetTopLeft(1350, 850);
+		blue_diamond[6].SetTopLeft(1350, 850);
+		blue_diamond[7].SetTopLeft(1350, 850);
 		break;
 	case 4:
 		red_diamond[0].SetTopLeft(170, 530);
@@ -557,7 +557,7 @@ void Object::Diamond::setObject(int map_stage) {
 		blue_diamond[4].SetTopLeft(310, 710);
 		blue_diamond[5].SetTopLeft(450, 300);
 		blue_diamond[6].SetTopLeft(450, 130);
-		blue_diamond[7].SetTopLeft(0, 0);
+		blue_diamond[7].SetTopLeft(1350, 850);
 		break;
 
 	case 5:

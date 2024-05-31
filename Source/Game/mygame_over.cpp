@@ -48,6 +48,8 @@ void CGameStateOver::OnInit()
 
 	Sleep(1000);
 
+	END.LoadBitmapByString({ "Resources/w_END.bmp" },RGB(255,255,255));				// END
+
 
 }
 
@@ -60,5 +62,6 @@ void CGameStateOver::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CGameStateOver::OnShow()
 {
+	END.ShowBitmap();
 	
 }
