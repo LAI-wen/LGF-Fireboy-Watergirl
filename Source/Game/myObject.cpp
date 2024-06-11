@@ -440,7 +440,7 @@ void Object::Box::setObject(int map_stage) {
 		box.SetTopLeft(0, 0);
 		break;
 	case 4:
-		box.SetTopLeft(900, 100);
+		box.SetTopLeft(900, 185);
 		break;
 	case 5:
 		box.SetTopLeft(0, 0);

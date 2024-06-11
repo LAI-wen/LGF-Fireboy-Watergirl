@@ -35,18 +35,14 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 
 	gravety();
 	characterMove();
-	//ballMove();
 	BallMove(ball.ball[0], fireBoy);
 	BallMove(ball.ball[1], fireBoy);
 	BallMove(ball.ball[0], waterGirl);
 	BallMove(ball.ball[1], waterGirl);
 	
-	/////////////////////////////////////////////////////////////////////////////
 	////	 機關
-	/////////////////////////////////////////////////////////////////////////////
-	
+
 	//機關 按鈕觸發
-	
 	if (phase == 1 || phase == 2 || phase == 4) {
 
 		//角色 1  2 和箱子 碰到 button1 會按下
@@ -60,7 +56,6 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		}
 
 		//角色 1  2 和 碰到 button2 會按下
-
 		if (CMovingBitmap::IsOverlap(waterGirl.foot, button.button2) == true || 
 			CMovingBitmap::IsOverlap(fireBoy.foot, button.button2) == true) {
 			button.button2.SetTopLeft(button.button2.GetLeft(), min(button.button1_y + 15,button.button2.GetTop() + 1));
@@ -68,8 +63,6 @@ void CGameStateRun::OnMove()	// 移動遊戲元素
 		else if (button.button2.GetTop() > button.button2_y) {
 			button.button2.SetTopLeft(button.button2.GetLeft(), button.button2.GetTop() - 2);
 		}
-
-
 	}
 	
 	if (phase == 2 || phase == 3) {
@@ -253,11 +246,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	fireBoy.OnInit();
 	waterGirl.OnInit();
 
-	//背景
 	bg.LoadBitmapByString({ "Resources/bg.bmp" });
 	bg.SetTopLeft(0, 0);
 	
-	map.generateMap();
+	
 	scene.loadScene();
 	door.generateObject();
 	button.generateObject();
@@ -266,6 +258,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	diamond.generateObject();
 	joystick.generateObject();
 	ball.generateObject();
+	map.generateMap();
 	fan.generateObject();
 
 	pause.LoadBitmapByString({ "Resources/pause_img.bmp" }, RGB(255, 255, 255));;
@@ -459,7 +452,6 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // �B�z�ƹ�
 	}
 
 
-
 	//continue
 	if ((continue_what == 1 || continue_what == 2) && (WM_LBUTTONDOWN)) {
 		int idx1 = point.x;
@@ -503,17 +495,14 @@ void CGameStateRun::OnShow()
 
 	bg.ShowBitmap();
 	
-	
 	door.showObject(phase);
 	button.showObject(phase);
 	ramp.showObject(phase);
 	box.showObject(phase);
 	
-	
 	ball.showObject(phase);
-	
-	map.showMap(phase);
 	diamond.showObject(phase);
+	map.showMap(phase);
 	joystick.showObject(phase);
 	pause.ShowBitmap();
 	fan.showObject(phase);
@@ -561,7 +550,6 @@ void CGameStateRun::OnShow()
 	}
 
 	
-
 	//跳關卡
 	if (GetAsyncKeyState(0x31) & 0x8000) {
 		phase = 1;
@@ -601,7 +589,7 @@ void CGameStateRun::OnShow()
 
 		if (phase == 1) {
 			TRACE("diamond = %d", eat_diamond);
-			if (eat_diamond == 7) {
+			if (eat_diamond >= 7) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
@@ -615,7 +603,7 @@ void CGameStateRun::OnShow()
 			pass_phase = 1;
 		}
 		else if (phase == 2) {
-			if (eat_diamond == 16) {
+			if (eat_diamond >= 16) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
@@ -629,7 +617,7 @@ void CGameStateRun::OnShow()
 			pass_phase = 2;
 		}
 		else if (phase == 3) {
-			if (eat_diamond == 9) {
+			if (eat_diamond >= 9) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
@@ -643,7 +631,7 @@ void CGameStateRun::OnShow()
 			pass_phase = 3;
 		}
 		else if (phase == 4) {
-			if (eat_diamond == 15) {
+			if (eat_diamond >= 15) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
@@ -657,7 +645,7 @@ void CGameStateRun::OnShow()
 			pass_phase = 4;
 		}
 		else if (phase == 5) {
-			if (eat_diamond == 16) {
+			if (eat_diamond >= 16) {
 				continue_what = 1;
 				phase += 1;
 				show_image_by_phase();
@@ -673,7 +661,6 @@ void CGameStateRun::OnShow()
 
 	}
 
-	
 
 	//搖桿
 	if (CMovingBitmap::IsOverlap(fireBoy.leftArm, joystick.joystick) == true && joystick.joystick.GetFrameIndexOfBitmap() == 0) {
@@ -717,7 +704,6 @@ void CGameStateRun::OnShow()
 		joystick.green_joystick.SetFrameIndexOfBitmap(0);
 	}
 
-
 	//死掉介面 0
 	//繼續_ALL寶石介面 1
 	//繼續_NOT ALL寶石介面 2
@@ -738,33 +724,23 @@ void CGameStateRun::OnShow()
 		scene.showScene(0);
 		button_menu.ShowBitmap();
 		button_retry.ShowBitmap();
-		
-		
-
 	}
 
 
 	//pause
-
 	if (ispause == true) {
 		scene.showScene(9);
 		button_menu.ShowBitmap();
 		button_retry.ShowBitmap();
-
 	}
 
 
 	//mune
-
 	if (ismenu == true) {
-
 		scene.showScene(pass_phase+3);
-		
 	}
 	
-
 	show_text_by_phase();
-	
 }
 
 
@@ -777,8 +753,6 @@ void CGameStateRun::show_text_by_phase() {
 		CTextDraw::Print(pDC, 237, 128, "現在不會死");
 	}
 	
-	
-
 	CDDraw::ReleaseBackCDC();
 }
 
@@ -809,8 +783,6 @@ void CGameStateRun::gravety() {
 		fireBoy.SetTopLeft(fireBoy.GetLeft(), fireBoy.GetTop() + 5);
 	}
 
-	
-
 
 	// 當角色2	沒有碰到 地板 以及 移動板，會往下掉
 	bool gravity_flag2 = false;
@@ -838,7 +810,6 @@ void CGameStateRun::gravety() {
 	}
 
 
-
 	// 箱子重力
 	if (phase == 1 || phase == 4) {
 		bool gravity_flag_box = false;
@@ -846,7 +817,6 @@ void CGameStateRun::gravety() {
 		if (CMovingBitmap::IsOverlap(box.box, ramp.ramp) == true && CMovingBitmap::IsOverlap(box.box, ramp.ramp2) == true) {
 			gravity_flag_box = true;
 		}
-
 
 		int box_y = (box.box.GetTop()) / 30;
 		for (int j = box_y; j < min(box_y + 3, 29); j++) {
@@ -876,7 +846,6 @@ void CGameStateRun::gravety() {
 		if (CMovingBitmap::IsOverlap(ball.ball[1], ramp.white_ramp) == true) {
 			gravity_flag_ball1 = true;
 		}
-
 
 		int ball_y = (ball.ball[0].GetTop()) / 30;
 		for (int j = ball_y; j < min(ball_y + 3, 29); j++) {
@@ -908,19 +877,14 @@ void CGameStateRun::gravety() {
 		if (gravity_flag_ball1 == false) {
 			ball.ball[1].SetTopLeft(ball.ball[1].GetLeft(), ball.ball[1].GetTop() + 5);
 		}
-
 	}
-
 }
 
 
 void CGameStateRun::characterMove() {
-	/////////////////////////////////////////////////////////////////////////////
 	////	 角色 跳躍
-	/////////////////////////////////////////////////////////////////////////////
 
 	////	 角色 1 跳躍
-	
 	if (GetAsyncKeyState(0x57) & 0x8000 && jumpable1 == true) {
 		jump1 = true;
 		jump1_time = clock();
@@ -930,7 +894,6 @@ void CGameStateRun::characterMove() {
 		jumpable1 = false;
 	}
 	
-
 	if (jump1 == true && (clock() - jump1_time) < 500) {
 		fireBoy.SetTopLeft(fireBoy.GetLeft(), fireBoy.GetTop() - 10);
 	}
@@ -977,12 +940,9 @@ void CGameStateRun::characterMove() {
 		jump2 = false;
 	}
 
-	/////////////////////////////////////////////////////////////////////////////
 	////	 角色 頂頭
-	/////////////////////////////////////////////////////////////////////////////
 
 	////	 角色 1 頂頭 	////	 角色 1 碰到牆壁停止       //// 箱子碰到牆壁停止
-
 	bool wall_left1 = false;
 	bool wall_right1 = false;
 	bool wall_box_right1 = false;
@@ -1005,7 +965,7 @@ void CGameStateRun::characterMove() {
 		}
 	}
 
-	
+
 	for (int j = max(head1_y - 3, 0); j < min(head1_y + 3, 29); j++) {
 		for (int i = 0; i < 40; i++) {
 			if (map.int_map[phase - 1][j][i] != 0) {
@@ -1030,12 +990,7 @@ void CGameStateRun::characterMove() {
 	}
 	
 	
-
-
-	/////////////////////////////////////////////////////////////////////////////
 	////	 角色 1 移動 箱子移動
-	/////////////////////////////////////////////////////////////////////////////
-
 	if (GetAsyncKeyState(VK_A) & 0x8000 && wall_left1 == false ) {  // 當角色1按 A 向左
 		if (CMovingBitmap::IsOverlap(fireBoy.leftArm, box.box_right) == false) {
 			fireBoy.SetTopLeft(fireBoy.GetLeft() - 8, fireBoy.GetTop());
@@ -1067,7 +1022,6 @@ void CGameStateRun::characterMove() {
 	bool wall_right2 = false;
 	bool wall_box_right2 = false;
 	bool wall_box_left2 = false;
-
 
 	int head2_y = (waterGirl.head.GetTop()) / 30;
 
@@ -1108,8 +1062,8 @@ void CGameStateRun::characterMove() {
 		}
 	}
 
-	////	 角色 2 移動 且 碰到牆壁停止
 
+	////	 角色 2 移動 且 碰到牆壁停止
 	if (keepLeft == true && wall_left2 == false) {
 		if (CMovingBitmap::IsOverlap(waterGirl.leftArm, box.box_right) == false) {
 			waterGirl.SetTopLeft(waterGirl.GetLeft() - 8, waterGirl.GetTop());
@@ -1169,9 +1123,7 @@ void CGameStateRun::BallMove(CMovingBitmap &ball, Character &character) {
 }
 void CGameStateRun::show_image_by_phase() {
 
-	/////////////////////////////////////////////////////////
 	//////////// 物件在不同關卡的初始位置 //////////////////////
-	////////////////////////////////////////////////////////
 
 	if (phase <= 6) {
 		door.setObject(phase);
@@ -1182,27 +1134,23 @@ void CGameStateRun::show_image_by_phase() {
 		joystick.setObject(phase);
 		ball.setObject(phase);
 		fan.setObject(phase);
-		
 
 		if (phase == 1 && sub_phase == 1) {
 			// 角色與箱子
 			fireBoy.SetTopLeft(25, 640);  //25, 640
 			waterGirl.SetTopLeft(25, 760);
-
 		}
 		if (phase == 2 && sub_phase == 1) {
-
-			fireBoy.SetTopLeft(25, 640);
-			waterGirl.SetTopLeft(25, 760);
+			fireBoy.SetTopLeft(75, 750);
+			waterGirl.SetTopLeft(25, 750);
 		}
-
 		if (phase == 3 && sub_phase == 1) {
-			fireBoy.SetTopLeft(50, 50);
-			waterGirl.SetTopLeft(100, 50);
+			fireBoy.SetTopLeft(50, 60);
+			waterGirl.SetTopLeft(100, 60);
 		}
 		if (phase == 4 && sub_phase == 1) {
-			fireBoy.SetTopLeft(50, 700);
-			waterGirl.SetTopLeft(100, 700);
+			fireBoy.SetTopLeft(50, 750);
+			waterGirl.SetTopLeft(100, 750);
 
 		}
 		if (phase == 5 && sub_phase == 1) {
@@ -1222,10 +1170,6 @@ void CGameStateRun::show_image_by_phase() {
 
 		door.door1.SetFrameIndexOfBitmap(0);
 		door.door2.SetFrameIndexOfBitmap(0);
-
-		
-		
-		
 	}
 }
 
